@@ -76,7 +76,7 @@ html, body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-image: url('../imagenes/portada.web.png');
+    background-image: url('../imagenes/portada web.png');
     background-size: cover;
     background-position: center;
     color: #fff;
@@ -187,13 +187,13 @@ html, body {
     padding: 30px;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer; /* Ajuste para que el cursor cambie a "pointer" al pasar por los feature-item */
+    cursor: pointer;
 }
 
 .feature-link {
-    text-decoration: none; /* Elimina el subrayado del enlace */
-    color: inherit; /* Hereda el color del texto de la sección padre */
-    display: block; /* Hace que el enlace ocupe todo el espacio del div */
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .feature-item:hover {
@@ -218,8 +218,8 @@ html, body {
     line-height: 1.6;
 }
 
-/* ----- Estilo para la Sección de la Galería (.gallery-section) ----- */
-.gallery-section {
+/* ----- Estilo para la Sección de Contacto ----- */
+.contact-section {
     padding: 80px 40px;
     background-color: #fff;
     text-align: center;
@@ -232,36 +232,197 @@ html, body {
     color: #333;
 }
 
+.contact-section .subtitle {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 50px;
+}
+
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #3e8e41;
+}
+
+.contact-buttons {
+    margin-top: 30px;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #25D366;
+    color: #fff;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E;
+}
+
+/* ----- Estilo para la Sección de la Galería en página separada ----- */
+.gallery-page-container {
+    padding: 80px 40px;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
+    justify-content: center;
+}
+.gallery-item {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Mantiene la proporción de la imagen sin distorsionarla */
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    object-fit: cover;
+    display: block;
 }
 
-.gallery-item img:hover {
-    transform: scale(1.05); /* Zoom sutil al pasar el mouse */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+/* ----- Estilo para la Sección de Ubicación (.location-section) ----- */
+.location-section {
+    padding: 80px 40px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.map-container {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 450px;
+}
+
+/* ----- Estilo para el Pie de Página (.footer) ----- */
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 20px;
+}
+
+.footer-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.footer-section p, .footer-section a {
+    font-size: 0.9em;
+    color: #ccc;
+    text-decoration: none;
+    line-height: 1.6;
+}
+
+.footer-section a:hover {
+    color: #fff;
+}
+
+.footer-section.social a {
+    font-size: 1.5em;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-section.social a:hover {
+    color: #4CAF50;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    font-size: 0.8em;
+    color: #aaa;
 }
 
 /* ----- Media Queries para Dispositivos Móviles ----- */
 @media (max-width: 768px) {
     
+    /* Ajusta el padding de la barra de navegación para pantallas pequeñas */
     .navbar {
         padding: 20px 20px;
     }
 
+    /* Oculta la lista del menú para hacerla responsive (luego podemos crear un menú hamburguesa) */
     .navbar .menu {
         display: none;
     }
 
+    /* Reducción del tamaño del texto en la sección principal */
     .hero-content h1 {
         font-size: 2em;
     }
@@ -270,14 +431,17 @@ html, body {
         font-size: 1em;
     }
 
+    /* Oculta los íconos laterales ya que no se ven bien en móvil */
     .side-icons {
         display: none;
     }
 
+    /* Ajusta la posición de los puntos del slider */
     .slider-dots {
         bottom: 10px;
     }
-
+    
+    /* Ajusta el logo para que esté en el centro o a la izquierda en móvil */
     .navbar .logo {
         width: 100%;
         text-align: center;
@@ -291,4 +455,18 @@ html, body {
     .feature-item {
         margin: 20px 0;
     }
+
+    /* Media Query para la sección de contacto */
+    .contact-section {
+        padding: 40px 20px;
+    }
+
+    .form-group {
+        padding: 0;
+    }
+
+    /* Media Query para la galería en móvil */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+ }
 }
