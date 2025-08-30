@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="[suspicious link removed]">
+<!-- Página principal -->
+<url>
+<loc>https://www.google.com/search?q=https://elalmendroeventos.com.ar/index.html</loc>
+<lastmod>2023-11-20</lastmod>
+<changefreq>monthly</changefreq>
+<priority>1.0</priority>
+</url>
+<!-- Página de la galería -->
+<url>
+<loc>https://www.google.com/search?q=https://elalmendroeventos.com.ar/galeria.html</loc>
+<lastmod>2023-11-20</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<!-- Página de contacto -->
+<url>
+<loc>https://www.google.com/search?q=https://elalmendroeventos.com.ar/contacto.html</loc>
+<lastmod>2023-11-20</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+</urlset>
