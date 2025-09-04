@@ -28,11 +28,29 @@ html, body {
     transition: background-color 0.3s ease;
 }
 
+/* ESTILO MODIFICADO PARA ALINEAR LOGO Y TEXTO */
 .navbar .logo a {
     color: #fff;
     text-decoration: none;
+    font-weight: bold;
+    display: flex; /* Para que el logo y el texto estén en línea */
+    align-items: center; /* Para que estén centrados verticalmente */
+    gap: 15px; /* Espacio entre el logo y el texto */
+}
+
+/* ESTILO AGREGADO PARA EL TEXTO JUNTO AL LOGO */
+.navbar .logo .navbar-text {
     font-size: 1.8em;
     font-weight: bold;
+    color: #fff;
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+}
+
+/* ESTILO PARA EL LOGO (IMAGEN) */
+.navbar .logo .navbar-logo {
+    height: 60px; /* <-- Puedes cambiar este valor */
+    width: auto;
+    vertical-align: middle;
 }
 
 .navbar .menu ul {
@@ -73,6 +91,7 @@ html, body {
     width: 100%;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -85,7 +104,7 @@ html, body {
 
 .hero-content {
     background: rgba(0, 0, 0, 0.4);
-    padding: 20px;
+    padding: 40px; /* Aumentamos el padding para compensar el logo eliminado */
     border-radius: 10px;
 }
 
@@ -94,6 +113,8 @@ html, body {
     margin-bottom: 0.5em;
     font-weight: 300;
 }
+
+/* LA CLASE .logo-portada FUE ELIMINADA DE AQUÍ */
 
 .hero-content p {
     font-size: 1.2em;
@@ -412,42 +433,48 @@ html, body {
 /* ----- Media Queries para Dispositivos Móviles ----- */
 @media (max-width: 768px) {
     
-    /* Ajusta el padding de la barra de navegación para pantallas pequeñas */
-    .navbar {
-        padding: 20px 20px;
+    .navbar .logo .navbar-logo {
+        height: 45px; /* Un tamaño más pequeño para celulares */
+    }
+    
+    /* ESTILO MODIFICADO PARA EL TEXTO EN MÓVIL */
+    .navbar .logo .navbar-text {
+        font-size: 1.2em;
+        white-space: normal;
     }
 
-    /* Oculta la lista del menú para hacerla responsive (luego podemos crear un menú hamburguesa) */
+    .navbar {
+        padding: 15px 20px;
+    }
+
     .navbar .menu {
         display: none;
     }
 
-    /* Reducción del tamaño del texto en la sección principal */
     .hero-content h1 {
         font-size: 2em;
     }
+
+    /* La clase .logo-portada para móvil también se elimina */
 
     .hero-content p {
         font-size: 1em;
     }
 
-    /* Oculta los íconos laterales ya que no se ven bien en móvil */
     .side-icons {
         display: none;
     }
 
-    /* Ajusta la posición de los puntos del slider */
     .slider-dots {
         bottom: 10px;
     }
     
-    /* Ajusta el logo para que esté en el centro o a la izquierda en móvil */
+    /* ESTILO MODIFICADO PARA EL LOGO Y TEXTO EN MÓVIL */
     .navbar .logo {
-        width: 100%;
-        text-align: center;
+        width: auto;
+        text-align: left;
     }
 
-    /* Media Query para la sección de características */
     .features {
         flex-direction: column;
     }
@@ -456,7 +483,6 @@ html, body {
         margin: 20px 0;
     }
 
-    /* Media Query para la sección de contacto */
     .contact-section {
         padding: 40px 20px;
     }
@@ -465,8 +491,7 @@ html, body {
         padding: 0;
     }
 
-    /* Media Query para la galería en móvil */
     .gallery-grid {
         grid-template-columns: 1fr;
- }
+    }
 }
