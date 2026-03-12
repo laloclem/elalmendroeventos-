@@ -91,7 +91,7 @@
             <button type="submit" class="submit-button">Enviar Mensaje</button>
         </form>
         <div class="contact-buttons">
-            <a href="https://wa.me/5492644045332" class="whatsapp-button" target="_blank">
+            <a href="javascript:void(0);" onclick="trackWhatsApp()" class="whatsapp-button">
                 <i class="fab fa-whatsapp"></i> Consultar disponibilidad hoy
             </a>
         </div>
@@ -161,7 +161,25 @@ allowfullscreen>
             console.error('Error:', error);
             alert('Error de conexión. Por favor, contactanos por WhatsApp.');
         }
-    });
+        // Función para registrar el clic de WhatsApp
+const trackWhatsApp = async () => {
+    try {
+        await fetch('https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                name: 'Interés WhatsApp', 
+                email: 'N/A', 
+                message: 'Clic en botón de contacto directo',
+                origen: 'WhatsApp' 
+            })
+        });
+    } catch (error) {
+        console.error('Error tracking WhatsApp:', error);
+    }
+    // Abrir WhatsApp en una ventana nueva (reemplaza con tu número real)
+    window.open('https://wa.me/5492644045332?text=Hola!%20Vi%20la%20web%20y%20quiero%20consultar%20por%20el%20salón', '_blank');
+};
 </script>
 </body>
 </html>
