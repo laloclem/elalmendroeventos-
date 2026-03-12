@@ -162,23 +162,25 @@ allowfullscreen>
             alert('Error de conexión. Por favor, contactanos por WhatsApp.');
         }
         // Función para registrar el clic de WhatsApp
-const trackWhatsApp = async () => {
-    try {
-        await fetch('https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                name: 'Interés WhatsApp', 
-                email: 'N/A', 
-                message: 'Clic en botón de contacto directo',
-                origen: 'WhatsApp' 
-            })
-        });
-    } catch (error) {
-        console.error('Error tracking WhatsApp:', error);
-    }
-    // Abrir WhatsApp en una ventana nueva (reemplaza con tu número real)
-    window.open('https://wa.me/5492644045332?text=Hola!%20Vi%20la%20web%20y%20quiero%20consultar%20por%20el%20salón', '_blank');
+const trackWhatsApp = () => {
+    // 1. Definimos la URL de WhatsApp (asegurate que el número sea el tuyo)
+    const whatsappUrl = 'https://wa.me/5492644045332?text=Hola!%20Vi%20la%20web%20y%20quiero%20consultar%20por%20el%20salón';
+
+    // 2. Avisamos a n8n sin esperar la respuesta (para que no trabe la apertura)
+    fetch('https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors', // Esto evita problemas de permisos rápidos
+        body: JSON.stringify({ 
+            name: 'Interés WhatsApp', 
+            email: 'N/A', 
+            message: 'Clic en botón de contacto directo',
+            origen: 'WhatsApp' 
+        })
+    }).catch(err => console.log("Error tracking:", err));
+
+    // 3. Abrimos WhatsApp en la misma pestaña para que no lo bloquee el navegador
+    window.location.href = whatsappUrl;
 };
 </script>
 </body>
