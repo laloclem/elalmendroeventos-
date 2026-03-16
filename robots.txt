@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://elalmendroeventos.com.ar/sitemap.xml
+Sitemap: https://blog.elalmendroeventos.com.ar/sitemap.xml
