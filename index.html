@@ -7,7 +7,7 @@
     <title>El Almendro Eventos | San Juan</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/estilo-minimalista.css">
+    <link rel="stylesheet" href="css/estilo-minimalista.css?v=2">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -38,7 +38,6 @@
         </a>
     </div>
 
-    <!-- HAMBURGUESA -->
     <div class="menu-toggle">☰</div>
 
     <nav class="menu">
@@ -62,7 +61,6 @@
 
 <!-- FEATURES -->
 <section id="caracteristicas" class="features">
-
     <a href="galeria.html" class="feature-item fade-up">
         <i class="fas fa-camera-retro" aria-hidden="true"></i>
         <h2>Galería</h2>
@@ -80,17 +78,14 @@
         <h2>Ambiente natural</h2>
         <p>Espacios abiertos ideales.</p>
     </div>
-
 </section>
 
 <!-- CONTACTO -->
 <section id="contacto" class="contact-section">
-
     <h2 class="section-title fade-up">Información rápida</h2>
     <p class="subtitle fade-up">Todo lo que necesitás saber antes de reservar.</p>
 
     <div class="cards-container">
-
         <div class="info-card fade-up">
             <i class="fas fa-users-viewfinder" aria-hidden="true"></i>
             <h3>Capacidad</h3>
@@ -120,7 +115,6 @@
                Cómo llegar
             </a>
         </div>
-
     </div>
 
     <div class="contact-buttons fade-up">
@@ -129,14 +123,11 @@
             Consultar disponibilidad por WhatsApp
         </a>
     </div>
-
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
-
     <div class="footer-content">
-
         <div class="footer-section about">
             <h2>El Almendro Eventos</h2>
             <p>Un espacio pensado para celebrar momentos únicos en San Juan.</p>
@@ -145,60 +136,54 @@
         <div class="footer-section social">
             <h2>Seguinos</h2>
 
-            <a href="https://www.facebook.com/share/1Cb2wU7CvV/" 
-               target="_blank" 
+            <a href="https://www.facebook.com/share/1Cb2wU7CvV/"
+               target="_blank"
                rel="noopener noreferrer">
                 <i class="fab fa-facebook-f"></i>
             </a>
 
-            <a href="https://www.instagram.com/el_almendro_eventos" 
-               target="_blank" 
+            <a href="https://www.instagram.com/el_almendro_eventos"
+               target="_blank"
                rel="noopener noreferrer">
                 <i class="fab fa-instagram"></i>
             </a>
         </div>
-
     </div>
 
     <div class="footer-bottom">
         © 2026 El Almendro Eventos
     </div>
-
 </footer>
 
 <!-- SCRIPTS -->
 <script>
-/* NAVBAR SCROLL */
 window.addEventListener("scroll", () => {
   document.querySelector(".navbar")
     .classList.toggle("scrolled", window.scrollY > 50);
 });
 
-/* MENU MOBILE */
-document.querySelector('.menu-toggle').addEventListener('click', () => {
-  document.querySelector('.menu').classList.toggle('active');
+document.querySelector(".menu-toggle").addEventListener("click", () => {
+  document.querySelector(".menu").classList.toggle("active");
 });
 
-/* ANIMACIONES */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+      entry.target.classList.add("visible");
     }
   });
-});
+}, { threshold: 0.1 });
 
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
 
-/* WHATSAPP */
-const trackWhatsApp = (origen = 'General') => {
+const trackWhatsApp = (origen = "General") => {
     const msg = encodeURIComponent(`Hola! Vi "${origen}" en la web y quiero consultar disponibilidad.`);
     const url = `https://wa.me/5492644045332?text=${msg}`;
 
-    fetch('https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        mode: 'no-cors',
+    fetch("https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        mode: "no-cors",
         body: JSON.stringify({ origen })
     }).catch(() => {});
 
