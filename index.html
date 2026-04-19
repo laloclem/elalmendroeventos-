@@ -3,145 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Un lugar perfecto para organizar tus eventos, con un ambiente ideal y todas las comodidades en San Juan.">
-    <meta name="keywords" content="eventos, lugar, fiestas, reuniones, cumpleaños, El Almendro Eventos, San Juan">
-    <title>El Almendro Eventos</title>
+    <meta name="description" content="Salón de eventos El Almendro en Rivadavia, San Juan. El lugar ideal para tus celebraciones.">
+    <title>El Almendro Eventos | San Juan</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="css/estilo-minimalista.css">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MZLXMXCC');</script>
-    </head>
-<body>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZLXMXCC"
-     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    
-    <header class="navbar">
-        <div class="logo">
-            <a href="#inicio">
-                <img src="imagenes/logo.png" alt="Logo El Almendro Eventos" class="navbar-logo">
-                <span class="navbar-text">El Almendro Eventos</span>
-            </a>
-        </div>
-        <nav class="menu">
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#caracteristicas">Características</a></li>
-                <li><a href="galeria.html">Galería</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main id="inicio" class="hero-section">
-        <div class="hero-content">
-            <h1>Tu evento ideal en San Juan</h1>
-            <p>El quincho que buscabas en Rivadavia.</p>
-        </div>
-    </main>
-
-    <div class="side-icons">
-        <div class="left-icon"><i class="fa-solid fa-camera"></i></div>
-        <div class="right-icon"><i class="fa-solid fa-location-dot"></i></div>
-    </div>
-
-    <div class="slider-dots">
-        <span></span>
-        <span class="active"></span>
-        <span></span>
-    </div>
-
-    <section id="caracteristicas" class="features">
-        <a href="galeria.html" class="feature-link">
-            <div class="feature-item">
-                <i class="fas fa-camera-retro"></i>
-                <h2>Galería</h2>
-                <p>Fotos reales del salón.</p>
-            </div>
-        </a>
-        <div class="feature-item">
-            <i class="fas fa-utensils"></i>
-            <h2>Parrilla y Quincho.</h2>
-            <p>Comodidad para tus asados.</p>
-        </div>
-        <div class="feature-item">
-            <i class="fas fa-chair"></i>
-            <h2>Ambiente Natural.</h2>
-            <p>Tu festejo al aire libre.</p>
-        </div>
-    </section>
-
-    <section id="contacto" class="contact-section">
-        <h2 class="section-title">¡Consultas al instante!</h2>
-        <p class="subtitle">Resolvemos tus dudas antes de contactarnos.</p>
-
-        <div class="cards-container">
-            <div class="info-card">
-                <i class="fas fa-users-viewfinder"></i>
-                <h3>Capacidad</h3>
-                <p>Salón principal para 150 personas y amplio parque exterior para recepciones.</p>
-                <button onclick="trackWhatsApp('Capacidad')" class="card-button">Consultar fecha</button>
-            </div>
-
-            <div class="info-card">
-                <i class="fas fa-star"></i>
-                <h3>Servicios</h3>
-                <p>Sonido profesional, luces, climatización y personal de limpieza incluidos.</p>
-                <button onclick="trackWhatsApp('Servicios')" class="card-button">Ver detalles</button>
-            </div>
-
-            <div class="info-card">
-                <i class="fas fa-map-location-dot"></i>
-                <h3>Ubicación</h3>
-                <p>En el corazón de Rivadavia, con fácil acceso y estacionamiento seguro.</p>
-                <a href="https://maps.app.goo.gl/TU_UBICACION_AQUI" target="_blank" class="card-button map-link">Cómo llegar</a>
-            </div>
-        </div>
-
-        <div class="contact-buttons">
-            <a href="javascript:void(0);" onclick="trackWhatsApp('Boton Principal')" class="whatsapp-button">
-                <i class="fab fa-whatsapp"></i> Hablar directo por WhatsApp
-            </a>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section about">
-                <h2>El Almendro Eventos</h2>
-                <p>Somos un lugar de eventos en San Juan, Argentina, con un ambiente ideal y todas las comodidades para tus celebraciones.</p>
-            </div>
-            <div class="footer-section social">
-                <h2>Síguenos</h2>
-                <a href="https://www.facebook.com/share/1Cb2wU7CvV/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/el_almendro_eventos?igsh=MWh5YXB1eDhzbHpsNg==" target="_blank"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            © 2026 El Almendro Eventos | Diseñado con 💚
-        </div>
-    </footer>
-
-    <script>
-        const trackWhatsApp = (origen = 'General') => {
-            const mensaje = encodeURIComponent(`Hola! Vi la tarjeta de ${origen} en la web y quiero consultar por el salón.`);
-            const whatsappUrl = `https://wa.me/5492644045332?text=${mensaje}`;
-
-            fetch('https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                mode: 'no-cors',
-                body: JSON.stringify({ 
-                    name: 'Interés Web', 
-                    message: `Clic desde: ${origen}`,
-                    origen: 'WhatsApp' 
-                })
-            }).catch(err => console.log("Error tracking:", err));
-
-            window.location.href = whatsappUrl;
-        };
+    <!-- GTM -->
+    <script defer>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MZLXMXCC');
     </script>
+</head>
+
+<body>
+
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZLXMXCC"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">
+        <a href="index.html">
+            <img src="imagenes/logo.png" alt="Logo El Almendro Eventos" class="navbar-logo">
+            <span class="navbar-text">El Almendro Eventos</span>
+        </a>
+    </div>
+
+    <!-- HAMBURGUESA -->
+    <div class="menu-toggle">☰</div>
+
+    <nav class="menu">
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#caracteristicas">Características</a></li>
+            <li><a href="galeria.html">Galería</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- HERO -->
+<main id="inicio" class="hero-section">
+    <div class="hero-content fade-up">
+        <h1>Tu evento ideal en San Juan</h1>
+        <p>El quincho perfecto en Rivadavia para celebrar sin preocupaciones.</p>
+        <a href="#contacto" class="cta-button">Consultar disponibilidad</a>
+    </div>
+</main>
+
+<!-- FEATURES -->
+<section id="caracteristicas" class="features">
+
+    <a href="galeria.html" class="feature-item fade-up">
+        <i class="fas fa-camera-retro" aria-hidden="true"></i>
+        <h2>Galería</h2>
+        <p>Conocé el espacio antes de reservar.</p>
+    </a>
+
+    <div class="feature-item fade-up">
+        <i class="fas fa-utensils" aria-hidden="true"></i>
+        <h2>Parrilla equipada</h2>
+        <p>Todo listo para tus asados.</p>
+    </div>
+
+    <div class="feature-item fade-up">
+        <i class="fas fa-chair" aria-hidden="true"></i>
+        <h2>Ambiente natural</h2>
+        <p>Espacios abiertos ideales.</p>
+    </div>
+
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" class="contact-section">
+
+    <h2 class="section-title fade-up">Información rápida</h2>
+    <p class="subtitle fade-up">Todo lo que necesitás saber antes de reservar.</p>
+
+    <div class="cards-container">
+
+        <div class="info-card fade-up">
+            <i class="fas fa-users-viewfinder" aria-hidden="true"></i>
+            <h3>Capacidad</h3>
+            <p>Hasta 150 personas con parque exterior incluido.</p>
+            <button onclick="trackWhatsApp('Capacidad')" class="card-button">
+                Consultar fecha
+            </button>
+        </div>
+
+        <div class="info-card fade-up">
+            <i class="fas fa-star" aria-hidden="true"></i>
+            <h3>Servicios</h3>
+            <p>Sonido, luces, climatización y limpieza incluidos.</p>
+            <button onclick="trackWhatsApp('Servicios')" class="card-button">
+                Ver detalles
+            </button>
+        </div>
+
+        <div class="info-card fade-up">
+            <i class="fas fa-map-location-dot" aria-hidden="true"></i>
+            <h3>Ubicación</h3>
+            <p>Rivadavia, San Juan. Acceso fácil y estacionamiento.</p>
+            <a href="https://maps.google.com/?q=Rivadavia,San+Juan"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="card-button map-link">
+               Cómo llegar
+            </a>
+        </div>
+
+    </div>
+
+    <div class="contact-buttons fade-up">
+        <a href="#" onclick="trackWhatsApp('Boton Principal'); return false;" class="whatsapp-button">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            Consultar disponibilidad por WhatsApp
+        </a>
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-section about">
+            <h2>El Almendro Eventos</h2>
+            <p>Un espacio pensado para celebrar momentos únicos en San Juan.</p>
+        </div>
+
+        <div class="footer-section social">
+            <h2>Seguinos</h2>
+
+            <a href="https://www.facebook.com/share/1Cb2wU7CvV/" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+
+            <a href="https://www.instagram.com/el_almendro_eventos" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 El Almendro Eventos
+    </div>
+
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+/* NAVBAR SCROLL */
+window.addEventListener("scroll", () => {
+  document.querySelector(".navbar")
+    .classList.toggle("scrolled", window.scrollY > 50);
+});
+
+/* MENU MOBILE */
+document.querySelector('.menu-toggle').addEventListener('click', () => {
+  document.querySelector('.menu').classList.toggle('active');
+});
+
+/* ANIMACIONES */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+});
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* WHATSAPP */
+const trackWhatsApp = (origen = 'General') => {
+    const msg = encodeURIComponent(`Hola! Vi "${origen}" en la web y quiero consultar disponibilidad.`);
+    const url = `https://wa.me/5492644045332?text=${msg}`;
+
+    fetch('https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors',
+        body: JSON.stringify({ origen })
+    }).catch(() => {});
+
+    window.location.href = url;
+};
+</script>
+
 </body>
 </html>
