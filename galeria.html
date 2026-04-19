@@ -1,33 +1,113 @@
-<main style="padding-top: 100px;">
-        <section class="gallery-page-container">
-            
-            <h1 class="section-title fade-up">Nuestra Galería</h1>
-            <p class="subtitle fade-up">Capturas reales de momentos inolvidables en San Juan.</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Galería de fotos de los eventos y espacios en El Almendro, San Juan.">
+    <title>Galería | El Almendro Eventos</title>
 
-            <div class="gallery-grid">
-                <div class="gallery-item fade-up"><img src="imagenes/deco12.jpg" alt="Salón para eventos"></div>
-                <div class="gallery-item fade-up"><img src="imagenes/quincho.jpg" alt="Quincho con parrilla"></div>
-                <div class="gallery-item fade-up"><img src="imagenes/par31.jpg" alt="Jardín exterior"></div>
-                <div class="gallery-item fade-up"><img src="imagenes/deco1.jpg" alt="Decoración de evento"></div>
-                <div class="gallery-item fade-up"><img src="imagenes/par21.jpg" alt="Juegos para niños"></div>
-                <div class="gallery-item fade-up"><img src="imagenes/par35.jpg" alt="Evento nocturno"></div>
-                <div class="gallery-item fade-up"><img src="imagenes/par18.jpg" alt="Espacio para ferias"></div>
-                <div class="gallery-item fade-up"><img src="imagenes/ninos-corriendo.jpg" alt="Niños jugando en el parque"></div>
-            </div>
+    <link rel="stylesheet" href="css/estilo-minimalista.css">
 
-            <div class="contact-buttons fade-up" style="text-align: center; margin-top: 40px;">
-                <a href="index.html#contacto" class="whatsapp-button">
-                    <i class="fab fa-whatsapp"></i> Quiero reservar mi fecha
-                </a>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script defer>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MZLXMXCC');
+    </script>
+</head>
+
+<body class="gallery-body">
+
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZLXMXCC"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="imagenes/logo.png" alt="Logo El Almendro Eventos" class="navbar-logo">
+                <span class="navbar-text">El Almendro</span>
+            </a>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#caracteristicas">Características</a></li>
+                <li><a href="galeria.html">Galería</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="gallery-hero-container">
+        
+        <section class="window-frame fade-up">
+            <div class="frame-content">
+                <h1 class="section-title">Nuestros Momentos</h1>
+                <p class="subtitle">Explorá nuestros espacios</p>
+
+                <div class="slider-window">
+                    <div class="slides">
+                        <img src="imagenes/deco12.jpg" class="slide active" alt="Decoración de evento">
+                        <img src="imagenes/quincho.jpg" class="slide" alt="Quincho El Almendro">
+                        <img src="imagenes/par31.jpg" class="slide" alt="Parque y Jardín">
+                        <img src="imagenes/deco1.jpg" class="slide" alt="Eventos Sociales">
+                        <img src="imagenes/par21.jpg" class="slide" alt="Juegos para niños">
+                        <img src="imagenes/par35.jpg" class="slide" alt="Vista Nocturna">
+                        <img src="imagenes/par18.jpg" class="slide" alt="Espacio para Ferias">
+                    </div>
+
+                    <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+                    <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
+                </div>
+
+                <div class="frame-footer">
+                    <p>Hacé clic en las flechas o esperá para ver más</p>
+                    <a href="index.html#contacto" class="whatsapp-button">
+                        <i class="fab fa-whatsapp"></i> Consultar Disponibilidad
+                    </a>
+                </div>
             </div>
         </section>
+
     </main>
 
     <script>
+        // Lógica del Slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach(img => {
+                img.classList.remove('active');
+            });
+            
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(n) {
+            showSlide(currentSlide + n);
+        }
+
+        // Auto-reproducción cada 5 segundos
+        setInterval(() => changeSlide(1), 5000);
+
+        // Animación Fade Up (Intersection Observer)
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
         }, { threshold: 0.1 });
+
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
     </script>
+
+</body>
+</html>
