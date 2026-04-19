@@ -421,108 +421,161 @@ body {
   }
 }
 /* =========================
-   NUEVA GALERÍA: EFECTO VENTANA
+   GALERIA: EFECTO VENTANA
 ========================= */
+.gallery-body {
+  background-color: #111;
+}
+
 .gallery-hero-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 100px 20px 40px; /* Espacio para la navbar */
-    /* Fondo fijo de portada con overlay oscuro */
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('../imagenes/portada-web.png') center/cover no-repeat fixed;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 60px;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("../imagenes/portada-web.png") center / cover no-repeat fixed;
 }
 
 .window-frame {
-    background: #ffffff;
-    width: 100%;
-    max-width: 900px;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-    text-align: center;
+  width: 100%;
+  max-width: 950px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 35px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.frame-content {
+  width: 100%;
+}
+
+.window-frame .section-title {
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.window-frame .subtitle {
+  color: #666;
+  margin-bottom: 0;
 }
 
 .slider-window {
-    position: relative;
-    width: 100%;
-    height: 500px; /* Altura ideal en PC */
-    margin: 30px 0;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #000;
+  position: relative;
+  width: 100%;
+  height: 500px;
+  margin: 30px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Mantiene la proporción de tus fotos */
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
 }
 
 .slide.active {
-    opacity: 1;
+  opacity: 1;
 }
 
-/* Botones de navegación */
 .slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.7);
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.5rem;
-    z-index: 10;
-    transition: 0.3s;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: #222;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
-.slider-btn:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
-.prev { left: 20px; }
-.next { right: 20px; }
+.slider-btn:hover {
+  background: #ffffff;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.prev {
+  left: 18px;
+}
+
+.next {
+  right: 18px;
+}
 
 .frame-footer {
-    margin-top: 20px;
+  margin-top: 10px;
 }
 
 .frame-footer p {
-    color: var(--color-text-light);
-    font-size: 0.9rem;
-    margin-bottom: 20px;
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
 }
 
-/* RESPONSIVO PARA CUALQUIER DISPOSITIVO */
+/* =========================
+   RESPONSIVE GALERIA
+========================= */
 @media (max-width: 768px) {
-    .window-frame {
-        padding: 20px;
-    }
-    
-    .slider-window {
-        height: 350px; /* Más baja en celulares */
-    }
+  .gallery-hero-container {
+    padding: 110px 16px 40px;
+    background-attachment: scroll;
+  }
 
-    .gallery-hero-container {
-        /* En móviles quitamos el fixed para mejor rendimiento */
-        background-attachment: scroll;
-    }
+  .window-frame {
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .slider-window {
+    height: 340px;
+    margin: 24px 0;
+  }
+
+  .slider-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  .prev {
+    left: 12px;
+  }
+
+  .next {
+    right: 12px;
+  }
 }
 
 @media (max-width: 480px) {
-    .slider-window {
-        height: 250px;
-    }
-    
-    .slider-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
+  .slider-window {
+    height: 250px;
+  }
+
+  .window-frame .section-title {
+    font-size: 1.8rem;
+  }
+
+  .window-frame .subtitle {
+    font-size: 0.95rem;
+  }
 }
