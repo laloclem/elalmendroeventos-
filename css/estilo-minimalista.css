@@ -1,504 +1,71 @@
-/* ----- CSS Básico y de Reinicio ----- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --color-primary: #4CAF50;
+  --color-primary-dark: #3e8e41;
+  --color-bg-light: #f8f8f8;
+  --color-text: #333;
+  --color-text-light: #666;
+  --color-white: #fff;
+  --shadow: 0 10px 30px rgba(0,0,0,0.1);
+  --radius: 12px;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    overflow-x: hidden; /* Evita el scroll horizontal */
-    scroll-behavior: smooth; /* Permite un desplazamiento suave a los anclajes */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: 'Segoe UI', Roboto, sans-serif; color: var(--color-text); line-height: 1.6; }
+
+/* NAVBAR */
+.navbar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; z-index: 1000; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); }
+.logo a { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
+.navbar-logo { height: 50px; }
+.menu ul { list-style: none; display: flex; gap: 20px; margin: 0; }
+.menu a { color: white; text-decoration: none; font-weight: 500; }
+
+/* HERO */
+.hero-section { height: 70vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../imagenes/portada-web.png') center/cover; color: white; text-align: center; }
+.hero-content h1 { font-size: 3rem; margin: 0; }
+
+/* CARDS CONTAINER */
+.contact-section { padding: 80px 20px; background: white; text-align: center; }
+.cards-container { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; max-width: 1200px; margin: 40px auto; }
+
+/* INFO CARD DESIGN */
+.info-card { 
+    background: white; 
+    flex: 1 1 300px; 
+    max-width: 350px; 
+    padding: 40px 25px; 
+    border-radius: var(--radius); 
+    box-shadow: var(--shadow); 
+    transition: all 0.3s ease; 
+    border: 1px solid #f0f0f0;
+}
+.info-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); border-color: var(--color-primary); }
+.info-card i { font-size: 3rem; color: var(--color-primary); margin-bottom: 20px; }
+.info-card h3 { margin: 10px 0; font-size: 1.6rem; }
+
+/* BUTTONS */
+.card-button { 
+    width: 100%; margin-top: 20px; padding: 12px; border: none; 
+    border-radius: 6px; background: var(--color-primary); color: white; 
+    font-weight: bold; cursor: pointer; transition: 0.3s; text-decoration: none; display: block;
+}
+.card-button:hover { background: var(--color-primary-dark); }
+.map-link { background: #444; }
+
+.whatsapp-button { 
+    display: inline-flex; align-items: center; gap: 10px; padding: 18px 35px; 
+    background: #25D366; color: white; border-radius: 50px; text-decoration: none; 
+    font-weight: bold; font-size: 1.1rem; margin-top: 40px; box-shadow: 0 10px 20px rgba(37,211,102,0.3);
 }
 
-/* ----- Estilo de la Barra de Navegación (.navbar) ----- */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: transparent;
-    z-index: 1000;
-    transition: background-color 0.3s ease;
-}
+/* FOOTER */
+.footer { background: #1a1a1a; color: white; padding: 60px 20px; text-align: center; }
+.footer-content { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-bottom: 30px; }
+.social a { color: white; font-size: 1.5rem; margin: 0 15px; transition: 0.3s; }
+.social a:hover { color: var(--color-primary); }
 
-/* ESTILO MODIFICADO PARA ALINEAR LOGO Y TEXTO */
-.navbar .logo a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    display: flex; /* Para que el logo y el texto estén en línea */
-    align-items: center; /* Para que estén centrados verticalmente */
-    gap: 15px; /* Espacio entre el logo y el texto */
-}
-
-/* ESTILO AGREGADO PARA EL TEXTO JUNTO AL LOGO */
-.navbar .logo .navbar-text {
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #fff;
-    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
-}
-
-/* ESTILO PARA EL LOGO (IMAGEN) */
-.navbar .logo .navbar-logo {
-    height: 60px; /* <-- Puedes cambiar este valor */
-    width: auto;
-    vertical-align: middle;
-}
-
-.navbar .menu ul {
-    list-style: none;
-    display: flex;
-}
-
-.navbar .menu ul li {
-    margin-left: 30px;
-}
-
-.navbar .menu ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1em;
-    padding: 5px 0;
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.navbar .menu ul li a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: #fff;
-    transition: width 0.3s ease;
-}
-
-.navbar .menu ul li a:hover::after {
-    width: 100%;
-}
-
-/* ----- Estilo de la Sección Principal (.hero-section) ----- */
-.hero-section {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-image: url('../imagenes/portada web.png');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    position: relative;
-}
-
-.hero-content {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 40px; /* Aumentamos el padding para compensar el logo eliminado */
-    border-radius: 10px;
-}
-
-.hero-content h1 {
-    font-size: 3em;
-    margin-bottom: 0.5em;
-    font-weight: 300;
-}
-
-/* LA CLASE .logo-portada FUE ELIMINADA DE AQUÍ */
-
-.hero-content p {
-    font-size: 1.2em;
-    margin-bottom: 1.5em;
-}
-
-.cta-button {
-    background-color: transparent;
-    border: 2px solid #fff;
-    color: #fff;
-    padding: 10px 25px;
-    text-decoration: none;
-    font-size: 1.1em;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.cta-button:hover {
-    background-color: #fff;
-    color: #000;
-}
-
-/* ----- Estilo para los Iconos Laterales y los Puntos del Slider ----- */
-.side-icons {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    z-index: 999;
-}
-
-.left-icon, .right-icon {
-    position: absolute;
-    font-size: 2em;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.left-icon {
-    left: 20px;
-}
-
-.right-icon {
-    right: 20px;
-}
-
-.left-icon:hover, .right-icon:hover {
-    transform: scale(1.1);
-}
-
-.slider-dots {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-}
-
-.slider-dots span {
-    width: 10px;
-    height: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.slider-dots span.active {
-    background-color: #fff;
-    transform: scale(1.2);
-}
-
-/* ----- Estilo para la Sección de Características (.features) ----- */
-.features {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 80px 40px;
-    background-color: #f8f8f8;
-    flex-wrap: wrap;
-    text-align: center;
-}
-
-.feature-item {
-    flex: 1;
-    min-width: 250px;
-    margin: 20px;
-    padding: 30px;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-.feature-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.feature-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.feature-item i {
-    font-size: 3em;
-    color: #4CAF50;
-    margin-bottom: 20px;
-}
-
-.feature-item h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.feature-item p {
-    color: #666;
-    line-height: 1.6;
-}
-
-/* ----- Estilo para la Sección de Contacto ----- */
-.contact-section {
-    padding: 80px 40px;
-    background-color: #fff;
-    text-align: center;
-}
-
-.section-title {
-    font-size: 2.5em;
-    font-weight: 300;
-    margin-bottom: 50px;
-    color: #333;
-}
-
-.contact-section .subtitle {
-    font-size: 1.2em;
-    color: #666;
-    margin-bottom: 50px;
-}
-
-#contact-form {
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-    background-color: #fff;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: #4CAF50;
-}
-
-.submit-button {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-    background-color: #3e8e41;
-}
-
-.contact-buttons {
-    margin-top: 30px;
-}
-
-.whatsapp-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #25D366;
-    color: #fff;
-    text-decoration: none;
-    padding: 15px 30px;
-    border-radius: 5px;
-    font-size: 1.1em;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.whatsapp-button:hover {
-    background-color: #128C7E;
-}
-
-/* ----- Estilo para la Sección de la Galería en página separada ----- */
-.gallery-page-container {
-    padding: 80px 40px;
-    background-color: #f8f8f8;
-    text-align: center;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    justify-content: center;
-}
-.gallery-item {
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.gallery-item:hover {
-    transform: scale(1.05);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* ----- Estilo para la Sección de Ubicación (.location-section) ----- */
-.location-section {
-    padding: 80px 40px;
-    background-color: #fff;
-    text-align: center;
-}
-
-.map-container {
-    max-width: 900px;
-    margin: 0 auto;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.map-container iframe {
-    width: 100%;
-    height: 450px;
-    border: 0;
-    display: block;
-}
-
-/* ----- Estilo para el Pie de Página (.footer) ----- */
-.footer {
-    background-color: #222;
-    color: #fff;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.footer-section {
-    flex: 1;
-    min-width: 200px;
-    margin: 20px;
-}
-
-.footer-section h2 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    color: #fff;
-}
-
-.footer-section p, .footer-section a {
-    font-size: 0.9em;
-    color: #ccc;
-    text-decoration: none;
-    line-height: 1.6;
-}
-
-.footer-section a:hover {
-    color: #fff;
-}
-
-.footer-section.social a {
-    font-size: 1.5em;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-}
-
-.footer-section.social a:hover {
-    color: #4CAF50;
-}
-
-.footer-bottom {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid #444;
-    font-size: 0.8em;
-    color: #aaa;
-}
-
-/* ----- Media Queries para Dispositivos Móviles ----- */
+/* MOBILE */
 @media (max-width: 768px) {
-    
-    .navbar .logo .navbar-logo {
-        height: 45px; /* Un tamaño más pequeño para celulares */
-    }
-    
-    /* ESTILO MODIFICADO PARA EL TEXTO EN MÓVIL */
-    .navbar .logo .navbar-text {
-        font-size: 1.2em;
-        white-space: normal;
-    }
-
-    .navbar {
-        padding: 15px 20px;
-    }
-
-    .navbar .menu {
-        display: none;
-    }
-
-    .hero-content h1 {
-        font-size: 2em;
-    }
-     /* MAPA EN MÓVIL */
-    .map-container iframe {
-        height: 350px;
-    }
-    }
-
-    /* La clase .logo-portada para móvil también se elimina */
-
-    .hero-content p {
-        font-size: 1em;
-    }
-
-    .side-icons {
-        display: none;
-    }
-
-    .slider-dots {
-        bottom: 10px;
-    }
-    
-    /* ESTILO MODIFICADO PARA EL LOGO Y TEXTO EN MÓVIL */
-    .navbar .logo {
-        width: auto;
-        text-align: left;
-    }
-
-    .features {
-        flex-direction: column;
-    }
-
-    .feature-item {
-        margin: 20px 0;
-    }
-
-    .contact-section {
-        padding: 40px 20px;
-    }
-
-    .form-group {
-        padding: 0;
-    }
-
-    .gallery-grid {
-        grid-template-columns: 1fr;
-    }
+    .menu { display: none; }
+    .hero-content h1 { font-size: 2.2rem; }
+    .info-card { flex: 1 1 100%; }
 }
