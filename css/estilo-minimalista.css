@@ -136,7 +136,7 @@ body {
 }
 
 /* =========================
-   HERO
+   HERO (CORREGIDO)
 ========================= */
 .hero-section {
   min-height: 80vh;
@@ -146,11 +146,12 @@ body {
   text-align: center;
   padding: 0 20px;
 
+  /* Cambiamos a negro (0,0,0) para que el texto blanco resalte */
   background:
-    linear-gradient(rgba(248, 246, 246, 0.55), rgba(246, 241, 241, 0.55)),
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     url('../imagenes/portada-web.png') center/cover no-repeat;
 
-  color: var(--color-white);
+  color: #ffffff; /* Forzamos blanco puro */
 }
 
 .hero-content {
@@ -162,10 +163,13 @@ body {
   font-weight: 700;
   letter-spacing: -1px;
   margin-bottom: 10px;
+  color: #ffffff !important; /* El !important asegura que nada lo cambie a negro */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5); /* Sombra para máxima legibilidad */
 }
 
 .hero-content p {
   font-size: 1.2rem;
+  color: #ffffff;
   opacity: 0.9;
 }
 
