@@ -262,20 +262,19 @@ body {
 
 /* CARDS */
 .info-card {
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(10px);
-  flex: 1 1 300px;
-  max-width: 350px;
-  padding: 35px 25px;
+  background: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+  backdrop-filter: blur(12px); /* Efecto de desenfoque tipo vidrio */
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde sutil */
   border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255,255,255,0.3);
-  transition: transform var(--transition), box-shadow var(--transition);
+  padding: 35px 25px;
+  transition: all 0.3s ease;
 }
 
 .info-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
 }
 
 .info-card i {
