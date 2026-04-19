@@ -6,7 +6,7 @@
     <meta name="description" content="Galería de fotos de los eventos y espacios en El Almendro, San Juan.">
     <title>Galería | El Almendro Eventos</title>
 
-    <link rel="stylesheet" href="css/estilo-minimalista.css">
+    <link rel="stylesheet" href="css/estilo-minimalista.css?v=3">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -33,6 +33,7 @@
                 <span class="navbar-text">El Almendro</span>
             </a>
         </div>
+
         <nav class="menu">
             <ul>
                 <li><a href="index.html">Inicio</a></li>
@@ -44,8 +45,7 @@
     </header>
 
     <main class="gallery-hero-container">
-        
-        <section class="window-frame fade-up">
+        <section class="window-frame">
             <div class="frame-content">
                 <h1 class="section-title">Nuestros Momentos</h1>
                 <p class="subtitle">Explorá nuestros espacios</p>
@@ -61,52 +61,54 @@
                         <img src="imagenes/par18.jpg" class="slide" alt="Espacio para Ferias">
                     </div>
 
-                    <button class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
-                    <button class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
+                    <button type="button" class="slider-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+                    <button type="button" class="slider-btn next" onclick="changeSlide(1)">&#10095;</button>
                 </div>
 
                 <div class="frame-footer">
                     <p>Hacé clic en las flechas o esperá para ver más</p>
                     <a href="index.html#contacto" class="whatsapp-button">
-                        <i class="fab fa-whatsapp"></i> Consultar Disponibilidad
+                        <i class="fab fa-whatsapp"></i>
+                        Consultar Disponibilidad
                     </a>
                 </div>
             </div>
         </section>
-
     </main>
 
     <script>
-        // Lógica del Slider
         let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
+        const slides = document.querySelectorAll(".slide");
 
         function showSlide(index) {
+            if (!slides.length) return;
+
             slides.forEach(img => {
-                img.classList.remove('active');
+                img.classList.remove("active");
             });
-            
+
             currentSlide = (index + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
+            slides[currentSlide].classList.add("active");
         }
 
         function changeSlide(n) {
             showSlide(currentSlide + n);
         }
 
-        // Auto-reproducción cada 5 segundos
-        setInterval(() => changeSlide(1), 5000);
+        if (slides.length) {
+            showSlide(0);
+            setInterval(() => changeSlide(1), 5000);
+        }
 
-        // Animación Fade Up (Intersection Observer)
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add("visible");
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
     </script>
 
 </body>
