@@ -421,48 +421,40 @@ body {
   }
 }
 /* =========================
-   DISEÑO DE GALERÍA (MEJORADO)
+   ESTILOS DE GALERÍA PROFESIONAL
 ========================= */
 .gallery-page-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 20px;
-    text-align: center;
 }
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Crea columnas automáticas */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .gallery-item {
-    overflow: hidden;
+    height: 300px;
     border-radius: var(--radius);
+    overflow: hidden;
     box-shadow: var(--shadow-soft);
-    height: 300px; /* Altura fija para uniformidad */
     transition: transform 0.3s ease;
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Evita que las fotos se estiren o aplasten */
+    object-fit: cover; /* Esto es vital para que las fotos no se estiren */
     transition: transform 0.5s ease;
 }
 
 .gallery-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
 }
 
 .gallery-item:hover img {
-    transform: scale(1.1); /* Efecto de zoom suave al pasar el mouse */
-}
-
-@media (max-width: 768px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-        padding: 0 10px;
-    }
+    transform: scale(1.1);
 }
