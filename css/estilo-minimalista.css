@@ -579,3 +579,31 @@ body {
     font-size: 0.95rem;
   }
 }
+/* ==========================================
+   BANNER TEMPORAL - DÍA DE LA PATRIA 
+   ========================================== */
+.banner-patrio {
+    background: linear-gradient(to right, #74ACDF, #FFFFFF, #74ACDF);
+    color: #1a1a1a;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid #b0cbe3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.banner-patrio strong {
+    color: #004B87; /* Un azul patrio con buen contraste para el texto */
+}
+
+@media (max-width: 480px) {
+    .banner-patrio {
+        font-size: 12px; /* Se adapta a pantallas chicas de celular */
+        padding: 8px 10px;
+    }
+}
