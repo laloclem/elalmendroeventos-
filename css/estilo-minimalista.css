@@ -580,13 +580,15 @@ body {
   }
 }
 /* ==========================================
-   BANNER TEMPORAL - DÍA DE LA PATRIA 
+   BANNER TEMPORAL - DÍA DE LA PATRIA (OPTIMIZADO)
    ========================================== */
 .banner-patrio {
+    position: relative; /* Asegura que respete el flujo del sitio */
+    z-index: 99999;    /* Lo pone por encima de cualquier otra capa */
     background: linear-gradient(to right, #74ACDF, #FFFFFF, #74ACDF);
     color: #1a1a1a;
     text-align: center;
-    padding: 10px 15px;
+    padding: 12px 15px;
     font-size: 14px;
     letter-spacing: 0.3px;
     border-bottom: 1px solid #b0cbe3;
@@ -595,15 +597,14 @@ body {
     justify-content: center;
     align-items: center;
     gap: 8px;
+    width: 100%;
 }
 
 .banner-patrio strong {
-    color: #004B87; /* Un azul patrio con buen contraste para el texto */
+    color: #004B87;
 }
 
-@media (max-width: 480px) {
-    .banner-patrio {
-        font-size: 12px; /* Se adapta a pantallas chicas de celular */
-        padding: 8px 10px;
-    }
+/* Ajuste por si el navbar tiene position fixed */
+body {
+    padding-top: 0px; /* Evita espacios raros si el menú se mueve */
 }
