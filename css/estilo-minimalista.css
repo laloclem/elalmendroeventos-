@@ -628,8 +628,19 @@ body {
 /* Regla adaptativa para teléfonos celulares */
 @media (max-width: 480px) {
     .banner-patrio {
-        font-size: 12px; /* Se adapta a pantallas chicas de celular */
-        padding: 8px 10px;
-        height: 35px;    /* Un poquito más bajo para pantallas chicas */
+        font-size: 11px; /* Texto un cachito más chico para que entre en una sola línea */
+        padding: 6px 10px;
+        height: 32px;    /* Altura fija definida para el celular */
+    }
+
+    /* SI EL MENÚ ESTÁ FIJO, ESTO HACE QUE EL BANNER LO EMPUJE HACIA ABAJO */
+    .navbar {
+        top: 32px !important; /* Baja el menú exactamente la altura del banner */
+        transition: top 0.6s ease; /* Hace que el menú suba suave cuando el banner desaparezca */
+    }
+
+    /* CUANDO EL BANNER SE OCULTA, EL MENÚ VUELVE ARRIBA DE TODO */
+    .banner-oculto + .navbar {
+        top: 0 !important;
     }
 }
