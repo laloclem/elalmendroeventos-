@@ -161,17 +161,29 @@
     </div>
 </footer>
 
-<!-- SCRIPTS -->
 <script>
+// Temporizador para ocultar el banner patrio después de 5 segundos
+window.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+        const banner = document.querySelector(".banner-patrio");
+        if (banner) {
+            banner.classList.add("banner-oculto");
+        }
+    }, 5000); // 5000 milisegundos = 5 segundos
+});
+
+// Control del diseño del Navbar al hacer scroll
 window.addEventListener("scroll", () => {
   document.querySelector(".navbar")
     .classList.toggle("scrolled", window.scrollY > 50);
 });
 
+// Apertura y cierre del menú desplegable en celulares
 document.querySelector(".menu-toggle").addEventListener("click", () => {
   document.querySelector(".menu").classList.toggle("active");
 });
 
+// Observador para activar las animaciones visuales (Fade Up)
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -182,6 +194,7 @@ const observer = new IntersectionObserver(entries => {
 
 document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
 
+// Tracking y redirección de consultas por WhatsApp a n8n
 const trackWhatsApp = (origen = "General") => {
     const msg = encodeURIComponent(`Hola! Vi "${origen}" en la web y quiero consultar disponibilidad.`);
     const url = `https://wa.me/5492644045332?text=${msg}`;

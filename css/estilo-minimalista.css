@@ -598,13 +598,38 @@ body {
     align-items: center;
     gap: 8px;
     width: 100%;
+    
+    /* Transición suave para el desvanecido y el colapso del espacio */
+    transition: opacity 0.6s ease, height 0.6s ease, padding 0.6s ease, visibility 0.6s ease;
+    overflow: hidden; /* Evita que el texto se asome mientras se achica */
+    height: 43px;     /* Altura aproximada fija para que la transición de cierre sea limpia */
+    box-sizing: border-box;
 }
 
 .banner-patrio strong {
     color: #004B87;
 }
 
+/* Esta clase se activa con el script de JavaScript a los 5 segundos */
+.banner-oculto {
+    opacity: 0;
+    height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+    visibility: hidden;
+}
+
 /* Ajuste por si el navbar tiene position fixed */
 body {
     padding-top: 0px; /* Evita espacios raros si el menú se mueve */
+}
+
+/* Regla adaptativa para teléfonos celulares */
+@media (max-width: 480px) {
+    .banner-patrio {
+        font-size: 12px; /* Se adapta a pantallas chicas de celular */
+        padding: 8px 10px;
+        height: 35px;    /* Un poquito más bajo para pantallas chicas */
+    }
 }
