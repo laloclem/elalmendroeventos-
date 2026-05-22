@@ -166,10 +166,17 @@
 window.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
         const banner = document.querySelector(".banner-patrio");
+        const navbar = document.querySelector(".navbar");
+        
         if (banner) {
             banner.classList.add("banner-oculto");
         }
-    }, 5000); // 5000 milisegundos = 5 segundos
+        
+        // Le ordenamos al menú que vuelva arriba de todo cuando el banner se va
+        if (navbar && window.innerWidth <= 480) {
+            navbar.style.setProperty("top", "0px", "important");
+        }
+    }, 5000);
 });
 
 // Control del diseño del Navbar al hacer scroll

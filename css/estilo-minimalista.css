@@ -628,19 +628,23 @@ body {
 /* Regla adaptativa para teléfonos celulares */
 @media (max-width: 480px) {
     .banner-patrio {
-        font-size: 11px; /* Texto un cachito más chico para que entre en una sola línea */
-        padding: 6px 10px;
-        height: 32px;    /* Altura fija definida para el celular */
+        position: fixed;    /* Lo obligamos a flotar arriba de todo en el celu */
+        top: 0;
+        left: 0;
+        font-size: 11px;    /* Texto chico para que entre cómodo en una línea */
+        padding: 8px 10px;
+        height: 32px;       /* Altura fija del banner */
+        z-index: 100000;    /* Un nivel por encima del navbar para que no lo tapen */
     }
 
-    /* SI EL MENÚ ESTÁ FIJO, ESTO HACE QUE EL BANNER LO EMPUJE HACIA ABAJO */
+    /* OBLIGAMOS AL NAVBAR A BAJARSE MIENTRAS EL BANNER ESTÉ ACTIVO */
     .navbar {
-        top: 32px !important; /* Baja el menú exactamente la altura del banner */
-        transition: top 0.6s ease; /* Hace que el menú suba suave cuando el banner desaparezca */
+        top: 32px !important;      /* Baja exactamente los 32px que ocupa el banner */
+        transition: top 0.6s ease; /* Para que suba suavemente después */
     }
 
-    /* CUANDO EL BANNER SE OCULTA, EL MENÚ VUELVE ARRIBA DE TODO */
-    .banner-oculto + .navbar {
-        top: 0 !important;
+    /* AJUSTE PARA EL HERO (LA IMAGEN DE FONDO DEL PREDIO) */
+    .hero-section {
+        padding-top: 32px; /* Evita que el contenido del inicio quede tapado */
     }
 }
