@@ -122,15 +122,16 @@ body {
    HERO
 ========================= */
 .hero-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 120px 20px 80px;
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
-    url("../imagenes/portada-web.png") center / cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Cambiamos el padding-top de 120px a 163px para dejar espacio al banner */
+    padding: 163px 20px 80px 20px; 
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("../imagenes/portada-web.png") center / cover no-repeat;
+    /* Agregamos la transición para que cuando desaparezca el banner, la sección suba de forma suave */
+    transition: padding-top 0.6s ease; 
 }
 
 .hero-content {
@@ -649,11 +650,13 @@ body {
     }
 }
 /* ==========================================
-   BANNER TEMPORAL - MES DEL MUNDIAL
+   BANNER TEMPORAL - MES DEL MUNDIAL (POSICIÓN ABAJO)
    ========================================== */
 .banner-patrio {
-    position: relative; 
-    z-index: 99999;    
+    position: fixed; 
+    top: 65px;         /* Se posiciona justo abajo del menú en computadoras */
+    left: 0;
+    z-index: 9999;    /* Por encima del contenido pero abajo del menú desplegable */
     background: linear-gradient(to right, #74ACDF, #FFFFFF, #74ACDF);
     color: #1a1a1a;
     text-align: center;
@@ -667,7 +670,7 @@ body {
     align-items: center;
     gap: 8px;
     width: 100%;
-    overflow: hidden; /* Clave para que la pelota no agrande la pantalla al salir */
+    overflow: hidden; 
     transition: opacity 0.6s ease, height 0.6s ease, padding 0.6s ease, visibility 0.6s ease;
     height: 43px;     
     box-sizing: border-box;
@@ -680,10 +683,9 @@ body {
 /* --- ANIMACIÓN DE LA PELOTA RODANDO --- */
 .pelota-mundial {
     position: absolute;
-    left: -50px; /* Empieza afuera de la pantalla por la izquierda */
+    left: -50px; 
     font-size: 20px;
     bottom: 8px;
-    /* Hace que cruce en 4 segundos, gire sobre sí misma y lo haga una sola vez */
     animation: rodarPelota 4s linear forwards; 
 }
 
@@ -693,12 +695,11 @@ body {
         transform: rotate(0deg);
     }
     100% {
-        left: 100%; /* Cruza y se va por la derecha de la pantalla */
-        transform: rotate(1440deg); /* Gira varias veces para simular que rueda */
+        left: 100%; 
+        transform: rotate(1440deg); 
     }
 }
 
-/* Clase de cierre que activa tu JavaScript a los 5 segundos */
 .banner-oculto {
     opacity: 0;
     height: 0 !important;
@@ -708,26 +709,21 @@ body {
     visibility: hidden;
 }
 
-/* Ajuste adaptativo para celulares */
+/* --- AJUSTE ADAPTATIVO PARA CELULARES --- */
 @media (max-width: 480px) {
     .banner-patrio {
-        position: fixed;    
-        top: 0;
-        left: 0;
+        top: 56px;          /* Se calibra a la altura del menú móvil */
         font-size: 11px;    
         padding: 8px 10px;
         height: 35px;       
-        z-index: 100000;    
     }
+    
     .pelota-mundial {
         font-size: 16px;
         bottom: 6px;
     }
-    .navbar {
-        top: 35px !important;      
-        transition: top 0.6s ease; 
-    }
+
     .hero-section {
-        padding-top: 35px; 
+        padding-top: 91px !important; /* Espacio inicial en el celu: Menú (56px) + Banner (35px) */
     }
 }

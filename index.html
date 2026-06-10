@@ -30,10 +30,7 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MZLXMXCC"
     height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
-<div class="banner-patrio">
-    <div class="pelota-mundial">⚽</div>
-    🏆 <strong>¡Mes Mundialista!</strong> En El Almendro nos vestimos de celeste y blanco para alentar a la selección. ¡Vamos Argentina!
-</div>
+
 
 <!-- NAVBAR -->
 <header class="navbar">
@@ -55,6 +52,11 @@
         </ul>
     </nav>
 </header>
+
+    <div class="banner-patrio">
+         <div class="pelota-mundial">⚽</div>
+         🏆 <strong>¡Mes Mundialista!</strong> En El Almendro nos vestimos de celeste y blanco para alentar a la selección. ¡Vamos Argentina!
+    </div>
 
 <!-- HERO -->
 <main id="inicio" class="hero-section">
@@ -166,15 +168,19 @@
 window.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
         const banner = document.querySelector(".banner-patrio");
-        const navbar = document.querySelector(".navbar");
         
         if (banner) {
             banner.classList.add("banner-oculto");
         }
         
-        // Le ordenamos al menú que vuelva arriba de todo cuando el banner se va
-        if (navbar && window.innerWidth <= 480) {
-            navbar.style.setProperty("top", "0px", "important");
+        // Al ocultarse el banner, la foto del predio sube suavemente tanto en PC como en celular
+        const hero = document.querySelector(".hero-section");
+        if (hero) {
+            if (window.innerWidth <= 480) {
+                hero.style.setProperty("padding-top", "56px", "important"); // Vuelve al alto del menú móvil
+            } else {
+                hero.style.setProperty("padding-top", "120px", "important"); // Vuelve al alto de tu CSS original en PC
+            }
         }
     }, 5000);
 });
