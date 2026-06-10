@@ -648,3 +648,86 @@ body {
         padding-top: 32px; /* Evita que el contenido del inicio quede tapado */
     }
 }
+/* ==========================================
+   BANNER TEMPORAL - MES DEL MUNDIAL
+   ========================================== */
+.banner-patrio {
+    position: relative; 
+    z-index: 99999;    
+    background: linear-gradient(to right, #74ACDF, #FFFFFF, #74ACDF);
+    color: #1a1a1a;
+    text-align: center;
+    padding: 12px 15px;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid #b0cbe3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    overflow: hidden; /* Clave para que la pelota no agrande la pantalla al salir */
+    transition: opacity 0.6s ease, height 0.6s ease, padding 0.6s ease, visibility 0.6s ease;
+    height: 43px;     
+    box-sizing: border-box;
+}
+
+.banner-patrio strong {
+    color: #004B87;
+}
+
+/* --- ANIMACIÓN DE LA PELOTA RODANDO --- */
+.pelota-mundial {
+    position: absolute;
+    left: -50px; /* Empieza afuera de la pantalla por la izquierda */
+    font-size: 20px;
+    bottom: 8px;
+    /* Hace que cruce en 4 segundos, gire sobre sí misma y lo haga una sola vez */
+    animation: rodarPelota 4s linear forwards; 
+}
+
+@keyframes rodarPelota {
+    0% {
+        left: -50px;
+        transform: rotate(0deg);
+    }
+    100% {
+        left: 100%; /* Cruza y se va por la derecha de la pantalla */
+        transform: rotate(1440deg); /* Gira varias veces para simular que rueda */
+    }
+}
+
+/* Clase de cierre que activa tu JavaScript a los 5 segundos */
+.banner-oculto {
+    opacity: 0;
+    height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+    visibility: hidden;
+}
+
+/* Ajuste adaptativo para celulares */
+@media (max-width: 480px) {
+    .banner-patrio {
+        position: fixed;    
+        top: 0;
+        left: 0;
+        font-size: 11px;    
+        padding: 8px 10px;
+        height: 35px;       
+        z-index: 100000;    
+    }
+    .pelota-mundial {
+        font-size: 16px;
+        bottom: 6px;
+    }
+    .navbar {
+        top: 35px !important;      
+        transition: top 0.6s ease; 
+    }
+    .hero-section {
+        padding-top: 35px; 
+    }
+}
