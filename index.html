@@ -53,11 +53,6 @@
     </nav>
 </header>
 
-    <div class="banner-patrio">
-         <div class="pelota-mundial">⚽</div>
-         🏆 <strong>¡Mes Mundialista!</strong> En El Almendro nos vestimos de celeste y blanco para alentar a la selección. ¡Vamos Argentina!
-    </div>
-
 <!-- HERO -->
 <main id="inicio" class="hero-section">
     <div class="hero-content fade-up">
@@ -164,26 +159,6 @@
 </footer>
 
 <script>
-// Temporizador para ocultar el banner patrio después de 5 segundos
-window.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-        const banner = document.querySelector(".banner-patrio");
-        
-        if (banner) {
-            banner.classList.add("banner-oculto");
-        }
-        
-        // Al ocultarse el banner, la foto del predio sube suavemente tanto en PC como en celular
-        const hero = document.querySelector(".hero-section");
-        if (hero) {
-            if (window.innerWidth <= 480) {
-                hero.style.setProperty("padding-top", "56px", "important"); // Vuelve al alto del menú móvil
-            } else {
-                hero.style.setProperty("padding-top", "120px", "important"); // Vuelve al alto de tu CSS original en PC
-            }
-        }
-    }, 5000);
-});
 
 // Control del diseño del Navbar al hacer scroll
 window.addEventListener("scroll", () => {
