@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Salón de eventos El Almendro en Rivadavia, San Juan. El lugar ideal para tus celebraciones.">
-    
+
     <title>El Almendro Eventos</title>
-    
+
     <link rel="icon" type="image/png" sizes="32x32" href="imagenes/favicon.png">
-    
     <link rel="apple-touch-icon" sizes="180x180" href="imagenes/apple-touch-icon.png">
-    
-    <link rel="stylesheet" href="css/estilo-minimalista.css?v=2">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tipografías: Archivo (títulos y texto) + Allura (manuscrita) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Archivo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="css/estilo-minimalista.css?v=4">
+
+    <!-- Google Tag Manager -->
     <script defer>
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -31,180 +34,181 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
 
-
-<!-- NAVBAR -->
+<!-- ========== NAVBAR ========== -->
 <header class="navbar">
     <div class="logo">
         <a href="index.html">
             <img src="imagenes/logo.png" alt="Logo El Almendro Eventos" class="navbar-logo">
-            <span class="navbar-text">El Almendro Eventos</span>
+            <span class="navbar-text">El Almendro</span>
         </a>
     </div>
 
-    <div class="menu-toggle">☰</div>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span>
+    </button>
 
     <nav class="menu">
         <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#caracteristicas">Características</a></li>
-            <li><a href="galeria.html">Galería</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#caracteristicas" class="pill">El espacio</a></li>
+            <li><a href="galeria.html" class="pill">Galería</a></li>
+            <li><a href="#contacto" class="pill pill-accent">Contacto</a></li>
         </ul>
     </nav>
 </header>
 
-    <div class="banner-patrio">
-         <div class="pelota-mundial">⚽</div>
-         🏆 <strong>¡Mes Mundialista!</strong> En El Almendro nos vestimos de celeste y blanco para alentar a la selección. ¡Vamos Argentina!
+<!-- ========== HERO ========== -->
+<main id="inicio" class="hero-section">
+    <!-- Formas geométricas decorativas -->
+    <span class="shape shape-semi" aria-hidden="true"></span>
+    <span class="shape shape-dot" aria-hidden="true"></span>
+    <span class="shape shape-quarter" aria-hidden="true"></span>
+    <span class="shape shape-ring" aria-hidden="true"></span>
+
+    <div class="hero-content fade-up">
+        <p class="script">celebrá en</p>
+        <h1>El Almendro</h1>
+        <p class="hero-lead">Quincho y salón de eventos en Rivadavia, San Juan. Todo listo para que solo te ocupes de disfrutar.</p>
+        <div class="hero-actions">
+            <a href="#contacto" class="btn btn-dark">Consultar disponibilidad</a>
+            <a href="galeria.html" class="btn btn-outline">Ver galería</a>
+        </div>
     </div>
 
-<!-- HERO -->
-<main id="inicio" class="hero-section">
-    <div class="hero-content fade-up">
-        <h1>Tu evento ideal en San Juan</h1>
-        <p>El quincho perfecto en Rivadavia para celebrar sin preocupaciones.</p>
-        <a href="#contacto" class="cta-button">Consultar disponibilidad</a>
+    <div class="hero-photo fade-up">
+        <img src="imagenes/portada-web.png" alt="Vista del predio de El Almendro Eventos">
     </div>
 </main>
 
-<!-- FEATURES -->
-<section id="caracteristicas" class="features">
-    <a href="galeria.html" class="feature-item fade-up">
-        <i class="fas fa-camera-retro" aria-hidden="true"></i>
-        <h2>Galería</h2>
-        <p>Conocé el espacio antes de reservar.</p>
-    </a>
-
-    <div class="feature-item fade-up">
-        <i class="fas fa-utensils" aria-hidden="true"></i>
-        <h2>Parrilla equipada</h2>
-        <p>Todo listo para tus asados.</p>
-    </div>
-
-    <div class="feature-item fade-up">
-        <i class="fas fa-chair" aria-hidden="true"></i>
-        <h2>Ambiente natural</h2>
-        <p>Espacios abiertos ideales.</p>
+<!-- ========== CARACTERÍSTICAS (bloques de color) ========== -->
+<section id="caracteristicas" class="tiles">
+    <div class="container tiles-grid">
+        <div class="tile tile-green fade-up">
+            <span class="tile-big">90</span>
+            <p>personas en salón climatizado</p>
+        </div>
+        <div class="tile tile-orange fade-up">
+            <h3>Parrilla y horno pizzero</h3>
+            <p>Heladeras, freezer y mobiliario incluido.</p>
+        </div>
+        <div class="tile tile-mustard fade-up">
+            <h3>Parque al aire libre</h3>
+            <p>Ideal para ferias, recepciones y eventos grandes.</p>
+        </div>
+        <div class="tile tile-blue fade-up">
+            <h3>A tu manera</h3>
+            <p>Traé tu música y tu decoración.</p>
+        </div>
     </div>
 </section>
 
-<!-- CONTACTO -->
+<!-- ========== CONOCÉ EL ESPACIO (tarjetas con foto) ========== -->
+<section class="spaces">
+    <div class="container">
+        <h2 class="section-title fade-up">Conocé el espacio</h2>
+        <p class="subtitle fade-up">Un lugar pensado para celebrar cumpleaños, reuniones y fiestas sin preocupaciones.</p>
+
+        <div class="cards">
+            <!-- REEMPLAZAR: poné una foto distinta en cada tarjeta -->
+            <article class="card fade-up">
+                <img src="imagenes/portada-web.png" alt="Salón climatizado" loading="lazy">
+                <h3>El salón</h3>
+                <p>Climatizado y equipado para 90 personas.</p>
+            </article>
+            <article class="card fade-up">
+                <img src="imagenes/portada-web.png" alt="Zona de parrilla" loading="lazy">
+                <h3>La parrilla</h3>
+                <p>Parrilleros y horno pizzero listos para usar.</p>
+            </article>
+            <article class="card fade-up">
+                <img src="imagenes/portada-web.png" alt="Parque exterior" loading="lazy">
+                <h3>El parque</h3>
+                <p>Espacio verde amplio para disfrutar al aire libre.</p>
+            </article>
+        </div>
+
+        <div class="center fade-up">
+            <a href="galeria.html" class="btn btn-dark">Ver galería completa</a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== CONTACTO ========== -->
 <section id="contacto" class="contact-section">
-    <h2 class="section-title fade-up">Información rápida</h2>
-    <p class="subtitle fade-up">Todo lo que necesitás saber antes de reservar.</p>
+    <span class="shape shape-contact-semi" aria-hidden="true"></span>
+    <span class="shape shape-contact-dot" aria-hidden="true"></span>
 
-    <div class="cards-container">
-        <div class="info-card fade-up">
-            <i class="fas fa-users-viewfinder" aria-hidden="true"></i>
-            <h3>Espacios sin Limites.</h3>
-            <p>Salón climatizado para 90 personas y un amplio parque exterior ideal para ferias, recepciones y eventos masivos. Adaptamos nuestro predio a la magnitud de tu idea.</p>
-            <button onclick="trackWhatsApp('Capacidad')" class="card-button">
-                Consultar por eventos grandes
-            </button>
-        </div>
+    <div class="container contact-inner fade-up">
+        <p class="script script-light">¿tenés fecha?</p>
+        <h2>Consultá disponibilidad</h2>
+        <p class="contact-text">Estamos en Rivadavia, San Juan, con acceso fácil y estacionamiento.</p>
 
-        <div class="info-card fade-up">
-            <i class="fas fa-star" aria-hidden="true"></i>
-            <h3>Todo para tu evento.</h3>
-            <p>Equipamiento completo con parrilleros, horno pizzero, heladeras y freezer. Incluye mobiliario para 90 personas. Libertad total para traer tu propia música y decoración.</p>
-            <button onclick="trackWhatsApp('Servicios')" class="card-button">
-                Ver detalles
-            </button>
-        </div>
-
-        <div class="info-card fade-up">
-            <i class="fas fa-map-location-dot" aria-hidden="true"></i>
-            <h3>Ubicación</h3>
-            <p>Rivadavia, San Juan. Acceso fácil y estacionamiento, La comodidad que tus invitados necesitan para disfrutar desde el primer momento.</p>
-            <a href="https://maps.app.goo.gl/5LVaqRZKytSTan7B8"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="card-button map-link">
-               Abrir Google Maps
+        <div class="hero-actions">
+            <a href="https://wa.me/5492644045332"
+               onclick="trackWhatsApp('Boton Principal'); return false;"
+               class="btn btn-orange">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+                Escribinos por WhatsApp
+            </a>
+            <a href="https://maps.app.goo.gl/5LVaqRZKytSTan7B8" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light">
+                Cómo llegar
             </a>
         </div>
-    </div>
-
-    <div class="contact-buttons fade-up">
-        <a href="#" onclick="trackWhatsApp('Boton Principal'); return false;" class="whatsapp-button">
-            <i class="fab fa-whatsapp" aria-hidden="true"></i>
-            Consultar disponibilidad por WhatsApp
-        </a>
     </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ========== FOOTER ========== -->
 <footer class="footer">
-    <div class="footer-content">
-        <div class="footer-section about">
-            <h2>El Almendro Eventos</h2>
-            <p>Un espacio pensado para celebrar momentos únicos en San Juan.</p>
-        </div>
+    <div class="container footer-inner">
+        <span>© 2026 El Almendro Eventos</span>
 
-        <div class="footer-section social">
-            <h2>Seguinos</h2>
-
-            <a href="https://www.facebook.com/share/1Cb2wU7CvV/"
-               target="_blank"
-               rel="noopener noreferrer">
-                <i class="fab fa-facebook-f"></i>
+        <div class="social">
+            <a href="https://www.facebook.com/share/1Cb2wU7CvV/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8V6.5c0-.7.5-1 1-1h2V2h-3c-3 0-4 2-4 4.3V8H8v3.5h2V22h4V11.5h2.7L17 8h-3z"/></svg>
             </a>
-
-            <a href="https://www.instagram.com/el_almendro_eventos"
-               target="_blank"
-               rel="noopener noreferrer">
-                <i class="fab fa-instagram"></i>
+            <a href="https://www.instagram.com/el_almendro_eventos" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM12 2c-2.7 0-3 0-4.1.1-4 .2-5.6 1.8-5.8 5.8C2 9 2 9.3 2 12s0 3 .1 4.1c.2 4 1.8 5.6 5.8 5.8 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c4-.2 5.6-1.8 5.8-5.8.1-1.1.1-1.4.1-4.1s0-3-.1-4.1c-.2-4-1.8-5.6-5.8-5.8C15 2 14.7 2 12 2zm0 1.8c2.7 0 3 0 4 .1 2.9.1 3.9 1.2 4.1 4.1.1 1 .1 1.3.1 4s0 3-.1 4c-.1 2.9-1.2 3.9-4.1 4.1-1 .1-1.3.1-4 .1s-3 0-4-.1c-2.9-.1-3.9-1.2-4.1-4.1-.1-1-.1-1.3-.1-4s0-3 .1-4C4 5 5.1 4 8 3.9c1-.1 1.3-.1 4-.1z"/></svg>
             </a>
         </div>
-    </div>
-
-    <div class="footer-bottom">
-        © 2026 El Almendro Eventos
     </div>
 </footer>
 
+<!-- Botón flotante de WhatsApp -->
+<a href="https://wa.me/5492644045332"
+   onclick="trackWhatsApp('Boton Flotante'); return false;"
+   class="whatsapp-float" aria-label="Escribinos por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+</a>
+
 <script>
-// Temporizador para ocultar el banner patrio después de 5 segundos
-window.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-        const banner = document.querySelector(".banner-patrio");
-        
-        if (banner) {
-            banner.classList.add("banner-oculto");
-        }
-        
-        // Al ocultarse el banner, la foto del predio sube suavemente tanto en PC como en celular
-        const hero = document.querySelector(".hero-section");
-        if (hero) {
-            if (window.innerWidth <= 480) {
-                hero.style.setProperty("padding-top", "56px", "important"); // Vuelve al alto del menú móvil
-            } else {
-                hero.style.setProperty("padding-top", "120px", "important"); // Vuelve al alto de tu CSS original en PC
-            }
-        }
-    }, 5000);
-});
-
-// Control del diseño del Navbar al hacer scroll
+// Navbar: línea fina al hacer scroll
+const navbar = document.querySelector(".navbar");
 window.addEventListener("scroll", () => {
-  document.querySelector(".navbar")
-    .classList.toggle("scrolled", window.scrollY > 50);
+    navbar.classList.toggle("scrolled", window.scrollY > 20);
 });
 
-// Apertura y cierre del menú desplegable en celulares
-document.querySelector(".menu-toggle").addEventListener("click", () => {
-  document.querySelector(".menu").classList.toggle("active");
+// Menú en celulares
+const toggle = document.querySelector(".menu-toggle");
+const menu = document.querySelector(".menu");
+toggle.addEventListener("click", () => {
+    const abierto = menu.classList.toggle("active");
+    toggle.setAttribute("aria-expanded", abierto);
 });
+menu.querySelectorAll("a").forEach(a =>
+    a.addEventListener("click", () => {
+        menu.classList.remove("active");
+        toggle.setAttribute("aria-expanded", false);
+    })
+);
 
-// Observador para activar las animaciones visuales (Fade Up)
+// Animación suave al aparecer
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
-  });
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+        }
+    });
 }, { threshold: 0.1 });
-
 document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
 
 // Tracking y redirección de consultas por WhatsApp a n8n

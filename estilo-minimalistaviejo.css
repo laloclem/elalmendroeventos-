@@ -1,0 +1,729 @@
+/* =========================
+   VARIABLES
+========================= */
+:root {
+  --color-primary: #4caf50;
+  --color-primary-dark: #3e8e41;
+  --color-bg-light: #f8f8f8;
+  --color-text: #333;
+  --color-text-light: #666;
+  --color-white: #fff;
+
+  --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+  --radius: 12px;
+  --transition: 0.3s ease;
+}
+
+/* =========================
+   RESET
+========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  color: var(--color-text);
+  line-height: 1.6;
+  background-color: var(--color-bg-light);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  transition: var(--transition);
+}
+
+.navbar.scrolled {
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+.navbar-logo {
+  height: 50px;
+  width: auto;
+}
+
+.navbar-text {
+  font-weight: bold;
+}
+
+.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: var(--transition);
+}
+
+.menu a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width var(--transition);
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+/* =========================
+   MENU MOBILE
+========================= */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* =========================
+   HERO
+========================= */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Cambiamos el padding-top de 120px a 163px para dejar espacio al banner */
+    padding: 163px 20px 80px 20px; 
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("../imagenes/portada-web.png") center / cover no-repeat;
+    /* Agregamos la transición para que cuando desaparezca el banner, la sección suba de forma suave */
+    transition: padding-top 0.6s ease; 
+}
+
+.hero-content {
+  max-width: 900px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  color: #ffffff !important;
+  font-size: 3.2rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+  margin: 0 0 10px;
+}
+
+.hero-content p {
+  color: #ffffff !important;
+  font-size: 1.2rem;
+  opacity: 1;
+  margin: 0;
+}
+
+/* CTA */
+.cta-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  border-radius: 30px;
+  background: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: var(--transition);
+}
+
+.cta-button:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   FEATURES
+========================= */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 30px;
+  padding: 80px 20px;
+  background: var(--color-bg-light);
+  text-align: center;
+}
+
+.feature-item {
+  flex: 1 1 280px;
+  max-width: 350px;
+  padding: 40px 30px;
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow-soft);
+  text-decoration: none;
+  color: var(--color-text);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    opacity 0.8s ease,
+    transform 0.8s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feature-item:visited {
+  color: var(--color-text);
+}
+
+.feature-item i {
+  font-size: 2.8rem;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.feature-item h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   CONTACTO
+========================= */
+.contact-section {
+  padding: 80px 20px;
+  background: white;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: var(--color-text-light);
+  margin-bottom: 40px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* CARDS */
+.info-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  padding: 35px 25px;
+  transition: all 0.3s ease;
+  flex: 1 1 280px;
+  max-width: 350px;
+}
+
+.info-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.info-card i {
+  font-size: 2.8rem;
+  color: var(--color-primary);
+  margin-bottom: 15px;
+}
+
+.info-card h3 {
+  font-size: 1.5rem;
+}
+
+/* BOTONES */
+.card-button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--color-primary);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  transition: var(--transition);
+}
+
+.card-button:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.map-link {
+  background: #444;
+}
+
+/* WHATSAPP */
+.whatsapp-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 35px;
+  background: #25d366;
+  color: white;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 40px;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+  transition: var(--transition);
+}
+
+.whatsapp-button:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+  background: #1a1a1a;
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.footer-section h2 {
+  margin-bottom: 10px;
+}
+
+.social a {
+  color: white;
+  font-size: 1.5rem;
+  margin: 0 15px;
+  transition: var(--transition);
+}
+
+.social a:hover {
+  color: var(--color-primary);
+}
+
+/* =========================
+   ANIMACIONES
+========================= */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .menu {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    width: 100%;
+    flex-direction: column;
+    display: none;
+  }
+
+  .menu.active {
+    display: flex;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info-card {
+    flex: 1 1 100%;
+  }
+}
+/* =========================
+   GALERIA: EFECTO VENTANA
+========================= */
+.gallery-body {
+  background-color: #111;
+}
+
+.gallery-hero-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 60px;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("../imagenes/portada-web.png") center / cover no-repeat fixed;
+}
+
+.window-frame {
+  width: 100%;
+  max-width: 950px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 35px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.frame-content {
+  width: 100%;
+}
+
+.window-frame .section-title {
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.window-frame .subtitle {
+  color: #666;
+  margin-bottom: 0;
+}
+
+.slider-window {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  margin: 30px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: #222;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.slider-btn:hover {
+  background: #ffffff;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.prev {
+  left: 18px;
+}
+
+.next {
+  right: 18px;
+}
+
+.frame-footer {
+  margin-top: 10px;
+}
+
+.frame-footer p {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   RESPONSIVE GALERIA
+========================= */
+@media (max-width: 768px) {
+  .gallery-hero-container {
+    padding: 110px 16px 40px;
+    background-attachment: scroll;
+  }
+
+  .window-frame {
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .slider-window {
+    height: 340px;
+    margin: 24px 0;
+  }
+
+  .slider-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  .prev {
+    left: 12px;
+  }
+
+  .next {
+    right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider-window {
+    height: 250px;
+  }
+
+  .window-frame .section-title {
+    font-size: 1.8rem;
+  }
+
+  .window-frame .subtitle {
+    font-size: 0.95rem;
+  }
+}
+/* ==========================================
+   BANNER TEMPORAL - DÍA DE LA PATRIA (OPTIMIZADO)
+   ========================================== */
+.banner-patrio {
+    position: relative; /* Asegura que respete el flujo del sitio */
+    z-index: 99999;    /* Lo pone por encima de cualquier otra capa */
+    background: linear-gradient(to right, #74ACDF, #FFFFFF, #74ACDF);
+    color: #1a1a1a;
+    text-align: center;
+    padding: 12px 15px;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid #b0cbe3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    
+    /* Transición suave para el desvanecido y el colapso del espacio */
+    transition: opacity 0.6s ease, height 0.6s ease, padding 0.6s ease, visibility 0.6s ease;
+    overflow: hidden; /* Evita que el texto se asome mientras se achica */
+    height: 43px;     /* Altura aproximada fija para que la transición de cierre sea limpia */
+    box-sizing: border-box;
+}
+
+.banner-patrio strong {
+    color: #004B87;
+}
+
+/* Esta clase se activa con el script de JavaScript a los 5 segundos */
+.banner-oculto {
+    opacity: 0;
+    height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+    visibility: hidden;
+}
+
+/* Ajuste por si el navbar tiene position fixed */
+body {
+    padding-top: 0px; /* Evita espacios raros si el menú se mueve */
+}
+
+/* Regla adaptativa para teléfonos celulares */
+@media (max-width: 480px) {
+    .banner-patrio {
+        position: fixed;    /* Lo obligamos a flotar arriba de todo en el celu */
+        top: 0;
+        left: 0;
+        font-size: 11px;    /* Texto chico para que entre cómodo en una línea */
+        padding: 8px 10px;
+        height: 32px;       /* Altura fija del banner */
+        z-index: 100000;    /* Un nivel por encima del navbar para que no lo tapen */
+    }
+
+    /* OBLIGAMOS AL NAVBAR A BAJARSE MIENTRAS EL BANNER ESTÉ ACTIVO */
+    .navbar {
+        top: 32px !important;      /* Baja exactamente los 32px que ocupa el banner */
+        transition: top 0.6s ease; /* Para que suba suavemente después */
+    }
+
+    /* AJUSTE PARA EL HERO (LA IMAGEN DE FONDO DEL PREDIO) */
+    .hero-section {
+        padding-top: 32px; /* Evita que el contenido del inicio quede tapado */
+    }
+}
+/* ==========================================
+   BANNER TEMPORAL - MES DEL MUNDIAL (POSICIÓN ABAJO)
+   ========================================== */
+.banner-patrio {
+    position: fixed; 
+    top: 65px;         /* Se posiciona justo abajo del menú en computadoras */
+    left: 0;
+    z-index: 9999;    /* Por encima del contenido pero abajo del menú desplegable */
+    background: linear-gradient(to right, #74ACDF, #FFFFFF, #74ACDF);
+    color: #1a1a1a;
+    text-align: center;
+    padding: 12px 15px;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid #b0cbe3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    overflow: hidden; 
+    transition: opacity 0.6s ease, height 0.6s ease, padding 0.6s ease, visibility 0.6s ease;
+    height: 43px;     
+    box-sizing: border-box;
+}
+
+.banner-patrio strong {
+    color: #004B87;
+}
+
+/* --- ANIMACIÓN DE LA PELOTA RODANDO --- */
+.pelota-mundial {
+    position: absolute;
+    left: -50px; 
+    font-size: 20px;
+    bottom: 8px;
+    animation: rodarPelota 4s linear forwards; 
+}
+
+@keyframes rodarPelota {
+    0% {
+        left: -50px;
+        transform: rotate(0deg);
+    }
+    100% {
+        left: 100%; 
+        transform: rotate(1440deg); 
+    }
+}
+
+.banner-oculto {
+    opacity: 0;
+    height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+    visibility: hidden;
+}
+
+/* --- AJUSTE ADAPTATIVO PARA CELULARES --- */
+@media (max-width: 480px) {
+    .banner-patrio {
+        top: 56px;          /* Se calibra a la altura del menú móvil */
+        font-size: 11px;    
+        padding: 8px 10px;
+        height: 35px;       
+    }
+    
+    .pelota-mundial {
+        font-size: 16px;
+        bottom: 6px;
+    }
+
+    .hero-section {
+        padding-top: 91px !important; /* Espacio inicial en el celu: Menú (56px) + Banner (35px) */
+    }
+}
