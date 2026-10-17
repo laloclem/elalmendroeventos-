@@ -118,7 +118,7 @@
             </article>
             <article class="card fade-up">
                 <!-- REEMPLAZAR: poné acá el nombre de la foto de los juegos -->
-                <img src="imagenes/juegosespacio.png" alt="Plaza de juegos para chicos" loading="lazy">
+                <img src="imagenes/portada-web.png" alt="Plaza de juegos para chicos" loading="lazy">
                 <h3>Juegos para chicos</h3>
                 <p>Hamacas, trepadores y puente colgante para que los más chicos se diviertan.</p>
             </article>
@@ -219,10 +219,12 @@ const trackWhatsApp = (origen = "General") => {
     const msg = encodeURIComponent(`Hola! Vi "${origen}" en la web y quiero consultar disponibilidad.`);
     const url = `https://wa.me/5492644045332?text=${msg}`;
 
-    fetch("https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro", {
+    // El origen va en la URL para que n8n lo lea siempre bien.
+    // keepalive: el aviso se completa aunque la página ya esté abriendo WhatsApp.
+    fetch("https://n8n.estudiandoaconstruir.com.ar/webhook/contacto-almendro?origen=" + encodeURIComponent(origen), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         mode: "no-cors",
+        keepalive: true,
         body: JSON.stringify({ origen })
     }).catch(() => {});
 
