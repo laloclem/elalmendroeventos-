@@ -258,8 +258,7 @@ a { color: inherit; }
 
 .hero-photo img {
   width: 100%;
-  aspect-ratio: 21 / 9;
-  object-fit: cover;
+  height: auto;          /* la foto se muestra completa, sin recortes */
 }
 
 /* --- Formas geométricas --- */
@@ -589,7 +588,6 @@ a { color: inherit; }
   .shape-quarter{ width: 90px; height: 90px; top: calc(var(--nav-height) + 30px); }
 
   .hero-photo { margin-top: 48px; border-radius: 14px 14px 0 0; }
-  .hero-photo img { aspect-ratio: 4 / 3; }
 
   .hero-actions .btn { width: 100%; max-width: 340px; }
 
