@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Armá gratis la invitación digital para tu evento en El Almendro.">
+<meta name="robots" content="noindex, nofollow">
+<title>Armá tu invitación | El Almendro Eventos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fraunces:opsz,wght@9..144,900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fondo:#FBF3EE; --superficie:#FFFFFF; --tarjeta:#F6E2DE; --tinta:#2A1A1C; --suave:#5C4A4C;
+  --acento:#B23C57; --sobre-acento:#FFFFFF; --borde:#DCC7C3;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --fondo:#1E2B2B; --superficie:#253535; --tarjeta:#2A3B3A; --tinta:#F3EEE4; --suave:#C9C2B8;
+    --acento:#EBAA6E; --sobre-acento:#1E2B2B; --borde:#3C5150; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --fondo:#1E2B2B; --superficie:#253535; --tarjeta:#2A3B3A; --tinta:#F3EEE4; --suave:#C9C2B8;
+  --acento:#EBAA6E; --sobre-acento:#1E2B2B; --borde:#3C5150; color-scheme:dark;
+}
+:root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{ margin:0; background:var(--fondo); color:var(--tinta); font-family:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif; font-size:17px; line-height:1.55; }
+:focus-visible{ outline:3px solid var(--acento); outline-offset:3px; }
+.envoltura{ max-width:1100px; margin:0 auto; padding:24px 20px 64px; }
+
+.cabecera{ display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; }
+.cabecera svg{ flex:none; }
+.cabecera b{ font-family:"Fraunces",Georgia,serif; font-weight:900; font-size:22px; line-height:1; }
+.cabecera span{ display:block; font-size:14px; color:var(--suave); }
+
+.intro{ margin:40px 0 28px; max-width:640px; }
+.intro .mano{ font-family:"Caveat",cursive; font-weight:700; font-size:32px; color:var(--acento); margin:0; transform:rotate(-2deg); transform-origin:left; }
+.intro h1{ font-family:"Fraunces",Georgia,serif; font-weight:900; font-size:clamp(40px,7vw,68px); line-height:1; margin:6px 0 14px; letter-spacing:-0.02em; }
+.intro p{ margin:0; font-size:19px; color:var(--suave); }
+
+h2.paso{ font-size:22px; font-weight:800; margin:36px 0 14px; display:flex; align-items:center; gap:12px; }
+h2.paso span{ width:36px; height:36px; border-radius:50%; background:var(--tinta); color:var(--fondo); display:inline-flex; align-items:center; justify-content:center; font-size:17px; flex:none; }
+
+.opciones{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.opcion{ all:unset; box-sizing:border-box; cursor:pointer; border-radius:26px; background:var(--superficie); border:2px solid var(--borde); overflow:hidden; display:flex; flex-direction:column; transition:transform .15s ease, border-color .15s ease; }
+.opcion:hover{ transform:translateY(-2px); }
+.opcion:focus-visible{ outline:3px solid var(--acento); outline-offset:3px; }
+.opcion[aria-pressed="true"]{ border-color:var(--acento); box-shadow:0 0 0 2px var(--acento); }
+.opcion .mini{ aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; }
+.opcion .mini svg{ height:88%; width:auto; }
+.opcion .texto{ padding:14px 18px 18px; }
+.opcion b{ display:block; font-size:20px; font-weight:800; }
+.opcion small{ display:block; font-size:15px; color:var(--suave); margin-top:2px; }
+
+.taller{ display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:32px; align-items:start; }
+.taller[hidden]{ display:none; }
+.vista{ position:sticky; top:16px; display:flex; flex-direction:column; gap:14px; }
+.vista canvas{ width:100%; height:auto; aspect-ratio:9/16; border-radius:28px; display:block; background:var(--tarjeta); box-shadow:0 18px 40px rgba(0,0,0,.18); }
+
+form{ display:flex; flex-direction:column; gap:18px; }
+.campo{ display:flex; flex-direction:column; gap:6px; }
+.campo[hidden]{ display:none; }
+.fila{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+label{ font-weight:700; font-size:16px; }
+label small{ font-weight:500; color:var(--suave); }
+input, textarea{ font:inherit; color:var(--tinta); background:var(--superficie); border:2px solid var(--borde); border-radius:16px; min-height:52px; padding:10px 16px; width:100%; }
+textarea{ min-height:84px; resize:vertical; }
+input:focus, textarea:focus{ border-color:var(--acento); outline:none; }
+.ayuda{ font-size:14px; color:var(--suave); margin:0; }
+
+.sugerencias{ display:flex; flex-wrap:wrap; gap:8px; }
+.sugerencias button{ font:inherit; font-size:15px; color:var(--tinta); background:var(--tarjeta); border:0; border-radius:999px; padding:8px 14px; min-height:44px; cursor:pointer; text-align:left; }
+
+.segmento{ display:flex; flex-wrap:wrap; align-self:flex-start; background:var(--tarjeta); border-radius:24px; padding:4px; gap:4px; }
+.punto{ width:12px; height:12px; border-radius:50%; display:inline-block; margin-right:8px; flex:none; }
+.segmento button{ display:inline-flex; align-items:center; font:inherit; font-weight:600; border:0; background:transparent; color:var(--tinta); border-radius:999px; padding:0 18px; min-height:44px; cursor:pointer; }
+.segmento button[aria-pressed="true"]{ background:var(--tinta); color:var(--fondo); }
+
+.acciones{ display:flex; flex-wrap:wrap; gap:12px; }
+.btn{ font:inherit; font-weight:700; font-size:17px; border-radius:999px; min-height:54px; padding:0 26px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:10px; border:2px solid var(--tinta); }
+.btn svg{ width:22px; height:22px; }
+.btn-lleno{ background:var(--tinta); color:var(--fondo); flex:1 1 180px; }
+.btn-borde{ background:transparent; color:var(--tinta); flex:1 1 160px; }
+.estado{ min-height:24px; margin:0; font-size:15px; color:var(--suave); }
+.estado.error{ color:var(--acento); font-weight:600; }
+
+.acceso{ background:var(--superficie); border:2px solid var(--borde); border-radius:28px; padding:28px; max-width:560px; display:flex; flex-direction:column; gap:14px; }
+.acceso[hidden], .aviso-prueba[hidden]{ display:none; }
+.acceso h2{ margin:0; font-size:24px; font-weight:800; }
+.acceso p{ margin:0; color:var(--suave); }
+.acceso .linea{ display:flex; flex-wrap:wrap; gap:12px; }
+.acceso input{ flex:1 1 220px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; }
+.acceso .btn{ flex:0 1 auto; }
+.bloqueado[hidden]{ display:none; }
+.aviso-prueba{ background:var(--tarjeta); border-radius:16px; padding:10px 16px; font-size:15px; margin:0 0 18px; }
+input[readonly]{ background:var(--tarjeta); cursor:not-allowed; }
+.pie{ margin-top:56px; font-size:14px; color:var(--suave); }
+
+@media (max-width: 860px){
+  .opciones{ grid-template-columns:1fr; }
+  .opcion{ flex-direction:row; align-items:center; }
+  .opcion .mini{ width:120px; flex:none; aspect-ratio:1/1; }
+  .taller{ grid-template-columns:1fr; }
+  .vista{ position:static; order:-1; align-items:center; }
+  .vista canvas{ max-width:300px; }
+}
+@media (max-width: 420px){ .fila{ grid-template-columns:1fr; } }
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="envoltura">
+
+  <a class="cabecera" href="index.html">
+    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="11" r="7" fill="#F4C3CC"/><circle cx="29" cy="18" r="7" fill="#F4C3CC"/><circle cx="25" cy="28" r="7" fill="#F4C3CC"/><circle cx="15" cy="28" r="7" fill="#F4C3CC"/><circle cx="11" cy="18" r="7" fill="#F4C3CC"/><circle cx="20" cy="20" r="4" fill="#B23C57"/>
+    </svg>
+    <div><b>El Almendro</b><span>Tarjetas digitales</span></div>
+  </a>
+
+  <header class="intro">
+    <p class="mano">gratis con tu reserva</p>
+    <h1>Armá tu invitación</h1>
+    <p>Elegí una tarjeta, completá los datos y descargala para mandarla por WhatsApp o subirla a tus historias.</p>
+  </header>
+
+  <p class="aviso-prueba" id="aviso-prueba" hidden>Vista previa: acá no se valida el código. En tu web sí se valida con n8n.</p>
+
+  <section class="acceso" id="acceso" aria-labelledby="titulo-acceso">
+    <h2 id="titulo-acceso">Ingresá tu código de reserva</h2>
+    <p>Lo encontrás en el mensaje que te mandamos al confirmar tu reserva.</p>
+    <div class="linea">
+      <label for="f-codigo" class="sr" style="position:absolute;left:-9999px">Código de reserva</label>
+      <input id="f-codigo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ej: ALM-7K3QX" maxlength="12">
+      <button type="button" class="btn btn-lleno" id="btn-codigo">Continuar</button>
+    </div>
+    <p class="estado" id="estado-codigo" role="status" aria-live="polite"></p>
+  </section>
+
+  <div class="bloqueado" id="bloqueado" hidden>
+  <h2 class="paso"><span>1</span>Elegí tu tarjeta</h2>
+  <div class="opciones" id="opciones">
+    <button type="button" class="opcion" data-tipo="cumple" aria-pressed="false">
+      <div class="mini" data-mini="cumple"></div>
+      <div class="texto"><b>Cumpleaños</b><small>Para chicos y grandes, con la vela de la edad.</small></div>
+    </button>
+    <button type="button" class="opcion" data-tipo="celebracion" aria-pressed="false">
+      <div class="mini" data-mini="celebracion"></div>
+      <div class="texto"><b>Celebración</b><small>Aniversarios, asados, despedidas, bautismos y más.</small></div>
+    </button>
+    <button type="button" class="opcion" data-tipo="empresa" aria-pressed="false">
+      <div class="mini" data-mini="empresa"></div>
+      <div class="texto"><b>Empresarial</b><small>Cenas de fin de año, encuentros y reuniones de equipo.</small></div>
+    </button>
+  </div>
+
+  <div class="taller" id="taller" hidden>
+    <div>
+      <h2 class="paso"><span>2</span>Completá los datos</h2>
+      <form id="formulario" novalidate>
+        <div class="campo" data-campo="nombre">
+          <label for="f-nombre">¿Quién cumple?</label>
+          <input id="f-nombre" name="nombre" maxlength="22" autocomplete="off" placeholder="Ej: Martina">
+        </div>
+        <div class="campo" data-campo="edad">
+          <label for="f-edad">¿Cuántos años cumple?</label>
+          <input id="f-edad" name="edad" type="number" inputmode="numeric" min="1" max="110" placeholder="Ej: 6">
+        </div>
+        <div class="campo" data-campo="titulo">
+          <label for="f-titulo">¿Qué festejan?</label>
+          <input id="f-titulo" name="titulo" maxlength="40" autocomplete="off" placeholder="Ej: ¡Cumplimos 25 años juntos!">
+        </div>
+        <div class="campo" data-campo="quienes">
+          <label for="f-quienes">¿Quiénes invitan?</label>
+          <input id="f-quienes" name="quienes" maxlength="30" autocomplete="off" placeholder="Ej: Ana y Pablo">
+        </div>
+        <div class="campo" data-campo="empresa">
+          <label for="f-empresa">Nombre de la empresa</label>
+          <input id="f-empresa" name="empresa" maxlength="30" autocomplete="organization" placeholder="Ej: Constructora Andes">
+        </div>
+        <div class="campo" data-campo="evento">
+          <label for="f-evento">Nombre del evento</label>
+          <input id="f-evento" name="evento" maxlength="40" autocomplete="off" placeholder="Ej: Cena de fin de año">
+        </div>
+        <div class="fila">
+          <div class="campo">
+            <label for="f-fecha">Fecha</label>
+            <input id="f-fecha" name="fecha" type="date">
+            <p class="ayuda" id="ayuda-fecha" hidden>Es la fecha de tu reserva.</p>
+          </div>
+          <div class="campo">
+            <label for="f-hora">Hora</label>
+            <input id="f-hora" name="hora" type="time">
+          </div>
+        </div>
+        <div class="campo">
+          <label for="f-limite">Confirmar hasta el <small>(opcional)</small></label>
+          <input id="f-limite" name="limite" type="date">
+          <p class="ayuda">Así tus invitados saben hasta cuándo avisarte si van.</p>
+        </div>
+        <div class="campo">
+          <label for="f-mensaje">Mensaje <small>(opcional)</small></label>
+          <textarea id="f-mensaje" name="mensaje" maxlength="90" placeholder="Escribí tu mensaje o tocá una sugerencia"></textarea>
+          <div class="sugerencias" id="sugerencias"></div>
+        </div>
+        <div class="campo">
+          <span style="font-weight:700">Colores</span>
+          <div class="segmento" role="group" aria-label="Colores de la tarjeta">
+            <button type="button" data-estilo="primavera" aria-pressed="false"><i class="punto" style="background:#B23C57"></i>Primavera</button>
+            <button type="button" data-estilo="verano" aria-pressed="false"><i class="punto" style="background:#2E6B3B"></i>Verano</button>
+            <button type="button" data-estilo="otono" aria-pressed="false"><i class="punto" style="background:#A3431A"></i>Otoño</button>
+            <button type="button" data-estilo="invierno" aria-pressed="false"><i class="punto" style="background:#EBAA6E"></i>Invierno</button>
+          </div>
+          <p class="ayuda">Son los mismos colores de nuestra web. Se elige sola la estación de la fecha de tu evento, pero podés cambiarla.</p>
+        </div>
+      </form>
+
+      <h2 class="paso"><span>3</span>Descargá y compartí</h2>
+      <div class="acciones">
+        <button type="button" class="btn btn-lleno" id="btn-descargar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+          Descargar imagen
+        </button>
+        <button type="button" class="btn btn-borde" id="btn-compartir">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg>
+          Compartir
+        </button>
+      </div>
+      <p class="estado" id="estado" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="vista">
+      <canvas id="lienzo" width="1080" height="1920" role="img" aria-label="Vista previa de tu invitación"></canvas>
+      <p class="ayuda">Así va a quedar tu tarjeta. Se actualiza mientras escribís.</p>
+    </div>
+  </div>
+
+  </div>
+
+  <p class="pie">El Almendro Eventos, Rivadavia, San Juan. Tus datos no se guardan: la tarjeta se arma en tu celular.</p>
+</div>
+
+<script>
+// ================= CONFIGURACIÓN =================
+var N8N = "https://n8n.estudiandoaconstruir.com.ar/webhook/";
+var URL_VALIDAR = N8N + "validar-tarjeta";      // responde si el código es válido
+var URL_GENERADA = N8N + "tarjeta-generada";    // anota que el cliente descargó su tarjeta
+
+// En la vista previa de Claude no se puede llamar a n8n: ahí se saltea la validación
+var MODO_PRUEBA = !!window.claude;
+
+// ================= TARJETAS Y COLORES =================
+// Mismos colores que la web: una paleta por estación
+var TEMAS = {
+  primavera: { arriba:"#FBF3EE", abajo:"#B23C57", titulo:"#F9D9DE", texto:"#FFFFFF", suave:"rgba(255,255,255,0.88)", pie:"rgba(255,255,255,0.72)", caja:"rgba(255,255,255,0.14)", torta:"#F4C3CC", vela:"#B23C57", globo1:"#B23C57", globo2:"#F6D27A", papel:"#B23C57", bebida:"#F4C3CC", mantel:"#F4C3CC" },
+  verano:    { arriba:"#F7F2E2", abajo:"#2E6B3B", titulo:"#E8C35A", texto:"#FFFFFF", suave:"rgba(255,255,255,0.88)", pie:"rgba(255,255,255,0.72)", caja:"rgba(255,255,255,0.12)", torta:"#E8C35A", vela:"#2E6B3B", globo1:"#2E6B3B", globo2:"#F2B43B", papel:"#2E6B3B", bebida:"#E8C35A", mantel:"#6FA55C" },
+  otono:     { arriba:"#F6ECDD", abajo:"#A3431A", titulo:"#FBDDB4", texto:"#FFFFFF", suave:"rgba(255,255,255,0.88)", pie:"rgba(255,255,255,0.72)", caja:"rgba(255,255,255,0.14)", torta:"#EDB27A", vela:"#A3431A", globo1:"#A3431A", globo2:"#E9874A", papel:"#A3431A", bebida:"#E9874A", mantel:"#EDB27A" },
+  invierno:  { trazo:"#F3EEE4", arriba:"#1E2B2B", abajo:"#EBAA6E", titulo:"#1E2B2B", texto:"#1E2B2B", suave:"rgba(30,43,43,0.85)", pie:"rgba(30,43,43,0.72)", caja:"rgba(30,43,43,0.12)", torta:"#B9CCC9", vela:"#EBAA6E", globo1:"#EBAA6E", globo2:"#B9CCC9", papel:"#EBAA6E", bebida:"#EBAA6E", mantel:"#B9CCC9" }
+};
+
+// Estación según una fecha (hemisferio sur), igual que en la web
+function estacionDe(d) {
+  var md = (d.getMonth() + 1) * 100 + d.getDate();
+  if (md >= 921 && md <= 1220) return "primavera";
+  if (md >= 1221 || md <= 320) return "verano";
+  if (md <= 620) return "otono";
+  return "invierno";
+}
+
+var TIPOS = {
+  cumple: {
+    campos: ["nombre", "edad"],
+    obligatorios: { nombre: "el nombre", edad: "la edad" },
+    mensajes: ["Quiero que estés en este día tan especial.", "¡Te espero para festejar juntos!", "Sumate a festejar, va a estar buenísimo."]
+  },
+  celebracion: {
+    campos: ["titulo", "quienes"],
+    obligatorios: { titulo: "qué festejan", quienes: "quiénes invitan" },
+    mensajes: ["Queremos compartir este momento con vos.", "¡Te esperamos para festejar juntos!", "No puede faltar nadie. ¡Te esperamos!"]
+  },
+  empresa: {
+    campos: ["empresa", "evento"],
+    obligatorios: { empresa: "el nombre de la empresa", evento: "el nombre del evento" },
+    mensajes: ["Te esperamos para compartir un encuentro especial.", "Cerramos el año juntos. ¡Te esperamos!", "Será un gusto contar con tu presencia."]
+  }
+};
+
+var estado = { tipo: null, estilo: estacionDe(new Date()), elegidoAMano: false, codigo: null };
+
+// ================= ILUSTRACIONES (sin texto) =================
+var TRAZO = "#2B2B2B";
+
+function svgTorta(t) {
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360">' +
+  '<g stroke="'+TRAZO+'" stroke-width="4" stroke-linecap="round"><path d="M118 40 L108 22"/><path d="M186 40 L198 22"/><path d="M30 230 L18 222"/><path d="M272 236 L286 228"/></g>' +
+  '<g fill="'+t.papel+'" stroke="'+TRAZO+'" stroke-width="2.5"><rect x="20" y="30" width="12" height="7" rx="2" transform="rotate(30 26 33)"/><rect x="262" y="190" width="12" height="7" rx="2" transform="rotate(-25 268 193)"/><rect x="230" y="20" width="12" height="7" rx="2" transform="rotate(15 236 23)"/><rect x="40" y="290" width="12" height="7" rx="2" transform="rotate(-35 46 293)"/></g>' +
+  '<path d="M52 152 C60 190 44 230 70 270" fill="none" stroke="'+TRAZO+'" stroke-width="2.5"/>' +
+  '<ellipse cx="50" cy="108" rx="32" ry="40" fill="'+t.globo1+'" stroke="'+TRAZO+'" stroke-width="4"/><path d="M44 148 L50 156 L56 148 Z" fill="'+t.globo1+'" stroke="'+TRAZO+'" stroke-width="3" stroke-linejoin="round"/><path d="M38 92 C40 82 46 76 54 74" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>' +
+  '<path d="M252 138 C246 180 262 220 236 262" fill="none" stroke="'+TRAZO+'" stroke-width="2.5"/>' +
+  '<ellipse cx="254" cy="92" rx="32" ry="40" fill="'+t.globo2+'" stroke="'+TRAZO+'" stroke-width="4"/><path d="M248 132 L254 140 L260 132 Z" fill="'+t.globo2+'" stroke="'+TRAZO+'" stroke-width="3" stroke-linejoin="round"/><path d="M242 76 C244 66 250 60 258 58" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>' +
+  '<ellipse cx="150" cy="336" rx="124" ry="14" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="4"/>' +
+  '<rect x="48" y="244" width="204" height="88" rx="16" fill="'+t.torta+'" stroke="'+TRAZO+'" stroke-width="4"/>' +
+  '<path d="M50 262 C62 262 62 282 74 282 C86 282 86 262 98 262 C110 262 110 286 122 286 C134 286 134 262 146 262 C158 262 158 282 170 282 C182 282 182 262 194 262 C206 262 206 288 218 288 C230 288 230 262 250 262 L250 252 C250 248 246 246 242 246 L58 246 C54 246 50 248 50 252 Z" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="3" stroke-linejoin="round"/>' +
+  '<rect x="80" y="182" width="140" height="66" rx="14" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="4"/>' +
+  '<g fill="'+t.papel+'"><rect x="100" y="204" width="10" height="4" rx="2" transform="rotate(30 105 206)"/><rect x="140" y="222" width="10" height="4" rx="2" transform="rotate(-20 145 224)"/><rect x="178" y="200" width="10" height="4" rx="2" transform="rotate(40 183 202)"/><rect x="196" y="228" width="10" height="4" rx="2"/><rect x="118" y="230" width="10" height="4" rx="2" transform="rotate(-40 123 232)"/></g>' +
+  '<path d="M150 54 C162 70 164 84 150 96 C136 84 138 70 150 54 Z" fill="#F7931E" stroke="'+TRAZO+'" stroke-width="3" stroke-linejoin="round"/><path d="M150 72 C156 80 156 86 150 92 C144 86 144 80 150 72 Z" fill="#FFE066"/>' +
+  '</svg>';
+}
+
+function copa(cx, rot, t) {
+  return '<g transform="rotate('+rot+' '+cx+' 300)">' +
+    '<path d="M'+(cx-26)+' 70 L'+(cx+26)+' 70 L'+(cx+20)+' 190 C'+(cx+18)+' 212 '+(cx-18)+' 212 '+(cx-20)+' 190 Z" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="4" stroke-linejoin="round"/>' +
+    '<path d="M'+(cx-23.5)+' 120 L'+(cx+23.5)+' 120 L'+(cx+20)+' 190 C'+(cx+18)+' 208 '+(cx-18)+' 208 '+(cx-20)+' 190 Z" fill="'+t.bebida+'"/>' +
+    '<path d="M'+(cx-26)+' 70 L'+(cx+26)+' 70 L'+(cx+20)+' 190 C'+(cx+18)+' 212 '+(cx-18)+' 212 '+(cx-20)+' 190 Z" fill="none" stroke="'+TRAZO+'" stroke-width="4" stroke-linejoin="round"/>' +
+    '<path d="M'+(cx-12)+' 88 L'+(cx-14)+' 150" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>' +
+    '<path d="M'+cx+' 208 L'+cx+' 292" stroke="'+TRAZO+'" stroke-width="6" stroke-linecap="round"/>' +
+    '<ellipse cx="'+cx+'" cy="298" rx="32" ry="8" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="4"/>' +
+  '</g>';
+}
+
+function svgCopas(t) {
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360">' +
+  '<g fill="'+t.papel+'" stroke="'+TRAZO+'" stroke-width="2.5"><rect x="24" y="60" width="12" height="7" rx="2" transform="rotate(30 30 63)"/><rect x="262" y="120" width="12" height="7" rx="2" transform="rotate(-25 268 123)"/><rect x="40" y="250" width="12" height="7" rx="2" transform="rotate(-35 46 253)"/><rect x="250" y="270" width="12" height="7" rx="2" transform="rotate(15 256 273)"/></g>' +
+  '<g fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="2.5"><circle cx="70" cy="150" r="6"/><circle cx="234" cy="196" r="5"/><circle cx="58" cy="198" r="4"/><circle cx="246" cy="76" r="5"/></g>' +
+  copa(112, -14, t) + copa(188, 14, t) +
+  '<path d="M150 18 L156 36 L174 38 L160 50 L164 68 L150 58 L136 68 L140 50 L126 38 L144 36 Z" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="3" stroke-linejoin="round"/>' +
+  '<g stroke="'+TRAZO+'" stroke-width="4" stroke-linecap="round"><path d="M112 28 L100 14"/><path d="M188 28 L200 14"/><path d="M96 56 L80 52"/><path d="M204 56 L220 52"/></g>' +
+  '<ellipse cx="150" cy="338" rx="120" ry="12" fill="rgba(0,0,0,0.12)"/>' +
+  '</svg>';
+}
+
+function svgMesa(t) {
+  var focos = "";
+  [[40,62],[78,82],[116,94],[154,98],[192,94],[230,82],[266,62]].forEach(function (p) {
+    focos += '<circle cx="'+p[0]+'" cy="'+(p[1]+8)+'" r="9" fill="#FFE066" stroke="'+TRAZO+'" stroke-width="3"/>';
+  });
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360">' +
+  '<path d="M10 44 Q150 130 290 44" fill="none" stroke="'+TRAZO+'" stroke-width="3"/>' + focos +
+  '<rect x="138" y="150" width="24" height="66" rx="8" fill="#2F5D3A" stroke="'+TRAZO+'" stroke-width="4"/><rect x="144" y="132" width="12" height="22" rx="3" fill="#2F5D3A" stroke="'+TRAZO+'" stroke-width="4"/><rect x="141" y="170" width="18" height="22" rx="3" fill="#FFFFFF"/>' +
+  '<g transform="translate(-12 82) scale(0.45)">' + copa(250, 0, t) + '</g>' +
+  '<g transform="translate(120 82) scale(0.45)">' + copa(250, 0, t) + '</g>' +
+  '<ellipse cx="82" cy="212" rx="36" ry="9" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="4"/><ellipse cx="218" cy="212" rx="36" ry="9" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="4"/>' +
+  '<rect x="22" y="218" width="256" height="18" rx="6" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="4"/>' +
+  '<path d="M26 236 L274 236 L274 292 C258 304 242 292 226 304 C210 292 194 304 178 292 C162 304 146 292 130 304 C114 292 98 304 82 292 C66 304 50 292 26 304 Z" fill="'+t.mantel+'" stroke="'+TRAZO+'" stroke-width="4" stroke-linejoin="round"/>' +
+  '<path d="M70 304 L64 340 M230 304 L236 340" stroke="'+TRAZO+'" stroke-width="6" stroke-linecap="round"/>' +
+  '<ellipse cx="150" cy="344" rx="120" ry="10" fill="rgba(0,0,0,0.12)"/>' +
+  '</svg>';
+}
+
+function ilustracion(tipo, t) {
+  TRAZO = t.trazo || "#2B2B2B";   // en invierno el contorno va claro para que se vea sobre el fondo oscuro
+  if (tipo === "cumple") return svgTorta(t);
+  if (tipo === "celebracion") return svgCopas(t);
+  return svgMesa(t);
+}
+
+// Miniaturas de la elección
+document.querySelectorAll("[data-mini]").forEach(function (el) {
+  var tipo = el.getAttribute("data-mini");
+  el.style.background = TEMAS[estado.estilo].arriba;
+  el.innerHTML = ilustracion(tipo, TEMAS[estado.estilo]).replace("<svg ", '<svg aria-hidden="true" ');
+});
+
+// ================= DIBUJO DE LA TARJETA =================
+var lienzo = document.getElementById("lienzo");
+var ctx = lienzo.getContext("2d");
+var W = 1080, H = 1920;
+var turno = 0;
+
+function cargarImagen(svg) {
+  return new Promise(function (ok, mal) {
+    var img = new Image();
+    img.onload = function () { ok(img); };
+    img.onerror = mal;
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  });
+}
+
+function partir(texto, ancho) {
+  var palabras = String(texto).split(/\s+/).filter(Boolean), lineas = [], actual = "";
+  palabras.forEach(function (p) {
+    var prueba = actual ? actual + " " + p : p;
+    if (ctx.measureText(prueba).width > ancho && actual) { lineas.push(actual); actual = p; }
+    else actual = prueba;
+  });
+  if (actual) lineas.push(actual);
+  return lineas;
+}
+
+function ajustarTitulo(texto, maxTam, minTam, ancho, maxLineas) {
+  var tam = maxTam, lineas;
+  do {
+    ctx.font = "900 " + tam + "px Outfit, Arial, sans-serif";
+    lineas = partir(texto, ancho);
+    if (lineas.length <= maxLineas && lineas.every(function (l) { return ctx.measureText(l).width <= ancho; })) break;
+    tam -= 6;
+  } while (tam > minTam);
+  return { tam: tam, lineas: lineas.slice(0, maxLineas) };
+}
+
+var MESES = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+var DIAS = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+
+function fechaLarga(valor) {
+  if (!valor) return "";
+  var p = valor.split("-"); var d = new Date(+p[0], +p[1] - 1, +p[2]);
+  return DIAS[d.getDay()] + " " + d.getDate() + " de " + MESES[d.getMonth()];
+}
+function fechaCorta(valor) {
+  if (!valor) return "";
+  var p = valor.split("-"); return (+p[2]) + " de " + MESES[+p[1] - 1];
+}
+
+function icono(path, x, y, color) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(2.2, 2.2);
+  ctx.strokeStyle = color; ctx.lineWidth = 2.2; ctx.lineCap = "round"; ctx.lineJoin = "round";
+  path.split("|").forEach(function (d) { ctx.stroke(new Path2D(d)); });
+  ctx.restore();
+}
+
+function leer() {
+  var f = document.getElementById("formulario");
+  var v = {};
+  ["nombre","edad","titulo","quienes","empresa","evento","fecha","hora","limite","mensaje"].forEach(function (k) { v[k] = (f.elements[k].value || "").trim(); });
+  return v;
+}
+
+async function dibujar() {
+  if (!estado.tipo) return;
+  var mio = ++turno;
+  var t = TEMAS[estado.estilo];
+  var v = leer();
+  var img = await cargarImagen(ilustracion(estado.tipo, t));
+  try { await Promise.all([document.fonts.load("900 100px Outfit, Arial, sans-serif"), document.fonts.load("700 40px Outfit, Arial, sans-serif"), document.fonts.load("400 40px Outfit, Arial, sans-serif")]); } catch (e) {}
+  if (mio !== turno) return;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = t.arriba; ctx.fillRect(0, 0, W, H);
+  ctx.drawImage(img, 220, 70, 640, 768);
+
+  if (estado.tipo === "cumple") {
+    ctx.font = "900 183px Outfit, Arial, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+    ctx.lineJoin = "round"; ctx.lineWidth = 9; ctx.strokeStyle = TRAZO;
+    var num = v.edad || "?";
+    ctx.strokeText(num, 540, 445); ctx.fillStyle = t.vela; ctx.fillText(num, 540, 445);
+  }
+
+  ctx.fillStyle = t.abajo;
+  ctx.fill(new Path2D("M0 900 C200 800 340 960 580 920 C820 880 920 760 1080 800 L1080 1920 L0 1920 Z"));
+
+  ctx.textAlign = "left"; ctx.textBaseline = "top";
+  var x = 80, ancho = 920, y = 990;
+
+  // Línea chica + título grande
+  var chica, grande, debajo = "";
+  if (estado.tipo === "cumple") { chica = "¡Cumplo"; grande = (v.edad || "[edad]") + "!"; debajo = v.nombre || "[Nombre]"; }
+  else if (estado.tipo === "celebracion") { chica = "¡Te invitamos!"; grande = v.titulo || "[Qué festejan]"; debajo = v.quienes || "[Quiénes invitan]"; }
+  else { chica = (v.empresa || "[Empresa]") + " te invita a"; grande = v.evento || "[Nombre del evento]"; }
+
+  ctx.font = "800 62px Outfit, Arial, sans-serif"; ctx.fillStyle = t.titulo;
+  ctx.fillText(partir(chica, ancho)[0] || "", x, y); y += 78;
+
+  if (estado.tipo === "cumple") {
+    ctx.font = "900 250px Outfit, Arial, sans-serif"; ctx.fillText(grande, x - 8, y - 30); y += 230;
+  } else {
+    var tit = ajustarTitulo(grande, 124, 70, ancho, 2);
+    ctx.font = "900 " + tit.tam + "px Outfit, Arial, sans-serif";
+    tit.lineas.forEach(function (l) { ctx.fillText(l, x - 4, y); y += tit.tam * 0.98; });
+    y += 14;
+  }
+
+  if (debajo) { ctx.font = "800 70px Outfit, Arial, sans-serif"; ctx.fillStyle = t.texto; ctx.fillText(partir(debajo, ancho)[0], x, y); y += 92; }
+
+  if (v.mensaje) {
+    ctx.font = "400 44px Outfit, Arial, sans-serif"; ctx.fillStyle = t.suave;
+    partir(v.mensaje, ancho).slice(0, 2).forEach(function (l) { ctx.fillText(l, x, y); y += 58; });
+    y += 14;
+  }
+
+  // Caja de datos
+  var cajaY = Math.max(y + 10, 1440), cajaAlto = 252;
+  ctx.fillStyle = t.caja;
+  ctx.beginPath(); ctx.roundRect(x - 20, cajaY, ancho + 40, cajaAlto, 40); ctx.fill();
+  ctx.font = "700 46px Outfit, Arial, sans-serif"; ctx.fillStyle = t.texto;
+  var filas = [
+    ["M4.5 6h15a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5v-12A1.5 1.5 0 0 1 4.5 6z|M3 11h18|M8 3v5|M16 3v5", fechaLarga(v.fecha) || "[Fecha]"],
+    ["M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18z|M12 7v5l3 2", v.hora ? v.hora + " h" : "[Hora]"],
+    ["M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z|M12 7a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z", "El Almendro, Rivadavia"]
+  ];
+  filas.forEach(function (f, i) {
+    var fy = cajaY + 34 + i * 70;
+    icono(f[0], x + 6, fy, t.titulo);
+    ctx.fillStyle = t.texto; ctx.fillText(f[1], x + 80, fy + 2);
+  });
+
+  y = cajaY + cajaAlto + 34;
+  if (v.limite) {
+    ctx.font = "600 40px Outfit, Arial, sans-serif"; ctx.fillStyle = t.titulo;
+    ctx.fillText("Confirmá tu asistencia antes del " + fechaCorta(v.limite), x, y);
+  }
+
+  ctx.font = "500 32px Outfit, Arial, sans-serif"; ctx.fillStyle = t.pie; ctx.textAlign = "center";
+  ctx.fillText("Invitación de El Almendro Eventos", W / 2, 1850);
+}
+
+
+// ================= CÓDIGO DE RESERVA =================
+var cajaCodigo = document.getElementById("f-codigo");
+var avisoCodigo = document.getElementById("estado-codigo");
+
+function avisarCodigo(texto, error) { avisoCodigo.textContent = texto; avisoCodigo.className = "estado" + (error ? " error" : ""); }
+
+function habilitar(datos) {
+  estado.codigo = datos.codigo;
+  document.getElementById("acceso").hidden = true;
+  document.getElementById("bloqueado").hidden = false;
+  if (datos.fechaEvento) {
+    var fecha = document.getElementById("f-fecha");
+    fecha.value = datos.fechaEvento;
+    fecha.readOnly = true;
+    document.getElementById("ayuda-fecha").hidden = false;
+    var p = datos.fechaEvento.split("-");
+    estado.estilo = estacionDe(new Date(+p[0], +p[1] - 1, +p[2]));
+    document.querySelectorAll("[data-mini]").forEach(function (el) {
+      el.style.background = TEMAS[estado.estilo].arriba;
+      el.innerHTML = ilustracion(el.getAttribute("data-mini"), TEMAS[estado.estilo]).replace("<svg ", '<svg aria-hidden="true" ');
+    });
+  }
+}
+
+async function validarCodigo(codigo) {
+  codigo = (codigo || "").toUpperCase().replace(/\s+/g, "");
+  if (!codigo) { avisarCodigo("Escribí tu código de reserva.", true); return; }
+  if (MODO_PRUEBA) { habilitar({ codigo: codigo }); return; }
+  avisarCodigo("Revisando el código…");
+  var control = new AbortController();
+  var espera = setTimeout(function () { control.abort(); }, 10000);
+  try {
+    var r = await fetch(URL_VALIDAR, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ codigo: codigo }), signal: control.signal });
+    var datos = await r.json();
+    if (datos && datos.valido) { avisarCodigo(""); habilitar({ codigo: codigo, fechaEvento: datos.fechaEvento }); }
+    else if (datos && datos.motivo === "vencido") avisarCodigo("Este código ya venció porque la fecha del evento pasó.", true);
+    else avisarCodigo("Ese código no es válido. Revisalo o escribinos por WhatsApp.", true);
+  } catch (e) {
+    avisarCodigo("No pudimos revisar el código. Probá de nuevo en un momento.", true);
+  } finally { clearTimeout(espera); }
+}
+
+document.getElementById("btn-codigo").addEventListener("click", function () { validarCodigo(cajaCodigo.value); });
+cajaCodigo.addEventListener("keydown", function (e) { if (e.key === "Enter") validarCodigo(cajaCodigo.value); });
+
+(function () {
+  if (MODO_PRUEBA) document.getElementById("aviso-prueba").hidden = false;
+  var desdeLink = new URLSearchParams(location.search).get("codigo");
+  if (desdeLink) { cajaCodigo.value = desdeLink.toUpperCase(); validarCodigo(desdeLink); }
+})();
+
+// Avisa a n8n que se descargó o compartió una tarjeta (no frena nada si falla)
+function registrarUso(accion) {
+  if (MODO_PRUEBA || !estado.codigo) return;
+  fetch(URL_GENERADA, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ codigo: estado.codigo, tipo: estado.tipo, accion: accion }) }).catch(function () {});
+}
+
+// ================= INTERACCIÓN =================
+var taller = document.getElementById("taller");
+var avisos = document.getElementById("estado");
+
+function avisar(texto, error) { avisos.textContent = texto; avisos.className = "estado" + (error ? " error" : ""); }
+
+function elegirEstilo(e) {
+  estado.estilo = e;
+  document.querySelectorAll("[data-estilo]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-estilo") === e)); });
+  dibujar();
+}
+
+function elegirTipo(tipo) {
+  estado.tipo = tipo;
+  var cfg = TIPOS[tipo];
+  document.querySelectorAll(".opcion").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-tipo") === tipo)); });
+  document.querySelectorAll("[data-campo]").forEach(function (c) { c.hidden = cfg.campos.indexOf(c.getAttribute("data-campo")) === -1; });
+  var sug = document.getElementById("sugerencias"); sug.innerHTML = "";
+  cfg.mensajes.forEach(function (m) {
+    var b = document.createElement("button"); b.type = "button"; b.textContent = m;
+    b.addEventListener("click", function () { document.getElementById("f-mensaje").value = m; dibujar(); });
+    sug.appendChild(b);
+  });
+  taller.hidden = false;
+  avisar("");
+  elegirEstilo(estado.estilo);
+  document.getElementById("f-" + cfg.campos[0]).focus({ preventScroll: true });
+  taller.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+}
+
+document.querySelectorAll(".opcion").forEach(function (b) { b.addEventListener("click", function () { elegirTipo(b.getAttribute("data-tipo")); }); });
+document.querySelectorAll("[data-estilo]").forEach(function (b) { b.addEventListener("click", function () { estado.elegidoAMano = true; elegirEstilo(b.getAttribute("data-estilo")); }); });
+document.getElementById("f-fecha").addEventListener("change", function () {
+  var v = this.value; if (!v || estado.elegidoAMano) return;
+  var p = v.split("-"); elegirEstilo(estacionDe(new Date(+p[0], +p[1] - 1, +p[2])));
+});
+document.getElementById("formulario").addEventListener("input", function () { avisar(""); dibujar(); });
+document.getElementById("formulario").addEventListener("submit", function (e) { e.preventDefault(); });
+
+function faltantes() {
+  var v = leer(), cfg = TIPOS[estado.tipo], f = [];
+  Object.keys(cfg.obligatorios).forEach(function (k) { if (!v[k]) f.push(cfg.obligatorios[k]); });
+  if (!v.fecha) f.push("la fecha"); if (!v.hora) f.push("la hora");
+  return f;
+}
+
+function nombreArchivo() {
+  var v = leer();
+  var base = estado.tipo === "cumple" ? v.nombre : estado.tipo === "celebracion" ? v.quienes : v.evento;
+  base = (base || "invitacion").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return "invitacion-" + (base || "el-almendro") + ".png";
+}
+
+async function generar() {
+  var f = faltantes();
+  if (f.length) { avisar("Para terminar, completá " + f.join(", ").replace(/, ([^,]*)$/, " y $1") + ".", true); return null; }
+  await dibujar();
+  return await new Promise(function (ok) { lienzo.toBlob(ok, "image/png"); });
+}
+
+async function guardar(blob, nombre) {
+  if (window.claude && typeof window.claude.use === "function") {
+    try {
+      var d = await window.claude.use("downloads");
+      if (d) {
+        try { await d.save({ filename: nombre, data: blob }); avisar("¡Listo! Tu invitación se descargó."); }
+        catch (e) { if (e && e.code === "declined") avisar("Descarga cancelada."); else avisar("No se pudo descargar la imagen en esta vista.", true); }
+        return;
+      }
+    } catch (e) {}
+  }
+  var url = URL.createObjectURL(blob), a = document.createElement("a");
+  a.href = url; a.download = nombre; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  avisar("¡Listo! Tu invitación se descargó.");
+}
+
+document.getElementById("btn-descargar").addEventListener("click", async function () {
+  var blob = await generar(); if (!blob) return;
+  registrarUso("descarga");
+  guardar(blob, nombreArchivo());
+});
+
+document.getElementById("btn-compartir").addEventListener("click", async function () {
+  var blob = await generar(); if (!blob) return;
+  registrarUso("compartir");
+  var archivo = new File([blob], nombreArchivo(), { type: "image/png" });
+  if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+    try { await navigator.share({ files: [archivo], title: "Invitación" }); avisar("¡Compartida!"); }
+    catch (e) { if (!e || e.name !== "AbortError") { avisar("No se pudo abrir el menú para compartir. Te la descargamos."); guardar(blob, archivo.name); } }
+  } else {
+    avisar("Este navegador no permite compartir directo. Te la descargamos para que la mandes por WhatsApp.");
+    guardar(blob, archivo.name);
+  }
+});
+</script>
+</body>
+</html>
