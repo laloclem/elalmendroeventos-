@@ -99,6 +99,13 @@ input:focus, textarea:focus{ border-color:var(--acento); outline:none; }
 .bloqueado[hidden]{ display:none; }
 .aviso-prueba{ background:var(--tarjeta); border-radius:16px; padding:10px 16px; font-size:15px; margin:0 0 18px; }
 input[readonly]{ background:var(--tarjeta); cursor:not-allowed; }
+.legal{ margin-top:64px; padding-top:24px; border-top:1px solid var(--borde); max-width:760px; font-size:14px; line-height:1.55; color:var(--suave); }
+.legal h2{ font-size:15px; font-weight:700; color:var(--tinta); margin:0 0 8px; }
+.legal ul{ margin:0 0 10px; padding-left:18px; }
+.legal li{ margin:0 0 4px; }
+.legal p{ margin:0 0 4px; }
+.legal a{ color:var(--tinta); font-weight:600; }
+.legal .firma{ margin-top:10px; }
 .pie{ margin-top:56px; font-size:14px; color:var(--suave); }
 
 @media (max-width: 860px){
@@ -242,7 +249,18 @@ input[readonly]{ background:var(--tarjeta); cursor:not-allowed; }
 
   </div>
 
-  <p class="pie">El Almendro Eventos, Rivadavia, San Juan. Tus datos no se guardan: la tarjeta se arma en tu celular.</p>
+  <footer class="legal" aria-labelledby="titulo-legal">
+    <h2 id="titulo-legal">Condiciones de uso</h2>
+    <ul>
+      <li>Las invitaciones digitales son un beneficio exclusivo para clientes con reserva confirmada en El Almendro Eventos.</li>
+      <li>Generar una invitación no constituye ni garantiza una reserva. La única reserva válida es la confirmada directamente con El Almendro Eventos.</li>
+      <li>El código de reserva es personal e intransferible. El Almendro Eventos puede darlo de baja ante cualquier uso indebido.</li>
+      <li>El contenido de cada invitación (nombres, mensajes, horarios y demás datos) es responsabilidad de quien la arma.</li>
+      <li>Los datos que escribís en tu invitación no se guardan: la imagen se arma en tu dispositivo. Solo se registra tu código de reserva, el tipo de tarjeta elegida y la fecha en que la descargaste.</li>
+    </ul>
+    <p>¿Dudas sobre una invitación? Escribinos al <a href="https://wa.me/5492644045332">264 404 5332</a>.</p>
+    <p class="firma">El Almendro Eventos, Rivadavia, San Juan.</p>
+  </footer>
 </div>
 
 <script>
