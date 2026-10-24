@@ -10,18 +10,38 @@
     <link rel="icon" type="image/png" sizes="32x32" href="imagenes/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="imagenes/apple-touch-icon.png">
 
-    <!-- Tipografías: Archivo (títulos y texto) + Allura (manuscrita) -->
+    <!-- Estación del año (hemisferio sur). Va antes del CSS para que no parpadee.
+         Para probar otra: agregá ?estacion=invierno (o primavera, verano, otono) a la dirección. -->
+    <script>
+    (function () {
+        var html = document.documentElement;
+        var validas = ["primavera", "verano", "otono", "invierno"];
+        var pedida = new URLSearchParams(location.search).get("estacion");
+        var estacion;
+        if (validas.indexOf(pedida) > -1) {
+            estacion = pedida;
+        } else {
+            var hoy = new Date();
+            var md = (hoy.getMonth() + 1) * 100 + hoy.getDate();   // ej: 24 de octubre = 1024
+            if (md >= 921 && md <= 1220) estacion = "primavera";       // 21 sep a 20 dic
+            else if (md >= 1221 || md <= 320) estacion = "verano";     // 21 dic a 20 mar
+            else if (md <= 620) estacion = "otono";                    // 21 mar a 20 jun
+            else estacion = "invierno";                                // 21 jun a 20 sep
+        }
+        html.setAttribute("data-estacion", estacion);
+        html.classList.add("js");   // las animaciones solo se activan si el JavaScript funciona
+    })();
+    </script>
+
+    <!-- Tipografías: Fraunces (títulos) + Outfit (texto) + Caveat (manuscrita) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Archivo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Las fotos se sirven desde Cloudinary -->
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
 
-    <link rel="stylesheet" href="css/estilo-minimalista.css?v=8">
-
-    <!-- Marca que el JavaScript funciona -->
-    <script>document.documentElement.classList.add("js");</script>
+    <link rel="stylesheet" href="css/estilo-minimalista.css?v=9">
 
     <!-- Google Tag Manager -->
     <script defer>
@@ -58,21 +78,69 @@
             <li><a href="index.html#caracteristicas" class="pill">El espacio</a></li>
             <li><a href="galeria.html" class="pill" aria-current="page">Galería</a></li>
             <li><a href="index.html#contacto" class="pill pill-accent">Contacto</a></li>
+            <li><span class="temporada"><span data-solo="primavera">Primavera</span><span data-solo="verano">Verano</span><span data-solo="otono">Otoño</span><span data-solo="invierno">Invierno</span></span></li>
         </ul>
     </nav>
 </header>
 
-<!-- ========== ENCABEZADO ========== -->
 <main>
+    <!-- ========== ENCABEZADO ========== -->
     <section class="gal-header">
-        <span class="shape shape-semi" aria-hidden="true"></span>
-        <span class="shape shape-quarter" aria-hidden="true"></span>
-
         <div class="gal-header-content">
             <p class="script">conocé</p>
             <h1 class="gal-title">Nuestros espacios</h1>
             <p class="subtitle">Fotos reales de eventos en El Almendro. Tocá cualquier foto para verla en grande.</p>
         </div>
+        <svg class="arbol" viewBox="0 0 420 460" role="img" aria-label="Ilustración del almendro, que cambia según la estación del año">
+            <circle class="sol" cx="320" cy="90" r="58"/>
+            <g class="destellos">
+                <path d="M40 70 L58 82"/><path d="M30 110 L52 112"/><path d="M372 200 L392 192"/><path d="M378 236 L398 244"/>
+            </g>
+            <ellipse class="suelo" cx="210" cy="440" rx="180" ry="16"/>
+            <path class="tronco" d="M194 440 C196 390 190 350 200 310 C206 280 202 258 204 236 L220 236 C220 258 224 280 220 310 C216 350 222 390 228 440 Z"/>
+            <g class="ramas">
+                <path d="M210 246 C185 205 155 185 112 165" stroke-width="13"/>
+                <path d="M212 244 C236 205 266 184 306 156" stroke-width="13"/>
+                <path d="M211 240 C211 195 206 155 210 112" stroke-width="10"/>
+                <path d="M134 176 C118 154 102 144 80 143" stroke-width="7"/>
+                <path d="M286 170 C300 146 320 135 342 132" stroke-width="7"/>
+                <path d="M209 156 C190 134 175 118 164 92" stroke-width="6"/>
+                <path d="M210 145 C230 124 246 108 258 82" stroke-width="6"/>
+            </g>
+
+            <!-- Primavera: en flor -->
+            <g data-solo="primavera">
+                <circle cx="112" cy="156" r="48" fill="#F4C3CC"/><circle cx="164" cy="108" r="54" fill="#FFF4F2"/><circle cx="212" cy="84" r="58" fill="#F4C3CC"/><circle cx="262" cy="104" r="54" fill="#FFF4F2"/><circle cx="310" cy="146" r="48" fill="#F4C3CC"/><circle cx="160" cy="180" r="40" fill="#FFF4F2"/><circle cx="264" cy="178" r="42" fill="#F9D9DE"/><circle cx="212" cy="150" r="50" fill="#F9D9DE"/><circle cx="82" cy="140" r="30" fill="#FFF4F2"/><circle cx="342" cy="130" r="28" fill="#FFF4F2"/>
+                <g fill="#D9667F"><circle cx="120" cy="140" r="5"/><circle cx="170" cy="96" r="5"/><circle cx="214" cy="70" r="5"/><circle cx="258" cy="118" r="5"/><circle cx="306" cy="150" r="5"/><circle cx="196" cy="150" r="5"/><circle cx="150" cy="176" r="5"/><circle cx="276" cy="176" r="5"/><circle cx="236" cy="96" r="4"/><circle cx="96" cy="160" r="4"/><circle cx="330" cy="126" r="4"/></g>
+                <g fill="#F4C3CC"><ellipse cx="80" cy="300" rx="7" ry="4" transform="rotate(30 80 300)"/><ellipse cx="340" cy="330" rx="7" ry="4" transform="rotate(-20 340 330)"/><ellipse cx="300" cy="400" rx="7" ry="4" transform="rotate(15 300 400)"/><ellipse cx="120" cy="380" rx="7" ry="4" transform="rotate(-35 120 380)"/></g>
+            </g>
+
+            <!-- Verano: verde y con almendras tiernas -->
+            <g data-solo="verano">
+                <circle cx="112" cy="156" r="50" fill="#4F8A4A"/><circle cx="164" cy="106" r="56" fill="#6FA55C"/><circle cx="212" cy="82" r="60" fill="#4F8A4A"/><circle cx="262" cy="104" r="56" fill="#6FA55C"/><circle cx="310" cy="146" r="50" fill="#3B6E3C"/><circle cx="160" cy="182" r="42" fill="#3B6E3C"/><circle cx="264" cy="180" r="44" fill="#4F8A4A"/><circle cx="212" cy="150" r="52" fill="#5E9A55"/><circle cx="80" cy="140" r="32" fill="#6FA55C"/><circle cx="344" cy="130" r="30" fill="#6FA55C"/>
+                <g fill="#B9D68A"><ellipse cx="140" cy="130" rx="7" ry="10"/><ellipse cx="200" cy="110" rx="7" ry="10"/><ellipse cx="282" cy="140" rx="7" ry="10"/><ellipse cx="236" cy="170" rx="7" ry="10"/><ellipse cx="176" cy="164" rx="7" ry="10"/></g>
+            </g>
+
+            <!-- Otoño: dorado, almendras y hojas cayendo -->
+            <g data-solo="otono">
+                <circle cx="112" cy="160" r="44" fill="#E39A4B"/><circle cx="164" cy="112" r="50" fill="#C9652A"/><circle cx="212" cy="90" r="54" fill="#EDC062"/><circle cx="262" cy="110" r="50" fill="#E39A4B"/><circle cx="308" cy="150" r="44" fill="#C9652A"/><circle cx="160" cy="182" r="36" fill="#EDC062"/><circle cx="262" cy="180" r="38" fill="#EDC062"/><circle cx="212" cy="152" r="46" fill="#D9823B"/>
+                <g fill="#8A5A34"><ellipse cx="146" cy="138" rx="6" ry="9"/><ellipse cx="206" cy="120" rx="6" ry="9"/><ellipse cx="270" cy="146" rx="6" ry="9"/><ellipse cx="230" cy="176" rx="6" ry="9"/><ellipse cx="180" cy="168" rx="6" ry="9"/></g>
+                <g fill="#D9823B"><ellipse cx="70" cy="280" rx="11" ry="6" transform="rotate(30 70 280)"/><ellipse cx="350" cy="310" rx="11" ry="6" transform="rotate(-25 350 310)"/><ellipse cx="310" cy="410" rx="11" ry="6" transform="rotate(10 310 410)"/></g>
+                <g fill="#C9652A"><ellipse cx="110" cy="360" rx="11" ry="6" transform="rotate(-30 110 360)"/><ellipse cx="150" cy="430" rx="11" ry="6" transform="rotate(5 150 430)"/><ellipse cx="268" cy="432" rx="11" ry="6" transform="rotate(-10 268 432)"/></g>
+            </g>
+
+            <!-- Invierno: ramas desnudas, luna y escarcha -->
+            <g data-solo="invierno" fill="#F3EEE4">
+                <circle cx="60" cy="60" r="2.5"/><circle cx="120" cy="40" r="2"/><circle cx="180" cy="30" r="2.5"/><circle cx="250" cy="44" r="2"/><circle cx="380" cy="160" r="2.5"/><circle cx="40" cy="200" r="2"/><circle cx="70" cy="300" r="2.5"/><circle cx="360" cy="280" r="2"/><circle cx="390" cy="360" r="2.5"/><circle cx="30" cy="380" r="2"/>
+                <circle cx="112" cy="163" r="4"/><circle cx="306" cy="155" r="4"/><circle cx="80" cy="141" r="3"/><circle cx="342" cy="130" r="3"/><circle cx="164" cy="90" r="3"/><circle cx="258" cy="80" r="3"/><circle cx="210" cy="110" r="3"/>
+            </g>
+
+            <!-- Guirnalda de luces del quincho -->
+            <path class="guirnalda" d="M108 196 Q210 262 312 188"/>
+            <g class="lamparitas">
+                <circle cx="132" cy="210" r="7"/><circle cx="162" cy="224" r="7"/><circle cx="194" cy="230" r="7"/><circle cx="226" cy="229" r="7"/><circle cx="258" cy="220" r="7"/><circle cx="288" cy="204" r="7"/>
+            </g>
+        </svg>
     </section>
 
     <!-- ========== GRILLA DE FOTOS ========== -->
@@ -93,9 +161,6 @@
 
     <!-- ========== CIERRE ========== -->
     <section class="contact-section">
-        <span class="shape shape-contact-semi" aria-hidden="true"></span>
-        <span class="shape shape-contact-dot" aria-hidden="true"></span>
-
         <div class="container contact-inner">
             <p class="script script-light">¿te gustó el lugar?</p>
             <h2>Consultá tu fecha</h2>
