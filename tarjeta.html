@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fraunces:opsz,wght@9..144,900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
 :root{
   --fondo:#FBF3EE; --superficie:#FFFFFF; --tarjeta:#F6E2DE; --tinta:#2A1A1C; --suave:#5C4A4C;
@@ -249,6 +250,7 @@ input[readonly]{ background:var(--tarjeta); cursor:not-allowed; }
 var N8N = "https://n8n.estudiandoaconstruir.com.ar/webhook/";
 var URL_VALIDAR = N8N + "validar-tarjeta";      // responde si el código es válido
 var URL_GENERADA = N8N + "tarjeta-generada";    // anota que el cliente descargó su tarjeta
+var UBICACION = "https://maps.app.goo.gl/5LVaqRZKytSTan7B8";   // Google Maps de El Almendro
 
 // En la vista previa de Claude no se puede llamar a n8n: ahí se saltea la validación
 var MODO_PRUEBA = !!window.claude;
@@ -422,6 +424,23 @@ function icono(path, x, y, color) {
   ctx.restore();
 }
 
+// Dibuja el QR de "Cómo llegar" (si la librería no cargó, la tarjeta sale igual sin QR)
+function dibujarQR(x, y, lado, colorFondo, colorTexto) {
+  if (typeof qrcode !== "function") return false;
+  var qr = qrcode(0, "M"); qr.addData(UBICACION); qr.make();
+  var n = qr.getModuleCount(), margen = 14, celda = (lado - margen * 2) / n;
+  ctx.fillStyle = "#FFFFFF";
+  ctx.beginPath(); ctx.roundRect(x, y, lado, lado, 22); ctx.fill();
+  ctx.fillStyle = "#1E1E1E";
+  for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) {
+    if (qr.isDark(r, c)) ctx.fillRect(Math.floor(x + margen + c * celda), Math.floor(y + margen + r * celda), Math.ceil(celda), Math.ceil(celda));
+  }
+  ctx.font = "700 30px Outfit, Arial, sans-serif"; ctx.fillStyle = colorTexto; ctx.textAlign = "center";
+  ctx.fillText("Cómo llegar", x + lado / 2, y + lado + 12);
+  ctx.textAlign = "left";
+  return true;
+}
+
 function leer() {
   var f = document.getElementById("formulario");
   var v = {};
@@ -482,7 +501,7 @@ async function dibujar() {
   }
 
   // Caja de datos
-  var cajaY = Math.max(y + 10, 1440), cajaAlto = 252;
+  var cajaY = Math.max(y + 10, 1420), cajaAlto = 270;
   ctx.fillStyle = t.caja;
   ctx.beginPath(); ctx.roundRect(x - 20, cajaY, ancho + 40, cajaAlto, 40); ctx.fill();
   ctx.font = "700 46px Outfit, Arial, sans-serif"; ctx.fillStyle = t.texto;
@@ -492,12 +511,14 @@ async function dibujar() {
     ["M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z|M12 7a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z", "El Almendro, Rivadavia"]
   ];
   filas.forEach(function (f, i) {
-    var fy = cajaY + 34 + i * 70;
+    var fy = cajaY + 40 + i * 72;
     icono(f[0], x + 6, fy, t.titulo);
-    ctx.fillStyle = t.texto; ctx.fillText(f[1], x + 80, fy + 2);
+    ctx.fillStyle = t.texto; ctx.fillText(f[1], x + 80, fy + 2, ancho - 80 - 220);
   });
 
-  y = cajaY + cajaAlto + 34;
+  dibujarQR(x + ancho - 190, cajaY + 22, 190, t.caja, t.texto);
+
+  y = cajaY + cajaAlto + 40;
   if (v.limite) {
     ctx.font = "600 40px Outfit, Arial, sans-serif"; ctx.fillStyle = t.titulo;
     ctx.fillText("Confirmá tu asistencia antes del " + fechaCorta(v.limite), x, y);
@@ -654,7 +675,7 @@ document.getElementById("btn-compartir").addEventListener("click", async functio
   registrarUso("compartir");
   var archivo = new File([blob], nombreArchivo(), { type: "image/png" });
   if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
-    try { await navigator.share({ files: [archivo], title: "Invitación" }); avisar("¡Compartida!"); }
+    try { await navigator.share({ files: [archivo], title: "Invitación", text: "¡Te espero! Cómo llegar a El Almendro: " + UBICACION }); avisar("¡Compartida!"); }
     catch (e) { if (!e || e.name !== "AbortError") { avisar("No se pudo abrir el menú para compartir. Te la descargamos."); guardar(blob, archivo.name); } }
   } else {
     avisar("Este navegador no permite compartir directo. Te la descargamos para que la mandes por WhatsApp.");
