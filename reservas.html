@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FBF3EE">
+<title>Reservas | El Almendro</title>
+<link rel="manifest" href="reservas.webmanifest">
+<link rel="icon" href="icono-192.png">
+<link rel="apple-touch-icon" href="icono-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fondo:#FBF3EE; --hoja:#FFFFFF; --suave-fondo:#F6E2DE; --tinta:#2A1A1C; --suave:#5C4A4C;
+  --acento:#B23C57; --sobre-acento:#FFFFFF; --borde:#E3CFCB; --ok:#2E6B3B; --ok-fondo:#E3EFE3;
+  color-scheme:light;
+}
+:root[data-estacion="verano"]{ --fondo:#F7F2E2; --suave-fondo:#ECE6CF; --acento:#2E6B3B; --borde:#DDD5BB; }
+:root[data-estacion="otono"]{ --fondo:#F6ECDD; --suave-fondo:#EEDCC4; --acento:#A3431A; --borde:#E0CDB3; }
+:root[data-estacion="invierno"]{ --fondo:#EEF1EF; --suave-fondo:#DCE3E1; --acento:#1E2B2B; --borde:#CBD5D3; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --fondo:#1E2B2B; --hoja:#253535; --suave-fondo:#2E403F; --tinta:#F3EEE4; --suave:#C9C2B8;
+    --acento:#EBAA6E; --sobre-acento:#1E2B2B; --borde:#3C5150; --ok:#9FD3A8; --ok-fondo:#25402F; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --fondo:#1E2B2B; --hoja:#253535; --suave-fondo:#2E403F; --tinta:#F3EEE4; --suave:#C9C2B8;
+  --acento:#EBAA6E; --sobre-acento:#1E2B2B; --borde:#3C5150; --ok:#9FD3A8; --ok-fondo:#25402F; color-scheme:dark;
+}
+:root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{ margin:0; background:var(--fondo); color:var(--tinta); font-family:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif; font-size:17px; line-height:1.5; -webkit-tap-highlight-color:transparent; }
+:focus-visible{ outline:3px solid var(--acento); outline-offset:3px; }
+button{ font:inherit; color:inherit; }
+[hidden]{ display:none !important; }
+
+.marco{ max-width:640px; margin:0 auto; padding:16px 18px 132px; }
+
+/* Cabecera */
+.barra{ display:flex; align-items:center; gap:12px; padding:6px 0 18px; }
+.barra svg{ flex:none; }
+.barra .nombre{ flex:1; line-height:1.1; }
+.barra b{ display:block; font-family:"Fraunces",Georgia,serif; font-weight:900; font-size:24px; }
+.barra span{ font-size:14px; color:var(--suave); }
+.icono-btn{ width:48px; height:48px; border-radius:50%; border:2px solid var(--borde); background:var(--hoja); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+.icono-btn svg{ width:22px; height:22px; }
+.icono-btn.girando svg{ animation:giro .8s linear infinite; }
+@keyframes giro{ to{ transform:rotate(360deg); } }
+
+h1{ font-family:"Fraunces",Georgia,serif; font-weight:900; font-size:34px; line-height:1.05; margin:8px 0 4px; letter-spacing:-0.01em; }
+.bajada{ margin:0 0 20px; color:var(--suave); }
+
+/* Agenda */
+.agenda{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+.reserva{ background:var(--hoja); border:2px solid var(--borde); border-radius:22px; overflow:hidden; }
+.reserva[open]{ border-color:var(--tinta); }
+.reserva summary{ list-style:none; display:grid; grid-template-columns:76px minmax(0,1fr) 24px; gap:14px; align-items:center; padding:14px 16px 14px 14px; cursor:pointer; }
+.reserva summary::-webkit-details-marker{ display:none; }
+.flecha{ width:24px; height:24px; color:var(--suave); transition:transform .2s ease; }
+.reserva[open] .flecha{ transform:rotate(180deg); }
+
+.hoja-dia{ border-radius:16px; background:var(--suave-fondo); text-align:center; padding:6px 0 8px; line-height:1; }
+.hoja-dia small{ display:block; font-size:13px; font-weight:600; color:var(--suave); }
+.hoja-dia b{ display:block; font-family:"Fraunces",Georgia,serif; font-weight:900; font-size:38px; margin:4px 0 2px; color:var(--acento); }
+.hoja-dia span{ display:block; font-size:14px; font-weight:700; }
+.hoja-dia.hoy{ background:var(--acento); }
+.hoja-dia.hoy b, .hoja-dia.hoy small, .hoja-dia.hoy span{ color:var(--sobre-acento); }
+
+.datos h2{ font-size:19px; font-weight:800; margin:0; line-height:1.2; overflow-wrap:anywhere; }
+.datos .cuando{ margin:2px 0 6px; font-size:15px; color:var(--suave); }
+.estado{ display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; border-radius:999px; padding:3px 10px; background:var(--suave-fondo); color:var(--suave); }
+.estado::before{ content:""; width:8px; height:8px; border-radius:50%; background:currentColor; }
+.estado.lista{ background:var(--ok-fondo); color:var(--ok); }
+
+.detalle{ border-top:1px solid var(--borde); padding:14px 16px 16px; display:flex; flex-direction:column; gap:12px; }
+.detalle dl{ margin:0; display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 14px; font-size:15px; }
+.detalle dt{ color:var(--suave); }
+.detalle dd{ margin:0; font-weight:600; overflow-wrap:anywhere; }
+.detalle .codigo{ font-weight:800; letter-spacing:.06em; }
+.fila-botones{ display:flex; flex-wrap:wrap; gap:10px; }
+
+.btn{ font-weight:700; font-size:16px; border-radius:999px; min-height:48px; padding:0 20px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; border:2px solid var(--tinta); text-decoration:none; }
+.btn svg{ width:20px; height:20px; flex:none; }
+.btn-lleno{ background:var(--tinta); color:var(--fondo); }
+.btn-borde{ background:transparent; color:var(--tinta); }
+.btn-acento{ background:var(--acento); border-color:var(--acento); color:var(--sobre-acento); }
+.btn:disabled{ opacity:.55; cursor:progress; }
+
+.pasadas{ margin-top:28px; }
+.pasadas > summary{ cursor:pointer; font-weight:700; color:var(--suave); min-height:44px; display:flex; align-items:center; gap:8px; }
+.pasadas > summary::marker{ color:var(--suave); }
+.pasadas .agenda{ margin-top:10px; }
+.pasadas .reserva{ opacity:.85; }
+
+.vacio{ background:var(--hoja); border:2px dashed var(--borde); border-radius:22px; padding:28px 22px; text-align:center; }
+.vacio p{ margin:0; color:var(--suave); }
+.vacio b{ display:block; font-size:19px; color:var(--tinta); margin-bottom:4px; }
+
+.aviso{ border-radius:16px; padding:12px 16px; font-size:15px; margin:0 0 16px; background:var(--suave-fondo); }
+.aviso.error{ background:var(--acento); color:var(--sobre-acento); font-weight:600; }
+
+/* Botón principal fijo */
+.accion-fija{ position:fixed; left:0; right:0; bottom:0; padding:14px 18px calc(14px + env(safe-area-inset-bottom,0px)); background:linear-gradient(to top, var(--fondo) 70%, transparent); display:flex; justify-content:center; z-index:5; }
+.accion-fija .btn{ width:100%; max-width:604px; min-height:58px; font-size:18px; }
+
+/* Clave */
+.clave{ background:var(--hoja); border:2px solid var(--borde); border-radius:26px; padding:24px; display:flex; flex-direction:column; gap:14px; margin-top:12px; }
+.clave h1{ margin:0; }
+.clave p{ margin:0; color:var(--suave); }
+
+/* Formulario */
+label{ font-weight:700; font-size:16px; display:block; margin-bottom:6px; }
+.campo{ display:flex; flex-direction:column; }
+input{ font:inherit; color:var(--tinta); background:var(--fondo); border:2px solid var(--borde); border-radius:16px; min-height:54px; padding:10px 16px; width:100%; }
+input:focus{ border-color:var(--acento); outline:none; }
+.ayuda{ font-size:14px; color:var(--suave); margin:6px 0 0; }
+.mensaje-form{ min-height:22px; margin:0; font-size:15px; font-weight:600; color:var(--acento); }
+
+/* Hoja inferior */
+dialog{ border:0; padding:0; margin:auto auto 0; width:100%; max-width:640px; max-height:calc(100% - 40px); background:var(--hoja); color:var(--tinta); border-radius:28px 28px 0 0; }
+dialog::backdrop{ background:rgba(20,12,14,.45); }
+.hoja{ padding:22px 20px calc(22px + env(safe-area-inset-bottom,0px)); display:flex; flex-direction:column; gap:16px; }
+.hoja-cabeza{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.hoja-cabeza h2{ font-family:"Fraunces",Georgia,serif; font-weight:900; font-size:28px; margin:0; }
+.repetida{ border-radius:16px; padding:12px 14px; background:var(--suave-fondo); font-size:15px; }
+.repetida b{ font-weight:800; }
+
+.listo{ text-align:center; display:flex; flex-direction:column; gap:14px; align-items:center; }
+.listo p{ margin:0; color:var(--suave); }
+.ficha{ background:var(--suave-fondo); border-radius:20px; padding:14px 26px 16px; }
+.ficha small{ display:block; font-size:14px; color:var(--suave); font-weight:600; }
+.ficha b{ display:block; font-family:"Fraunces",Georgia,serif; font-weight:900; font-size:40px; letter-spacing:.04em; color:var(--acento); line-height:1.1; }
+.listo .btn{ width:100%; }
+
+.toast{ position:fixed; left:50%; bottom:calc(96px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--tinta); color:var(--fondo); padding:10px 18px; border-radius:999px; font-weight:600; font-size:15px; z-index:20; }
+
+@media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="marco">
+
+  <header class="barra">
+    <svg width="44" height="44" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="11" r="7" fill="#F4C3CC"/><circle cx="29" cy="18" r="7" fill="#F4C3CC"/><circle cx="25" cy="28" r="7" fill="#F4C3CC"/><circle cx="15" cy="28" r="7" fill="#F4C3CC"/><circle cx="11" cy="18" r="7" fill="#F4C3CC"/><circle cx="20" cy="20" r="4" fill="#B23C57"/>
+    </svg>
+    <div class="nombre"><b>Reservas</b><span>El Almendro Eventos</span></div>
+    <button class="icono-btn" id="btn-actualizar" type="button" aria-label="Actualizar reservas" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
+    </button>
+  </header>
+
+  <p class="aviso" id="aviso-prueba" hidden>Vista de prueba con reservas de ejemplo. En tu web se conecta con tu planilla.</p>
+
+  <!-- Pantalla de clave -->
+  <section class="clave" id="pantalla-clave" hidden aria-labelledby="titulo-clave">
+    <h1 id="titulo-clave">Entrá con tu clave</h1>
+    <p>Se pide una sola vez en este celular.</p>
+    <div class="campo">
+      <label for="f-clave">Clave</label>
+      <input id="f-clave" type="password" autocomplete="current-password">
+    </div>
+    <p class="mensaje-form" id="msg-clave" role="alert"></p>
+    <button class="btn btn-lleno" id="btn-clave" type="button">Entrar</button>
+  </section>
+
+  <!-- Agenda -->
+  <main id="pantalla-agenda" hidden>
+    <h1>Próximos eventos</h1>
+    <p class="bajada" id="resumen">Cargando reservas…</p>
+    <p class="aviso error" id="error-agenda" role="alert" hidden></p>
+    <ul class="agenda" id="lista-proximas"></ul>
+    <div class="vacio" id="vacio" hidden><b>Todavía no hay reservas</b><p>Cargá la primera con el botón de abajo.</p></div>
+    <details class="pasadas" id="bloque-pasadas" hidden>
+      <summary id="titulo-pasadas">Eventos pasados</summary>
+      <ul class="agenda" id="lista-pasadas"></ul>
+    </details>
+  </main>
+</div>
+
+<div class="accion-fija" id="accion-fija" hidden>
+  <button class="btn btn-acento" id="btn-nueva" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    Nueva reserva
+  </button>
+</div>
+
+<!-- Nueva reserva -->
+<dialog id="hoja-nueva" aria-labelledby="titulo-nueva">
+  <div class="hoja" id="paso-form">
+    <div class="hoja-cabeza">
+      <h2 id="titulo-nueva">Nueva reserva</h2>
+      <button class="icono-btn" type="button" data-cerrar aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="campo">
+      <label for="f-cliente">Nombre del cliente</label>
+      <input id="f-cliente" type="text" autocomplete="off" autocapitalize="words" placeholder="Ej: Laura Gómez">
+    </div>
+    <div class="campo">
+      <label for="f-telefono">Celular</label>
+      <input id="f-telefono" type="tel" inputmode="tel" autocomplete="off" placeholder="Ej: 2644045332">
+      <p class="ayuda">Característica sin 0 y número sin 15.</p>
+    </div>
+    <div class="campo">
+      <label for="f-fecha">Fecha del evento</label>
+      <input id="f-fecha" type="date">
+    </div>
+    <div class="repetida" id="repetida" role="status" hidden></div>
+    <p class="mensaje-form" id="msg-form" role="alert"></p>
+    <button class="btn btn-lleno" id="btn-crear" type="button">Crear código</button>
+  </div>
+
+  <div class="hoja listo" id="paso-listo" hidden>
+    <svg width="56" height="56" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="11" r="7" fill="#F4C3CC"/><circle cx="29" cy="18" r="7" fill="#F4C3CC"/><circle cx="25" cy="28" r="7" fill="#F4C3CC"/><circle cx="15" cy="28" r="7" fill="#F4C3CC"/><circle cx="11" cy="18" r="7" fill="#F4C3CC"/><circle cx="20" cy="20" r="4" fill="#B23C57"/>
+    </svg>
+    <h2 style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:28px;margin:0" id="listo-titulo">Reserva cargada</h2>
+    <div class="ficha"><small>Código de tarjeta</small><b id="listo-codigo">ALM-XXXXX</b></div>
+    <p id="listo-texto">Ahora mandale el mensaje con su invitación de regalo.</p>
+    <a class="btn btn-acento" id="listo-whatsapp" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
+      Enviar por WhatsApp
+    </a>
+    <button class="btn btn-borde" type="button" id="listo-copiar">Copiar mensaje</button>
+    <button class="btn btn-borde" type="button" data-cerrar>Listo</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+// ================= CONFIGURACIÓN =================
+var URL_APP = "https://n8n.estudiandoaconstruir.com.ar/webhook/reservas-app";
+var URL_TARJETA = "https://elalmendroeventos.com.ar/tarjeta.html";
+var MODO_PRUEBA = !/(^|\.)elalmendroeventos\.com\.ar$/.test(location.hostname);
+var CLAVE_GUARDADA = "almendro-reservas-clave";
+
+// ================= ESTACIÓN (igual que la web) =================
+function estacionDe(f) {
+  var m = f.getMonth() + 1, d = f.getDate(), n = m * 100 + d;
+  if (n >= 921 && n <= 1220) return "primavera";
+  if (n >= 321 && n <= 620) return "otono";
+  if (n >= 621 && n <= 920) return "invierno";
+  return "verano";
+}
+document.documentElement.setAttribute("data-estacion", estacionDe(new Date()));
+(function () {
+  var colores = { primavera: "#FBF3EE", verano: "#F7F2E2", otono: "#F6ECDD", invierno: "#EEF1EF" };
+  var oscuro = matchMedia("(prefers-color-scheme: dark)").matches;
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", oscuro ? "#1E2B2B" : colores[estacionDe(new Date())]);
+})();
+
+// ================= UTILIDADES =================
+var MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+var DIAS = ["dom","lun","mar","mié","jue","vie","sáb"];
+var DIAS_LARGOS = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+var MESES_LARGOS = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+
+function aFecha(iso) { var p = String(iso || "").split("-"); return p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : null; }
+function hoyISO() { var h = new Date(); return h.getFullYear() + "-" + String(h.getMonth() + 1).padStart(2, "0") + "-" + String(h.getDate()).padStart(2, "0"); }
+function diasHasta(iso) { var a = aFecha(hoyISO()), b = aFecha(iso); return Math.round((b - a) / 86400000); }
+function fechaLarga(iso) { var f = aFecha(iso); return f ? DIAS_LARGOS[f.getDay()] + " " + f.getDate() + " de " + MESES_LARGOS[f.getMonth()] : ""; }
+function fechaCorta(texto) {
+  if (!texto) return "";
+  var iso = /^\d{4}-\d{2}-\d{2}/.test(texto) ? texto.slice(0, 10) : null;
+  if (!iso) return texto;
+  var f = aFecha(iso); return f.getDate() + "/" + (f.getMonth() + 1);
+}
+function cuandoTexto(n) {
+  if (n === 0) return "Hoy";
+  if (n === 1) return "Mañana";
+  if (n > 1) return "En " + n + " días";
+  if (n === -1) return "Ayer";
+  return "Hace " + Math.abs(n) + " días";
+}
+function telWhatsApp(t) {
+  t = String(t || "").replace(/\D/g, "");
+  if (!t) return "";
+  if (t.indexOf("549") === 0) return t;
+  if (t.indexOf("54") === 0) return "549" + t.slice(2);
+  return "549" + t.replace(/^0/, "");
+}
+function telLindo(t) {
+  t = telWhatsApp(t); if (!t) return "Sin celular";
+  var n = t.slice(3); return n.slice(0, 3) + " " + n.slice(3, 6) + " " + n.slice(6);
+}
+function mensajeDe(r) {
+  return "¡Hola " + (r.cliente || "") + "! 🌸 Muchas gracias por elegir El Almendro para tu evento. Tu fecha quedó reservada.\n\n" +
+    "🎁 Te regalamos tu invitación digital. Armala desde acá, ya entrás con tu código:\n" +
+    URL_TARJETA + "?codigo=" + r.codigo + "\n\n" +
+    "Tu código es: " + r.codigo + "\n\n" +
+    "Elegís el diseño, completás los datos y la descargás lista para compartir. Incluye un QR para que tus invitados lleguen directo al salón 📍\n\n" +
+    "¡Nos vemos pronto! 🎉\nEl Almendro Eventos";
+}
+function linkWhatsApp(r) { return "https://wa.me/" + telWhatsApp(r.telefono) + "?text=" + encodeURIComponent(mensajeDe(r)); }
+function el(tag, clase, texto) { var e = document.createElement(tag); if (clase) e.className = clase; if (texto != null) e.textContent = texto; return e; }
+
+var toastTimer;
+function toast(t) {
+  var x = document.getElementById("toast"); x.textContent = t; x.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(function () { x.hidden = true; }, 2200);
+}
+async function copiar(texto, aviso) {
+  try { await navigator.clipboard.writeText(texto); toast(aviso); }
+  catch (e) { toast("No se pudo copiar en este navegador"); }
+}
+
+// ================= DATOS =================
+var reservas = [];
+
+function ejemplo() {
+  function dentro(n) { var f = new Date(); f.setDate(f.getDate() + n); return f.getFullYear() + "-" + String(f.getMonth() + 1).padStart(2, "0") + "-" + String(f.getDate()).padStart(2, "0"); }
+  return [
+    { codigo: "ALM-K7M2P", cliente: "Laura Gómez", telefono: "5492644045332", fecha: dentro(3), creado: dentro(-20), usada: dentro(-12) },
+    { codigo: "ALM-R4TQ8", cliente: "Familia Quiroga", telefono: "5492645123456", fecha: dentro(12), creado: dentro(-6), usada: "" },
+    { codigo: "ALM-WH3ZN", cliente: "Constructora Andina", telefono: "5492644998877", fecha: dentro(34), creado: dentro(-2), usada: "" },
+    { codigo: "ALM-B6XEJ", cliente: "Martina Ríos", telefono: "5492644556677", fecha: dentro(-9), creado: dentro(-40), usada: dentro(-25) }
+  ];
+}
+
+function clave() { try { return localStorage.getItem(CLAVE_GUARDADA) || ""; } catch (e) { return ""; } }
+function guardarClave(c) { try { localStorage.setItem(CLAVE_GUARDADA, c); } catch (e) {} }
+function borrarClave() { try { localStorage.removeItem(CLAVE_GUARDADA); } catch (e) {} }
+
+async function pedir(datos, claveUsar) {
+  var control = new AbortController();
+  var espera = setTimeout(function () { control.abort(); }, 15000);
+  try {
+    var r = await fetch(URL_APP, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({ clave: claveUsar || clave() }, datos)), signal: control.signal
+    });
+    var json = await r.json();
+    if (json && json.error === "clave") { var e = new Error("clave"); e.tipo = "clave"; throw e; }
+    return json;
+  } finally { clearTimeout(espera); }
+}
+
+// ================= PANTALLAS =================
+var pClave = document.getElementById("pantalla-clave");
+var pAgenda = document.getElementById("pantalla-agenda");
+var accionFija = document.getElementById("accion-fija");
+var btnActualizar = document.getElementById("btn-actualizar");
+
+function mostrarClave(mensaje) {
+  pClave.hidden = false; pAgenda.hidden = true; accionFija.hidden = true; btnActualizar.hidden = true;
+  document.getElementById("msg-clave").textContent = mensaje || "";
+  document.getElementById("f-clave").focus();
+}
+function mostrarAgenda() {
+  pClave.hidden = true; pAgenda.hidden = false; accionFija.hidden = false; btnActualizar.hidden = false;
+}
+
+async function entrar() {
+  var c = document.getElementById("f-clave").value.trim();
+  if (!c) { document.getElementById("msg-clave").textContent = "Escribí la clave."; return; }
+  var b = document.getElementById("btn-clave"); b.disabled = true; b.textContent = "Entrando…";
+  try {
+    var datos = await pedir({ accion: "listar" }, c);
+    guardarClave(c); reservas = normalizar(datos.reservas); mostrarAgenda(); pintar();
+  } catch (e) {
+    document.getElementById("msg-clave").textContent = e.tipo === "clave" ? "La clave no es correcta." : "No hay conexión con el sistema. Probá de nuevo en un momento.";
+  } finally { b.disabled = false; b.textContent = "Entrar"; }
+}
+document.getElementById("btn-clave").addEventListener("click", entrar);
+document.getElementById("f-clave").addEventListener("keydown", function (e) { if (e.key === "Enter") entrar(); });
+
+function normalizar(lista) {
+  return (Array.isArray(lista) ? lista : []).filter(function (r) { return r && r.codigo && /^\d{4}-\d{2}-\d{2}$/.test(r.fecha || ""); });
+}
+
+async function cargar() {
+  var error = document.getElementById("error-agenda");
+  error.hidden = true;
+  if (MODO_PRUEBA) { pintar(); return; }
+  btnActualizar.classList.add("girando");
+  try {
+    var datos = await pedir({ accion: "listar" });
+    reservas = normalizar(datos.reservas); pintar();
+  } catch (e) {
+    if (e.tipo === "clave") { borrarClave(); mostrarClave("La clave cambió. Ingresá la nueva."); return; }
+    error.textContent = "No se pudieron traer las reservas. Revisá la conexión y tocá actualizar.";
+    error.hidden = false;
+    if (!reservas.length) document.getElementById("resumen").textContent = "";
+  } finally { btnActualizar.classList.remove("girando"); }
+}
+btnActualizar.addEventListener("click", cargar);
+
+// ================= PINTAR AGENDA =================
+function tarjetaReserva(r) {
+  var n = diasHasta(r.fecha), f = aFecha(r.fecha);
+  var li = el("li");
+  var det = el("details", "reserva");
+  var sum = el("summary");
+
+  var hoja = el("div", "hoja-dia" + (n === 0 ? " hoy" : ""));
+  hoja.setAttribute("aria-hidden", "true");
+  hoja.appendChild(el("small", null, DIAS[f.getDay()]));
+  hoja.appendChild(el("b", null, String(f.getDate())));
+  hoja.appendChild(el("span", null, MESES[f.getMonth()]));
+
+  var datos = el("div", "datos");
+  datos.appendChild(el("h2", null, r.cliente || "Sin nombre"));
+  var cuando = el("p", "cuando", cuandoTexto(n));
+  var oculto = el("span", null, ", " + fechaLarga(r.fecha)); oculto.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)";
+  cuando.appendChild(oculto);
+  datos.appendChild(cuando);
+  datos.appendChild(el("span", "estado" + (r.usada ? " lista" : ""), r.usada ? "Ya armó su tarjeta" : "Tarjeta sin armar"));
+
+  var flecha = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  flecha.setAttribute("viewBox", "0 0 24 24"); flecha.setAttribute("class", "flecha"); flecha.setAttribute("aria-hidden", "true");
+  flecha.innerHTML = '<path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>';
+
+  sum.appendChild(hoja); sum.appendChild(datos); sum.appendChild(flecha);
+  det.appendChild(sum);
+
+  var cuerpo = el("div", "detalle");
+  var dl = el("dl");
+  [["Fecha", fechaLarga(r.fecha)], ["Celular", telLindo(r.telefono)], ["Código", r.codigo],
+   ["Tarjeta", r.usada ? "Armada el " + fechaCorta(r.usada) : "Todavía no la armó"]].forEach(function (par) {
+    dl.appendChild(el("dt", null, par[0]));
+    var dd = el("dd", par[0] === "Código" ? "codigo" : null, par[1]); dl.appendChild(dd);
+  });
+  cuerpo.appendChild(dl);
+
+  var botones = el("div", "fila-botones");
+  if (telWhatsApp(r.telefono) && n >= 0) {
+    var wa = el("a", "btn btn-lleno", "Reenviar mensaje");
+    wa.href = linkWhatsApp(r); wa.target = "_blank"; wa.rel = "noopener";
+    botones.appendChild(wa);
+  }
+  var cp = el("button", "btn btn-borde", "Copiar código"); cp.type = "button";
+  cp.addEventListener("click", function () { copiar(r.codigo, "Código copiado"); });
+  botones.appendChild(cp);
+  cuerpo.appendChild(botones);
+  det.appendChild(cuerpo);
+  li.appendChild(det);
+  return li;
+}
+
+function pintar() {
+  var proximas = reservas.filter(function (r) { return diasHasta(r.fecha) >= 0; }).sort(function (a, b) { return a.fecha < b.fecha ? -1 : 1; });
+  var pasadas = reservas.filter(function (r) { return diasHasta(r.fecha) < 0; }).sort(function (a, b) { return a.fecha > b.fecha ? -1 : 1; });
+
+  var lp = document.getElementById("lista-proximas"); lp.innerHTML = "";
+  proximas.forEach(function (r) { lp.appendChild(tarjetaReserva(r)); });
+  document.getElementById("vacio").hidden = proximas.length > 0;
+
+  var sin = proximas.filter(function (r) { return !r.usada; }).length;
+  var resumen = proximas.length === 0 ? "No hay eventos por delante."
+    : (proximas.length === 1 ? "1 evento por delante" : proximas.length + " eventos por delante") +
+      (sin === 0 ? ". Todos armaron su tarjeta." : sin === 1 ? ". 1 cliente todavía no armó su tarjeta." : ". " + sin + " clientes todavía no armaron su tarjeta.");
+  document.getElementById("resumen").textContent = resumen;
+
+  var bp = document.getElementById("bloque-pasadas");
+  var lpas = document.getElementById("lista-pasadas"); lpas.innerHTML = "";
+  pasadas.forEach(function (r) { lpas.appendChild(tarjetaReserva(r)); });
+  bp.hidden = pasadas.length === 0;
+  document.getElementById("titulo-pasadas").textContent = "Eventos pasados (" + pasadas.length + ")";
+}
+
+// ================= NUEVA RESERVA =================
+var hojaNueva = document.getElementById("hoja-nueva");
+var pasoForm = document.getElementById("paso-form");
+var pasoListo = document.getElementById("paso-listo");
+var fCliente = document.getElementById("f-cliente"), fTel = document.getElementById("f-telefono"), fFecha = document.getElementById("f-fecha");
+var msgForm = document.getElementById("msg-form"), cajaRepetida = document.getElementById("repetida");
+var confirmarRepetida = false, ultima = null;
+
+document.getElementById("btn-nueva").addEventListener("click", function () {
+  fCliente.value = ""; fTel.value = ""; fFecha.value = ""; fFecha.min = hoyISO();
+  msgForm.textContent = ""; cajaRepetida.hidden = true; confirmarRepetida = false;
+  document.getElementById("btn-crear").textContent = "Crear código";
+  pasoForm.hidden = false; pasoListo.hidden = true;
+  hojaNueva.showModal(); fCliente.focus();
+});
+hojaNueva.addEventListener("click", function (e) {
+  if (e.target === hojaNueva || e.target.closest("[data-cerrar]")) hojaNueva.close();
+});
+
+fFecha.addEventListener("change", function () {
+  confirmarRepetida = false;
+  document.getElementById("btn-crear").textContent = "Crear código";
+  var ya = reservas.filter(function (r) { return r.fecha === fFecha.value; });
+  if (ya.length) {
+    cajaRepetida.innerHTML = "";
+    cajaRepetida.appendChild(document.createTextNode("Ese día ya está reservado por "));
+    cajaRepetida.appendChild(el("b", null, ya.map(function (r) { return r.cliente; }).join(" y ")));
+    cajaRepetida.appendChild(document.createTextNode(". Revisá la fecha antes de seguir."));
+    cajaRepetida.hidden = false;
+  } else cajaRepetida.hidden = true;
+});
+[fCliente, fTel].forEach(function (c) { c.addEventListener("input", function () { msgForm.textContent = ""; }); });
+
+document.getElementById("btn-crear").addEventListener("click", async function () {
+  var cliente = fCliente.value.trim(), tel = telWhatsApp(fTel.value), fecha = fFecha.value, b = this;
+  var falta = [];
+  if (!cliente) falta.push("el nombre");
+  if (!fecha) falta.push("la fecha");
+  if (falta.length) { msgForm.textContent = "Completá " + falta.join(" y ") + "."; return; }
+  if (!tel || tel.length !== 13) { msgForm.textContent = "Revisá el celular: tienen que ser 10 números, sin 0 y sin 15."; fTel.focus(); return; }
+  if (fecha < hoyISO()) { msgForm.textContent = "La fecha ya pasó. Elegí una fecha de hoy en adelante."; return; }
+  if (!cajaRepetida.hidden && !confirmarRepetida) {
+    confirmarRepetida = true; b.textContent = "Crear igual"; msgForm.textContent = "Tocá de nuevo si querés cargarla igual."; return;
+  }
+
+  b.disabled = true; b.textContent = "Creando…"; msgForm.textContent = "";
+  try {
+    var nueva;
+    if (MODO_PRUEBA) {
+      var letras = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", c = "";
+      for (var i = 0; i < 5; i++) c += letras[Math.floor(Math.random() * letras.length)];
+      nueva = { codigo: "ALM-" + c, cliente: cliente, telefono: tel, fecha: fecha, creado: hoyISO(), usada: "" };
+    } else {
+      var resp = await pedir({ accion: "crear", cliente: cliente, telefono: tel, fecha: fecha });
+      if (!resp || !resp.codigo) throw new Error("sin código");
+      nueva = { codigo: resp.codigo, cliente: resp.cliente || cliente, telefono: String(resp.telefono || tel), fecha: fecha, creado: resp.creado || hoyISO(), usada: "" };
+    }
+    reservas.push(nueva); ultima = nueva; pintar();
+    document.getElementById("listo-codigo").textContent = nueva.codigo;
+    document.getElementById("listo-texto").textContent = "Ahora mandale a " + nueva.cliente + " el mensaje con su invitación de regalo.";
+    document.getElementById("listo-whatsapp").href = linkWhatsApp(nueva);
+    pasoForm.hidden = true; pasoListo.hidden = false;
+    document.getElementById("listo-whatsapp").focus();
+  } catch (e) {
+    if (e.tipo === "clave") { hojaNueva.close(); borrarClave(); mostrarClave("La clave cambió. Ingresá la nueva."); return; }
+    msgForm.textContent = "No se pudo cargar la reserva. Revisá la conexión y probá de nuevo.";
+  } finally { b.disabled = false; if (b.textContent === "Creando…") b.textContent = "Crear código"; }
+});
+document.getElementById("listo-copiar").addEventListener("click", function () { if (ultima) copiar(mensajeDe(ultima), "Mensaje copiado"); });
+
+// ================= INICIO =================
+(function () {
+  if (MODO_PRUEBA) {
+    document.getElementById("aviso-prueba").hidden = false;
+    reservas = ejemplo(); mostrarAgenda(); pintar(); return;
+  }
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw-reservas.js", { scope: "./reservas" }).catch(function () {});
+  if (!clave()) { mostrarClave(); return; }
+  mostrarAgenda(); cargar();
+})();
+document.addEventListener("visibilitychange", function () { if (!document.hidden && !MODO_PRUEBA && clave() && !pAgenda.hidden) cargar(); });
+</script>
+</body>
+</html>
