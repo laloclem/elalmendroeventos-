@@ -46,7 +46,8 @@ body{ margin:0; background:var(--fondo); color:var(--tinta); font-family:"Outfit
 h2.paso{ font-size:22px; font-weight:800; margin:36px 0 14px; display:flex; align-items:center; gap:12px; }
 h2.paso span{ width:36px; height:36px; border-radius:50%; background:var(--tinta); color:var(--fondo); display:inline-flex; align-items:center; justify-content:center; font-size:17px; flex:none; }
 
-.opciones{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.opciones{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+@media (max-width: 1020px){ .opciones{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .opcion{ all:unset; box-sizing:border-box; cursor:pointer; border-radius:26px; background:var(--superficie); border:2px solid var(--borde); overflow:hidden; display:flex; flex-direction:column; transition:transform .15s ease, border-color .15s ease; }
 .opcion:hover{ transform:translateY(-2px); }
 .opcion:focus-visible{ outline:3px solid var(--acento); outline-offset:3px; }
@@ -164,6 +165,10 @@ input[readonly]{ background:var(--tarjeta); cursor:not-allowed; }
       <div class="mini" data-mini="empresa"></div>
       <div class="texto"><b>Empresarial</b><small>Cenas de fin de año, encuentros y reuniones de equipo.</small></div>
     </button>
+    <button type="button" class="opcion" data-tipo="escuela" aria-pressed="false">
+      <div class="mini" data-mini="escuela"></div>
+      <div class="texto"><b>Escuelas y ferias</b><small>Actos, fiestas de fin de curso, kermeses y ferias de emprendedores.</small></div>
+    </button>
   </div>
 
   <div class="taller" id="taller" hidden>
@@ -190,9 +195,17 @@ input[readonly]{ background:var(--tarjeta); cursor:not-allowed; }
           <label for="f-empresa">Nombre de la empresa</label>
           <input id="f-empresa" name="empresa" maxlength="30" autocomplete="organization" placeholder="Ej: Constructora Andes">
         </div>
+        <div class="campo" data-campo="organiza">
+          <label for="f-organiza">¿Quién organiza?</label>
+          <input id="f-organiza" name="organiza" maxlength="34" autocomplete="off" placeholder="Ej: Escuela Sarmiento, 6° grado">
+        </div>
         <div class="campo" data-campo="evento">
           <label for="f-evento">Nombre del evento</label>
           <input id="f-evento" name="evento" maxlength="40" autocomplete="off" placeholder="Ej: Cena de fin de año">
+        </div>
+        <div class="campo" data-campo="entrada">
+          <label for="f-entrada">Entrada <small>(opcional)</small></label>
+          <input id="f-entrada" name="entrada" maxlength="40" autocomplete="off" placeholder="Ej: Entrada libre y gratuita">
         </div>
         <div class="fila">
           <div class="campo">
@@ -306,6 +319,12 @@ var TIPOS = {
     campos: ["empresa", "evento"],
     obligatorios: { empresa: "el nombre de la empresa", evento: "el nombre del evento" },
     mensajes: ["Te esperamos para compartir un encuentro especial.", "Cerramos el año juntos. ¡Te esperamos!", "Será un gusto contar con tu presencia."]
+  },
+  escuela: {
+    campos: ["organiza", "evento", "entrada"],
+    obligatorios: { organiza: "quién organiza", evento: "el nombre del evento" },
+    ejemplo: "Ej: Fiesta de fin de año",
+    mensajes: ["¡Te esperamos con toda la familia!", "Habrá juegos, comidas y muchas sorpresas.", "Vení a recorrer los puestos y apoyar a los emprendedores."]
   }
 };
 
@@ -371,10 +390,36 @@ function svgMesa(t) {
   '</svg>';
 }
 
+function svgFeria(t) {
+  var band = "", colores = [t.globo1, t.globo2, t.papel];
+  for (var i = 0; i < 8; i++) {
+    var u = (i + 0.5) / 8, x = (1-u)*(1-u)*10 + 2*(1-u)*u*150 + u*u*290, y = (1-u)*(1-u)*28 + 2*(1-u)*u*84 + u*u*28;
+    band += '<path d="M'+(x-14).toFixed(1)+' '+y.toFixed(1)+' L'+(x+14).toFixed(1)+' '+y.toFixed(1)+' L'+x.toFixed(1)+' '+(y+30).toFixed(1)+' Z" fill="'+colores[i % 3]+'" stroke="'+TRAZO+'" stroke-width="3" stroke-linejoin="round"/>';
+  }
+  var toldo = "", ancho = 220 / 6;
+  for (var j = 0; j < 6; j++) {
+    var x0 = 40 + j * ancho, x1 = x0 + ancho, col = j % 2 ? "#FFFFFF" : t.globo1;
+    toldo += '<path d="M'+x0.toFixed(1)+' 112 L'+x1.toFixed(1)+' 112 L'+x1.toFixed(1)+' 150 A'+(ancho/2).toFixed(1)+' '+(ancho/2).toFixed(1)+' 0 0 1 '+x0.toFixed(1)+' 150 Z" fill="'+col+'" stroke="'+TRAZO+'" stroke-width="3.5" stroke-linejoin="round"/>';
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360">' +
+  '<path d="M10 28 Q150 140 290 28" fill="none" stroke="'+TRAZO+'" stroke-width="3"/>' + band +
+  '<rect x="54" y="150" width="10" height="150" rx="3" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="3.5"/><rect x="236" y="150" width="10" height="150" rx="3" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="3.5"/>' +
+  '<path d="M34 112 L150 92 L266 112 Z" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="3.5" stroke-linejoin="round"/>' + toldo +
+  '<rect x="72" y="208" width="58" height="12" rx="3" fill="'+t.globo2+'" stroke="'+TRAZO+'" stroke-width="3"/><rect x="78" y="196" width="50" height="12" rx="3" fill="'+t.papel+'" stroke="'+TRAZO+'" stroke-width="3"/><rect x="74" y="220" width="54" height="10" rx="3" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="3"/>' +
+  '<circle cx="158" cy="214" r="15" fill="#D9453B" stroke="'+TRAZO+'" stroke-width="3.5"/><path d="M158 199 C158 193 160 190 163 188" fill="none" stroke="'+TRAZO+'" stroke-width="3" stroke-linecap="round"/><path d="M161 196 C168 190 176 192 178 196 C172 200 166 200 161 196 Z" fill="#4E9A4A" stroke="'+TRAZO+'" stroke-width="2.5" stroke-linejoin="round"/>' +
+  '<rect x="194" y="194" width="34" height="36" rx="8" fill="'+t.bebida+'" stroke="'+TRAZO+'" stroke-width="3.5"/><rect x="190" y="186" width="42" height="10" rx="3" fill="'+t.globo1+'" stroke="'+TRAZO+'" stroke-width="3"/>' +
+  '<rect x="30" y="228" width="240" height="14" rx="5" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="3.5"/>' +
+  '<rect x="38" y="242" width="224" height="62" rx="6" fill="'+t.mantel+'" stroke="'+TRAZO+'" stroke-width="3.5"/>' +
+  '<rect x="112" y="256" width="76" height="34" rx="8" fill="#FFFFFF" stroke="'+TRAZO+'" stroke-width="3"/>' +
+  '<ellipse cx="150" cy="338" rx="124" ry="12" fill="rgba(0,0,0,0.12)"/>' +
+  '</svg>';
+}
+
 function ilustracion(tipo, t) {
   TRAZO = t.trazo || "#2B2B2B";   // en invierno el contorno va claro para que se vea sobre el fondo oscuro
   if (tipo === "cumple") return svgTorta(t);
   if (tipo === "celebracion") return svgCopas(t);
+  if (tipo === "escuela") return svgFeria(t);
   return svgMesa(t);
 }
 
@@ -462,7 +507,7 @@ function dibujarQR(x, y, lado, colorFondo, colorTexto) {
 function leer() {
   var f = document.getElementById("formulario");
   var v = {};
-  ["nombre","edad","titulo","quienes","empresa","evento","fecha","hora","limite","mensaje"].forEach(function (k) { v[k] = (f.elements[k].value || "").trim(); });
+  ["nombre","edad","titulo","quienes","empresa","organiza","evento","entrada","fecha","hora","limite","mensaje"].forEach(function (k) { v[k] = (f.elements[k].value || "").trim(); });
   return v;
 }
 
@@ -496,10 +541,14 @@ async function dibujar() {
   var chica, grande, debajo = "";
   if (estado.tipo === "cumple") { chica = "¡Cumplo"; grande = (v.edad || "[edad]") + "!"; debajo = v.nombre || "[Nombre]"; }
   else if (estado.tipo === "celebracion") { chica = "¡Te invitamos!"; grande = v.titulo || "[Qué festejan]"; debajo = v.quienes || "[Quiénes invitan]"; }
+  else if (estado.tipo === "escuela") { chica = (v.organiza || "[Quién organiza]") + " te invita a"; grande = v.evento || "[Nombre del evento]"; }
   else { chica = (v.empresa || "[Empresa]") + " te invita a"; grande = v.evento || "[Nombre del evento]"; }
 
-  ctx.font = "800 62px Outfit, Arial, sans-serif"; ctx.fillStyle = t.titulo;
-  ctx.fillText(partir(chica, ancho)[0] || "", x, y); y += 78;
+  // La línea chica se achica hasta entrar entera en un renglón (nombres largos de escuelas o empresas)
+  var tamChica = 62;
+  do { ctx.font = "800 " + tamChica + "px Outfit, Arial, sans-serif"; if (ctx.measureText(chica).width <= ancho) break; tamChica -= 2; } while (tamChica > 40);
+  ctx.fillStyle = t.titulo;
+  ctx.fillText(chica, x, y, ancho); y += 78;
 
   if (estado.tipo === "cumple") {
     ctx.font = "900 250px Outfit, Arial, sans-serif"; ctx.fillText(grande, x - 8, y - 30); y += 230;
@@ -514,7 +563,8 @@ async function dibujar() {
 
   if (v.mensaje) {
     ctx.font = "400 44px Outfit, Arial, sans-serif"; ctx.fillStyle = t.suave;
-    partir(v.mensaje, ancho).slice(0, 2).forEach(function (l) { ctx.fillText(l, x, y); y += 58; });
+    var lineasMsg = (estado.tipo === "escuela" && v.entrada) ? 1 : 2;
+    partir(v.mensaje, ancho).slice(0, lineasMsg).forEach(function (l) { ctx.fillText(l, x, y); y += 58; });
     y += 14;
   }
 
@@ -537,6 +587,10 @@ async function dibujar() {
   dibujarQR(x + ancho - 190, cajaY + 22, 190, t.caja, t.texto);
 
   y = cajaY + cajaAlto + 40;
+  if (estado.tipo === "escuela" && v.entrada) {
+    ctx.font = "700 40px Outfit, Arial, sans-serif"; ctx.fillStyle = t.titulo;
+    ctx.fillText(v.entrada, x, y, ancho); y += 56;
+  }
   if (v.limite) {
     ctx.font = "600 40px Outfit, Arial, sans-serif"; ctx.fillStyle = t.titulo;
     ctx.fillText("Confirmá tu asistencia antes del " + fechaCorta(v.limite), x, y);
@@ -622,6 +676,7 @@ function elegirTipo(tipo) {
   var cfg = TIPOS[tipo];
   document.querySelectorAll(".opcion").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-tipo") === tipo)); });
   document.querySelectorAll("[data-campo]").forEach(function (c) { c.hidden = cfg.campos.indexOf(c.getAttribute("data-campo")) === -1; });
+  document.getElementById("f-evento").placeholder = cfg.ejemplo || "Ej: Cena de fin de año";
   var sug = document.getElementById("sugerencias"); sug.innerHTML = "";
   cfg.mensajes.forEach(function (m) {
     var b = document.createElement("button"); b.type = "button"; b.textContent = m;
