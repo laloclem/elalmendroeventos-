@@ -119,6 +119,15 @@ label{ font-weight:700; font-size:16px; display:block; margin-bottom:6px; }
 input{ font:inherit; color:var(--tinta); background:var(--fondo); border:2px solid var(--borde); border-radius:16px; min-height:54px; padding:10px 16px; width:100%; }
 input:focus{ border-color:var(--acento); outline:none; }
 .ayuda{ font-size:14px; color:var(--suave); margin:6px 0 0; }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; border:0; padding:0; margin:0; }
+.chips legend{ font-weight:700; font-size:16px; margin-bottom:6px; padding:0; }
+.chips label{ margin:0; font-weight:600; font-size:15px; display:inline-flex; align-items:center; min-height:44px; padding:0 16px; border-radius:999px; border:2px solid var(--borde); background:var(--fondo); cursor:pointer; }
+.chips input{ position:absolute; opacity:0; width:1px; height:1px; }
+.chips input:checked + span{ color:var(--sobre-acento); }
+.chips label:has(input:checked){ background:var(--acento); border-color:var(--acento); color:var(--sobre-acento); }
+.chips label:has(input:focus-visible){ outline:3px solid var(--acento); outline-offset:3px; }
+.fila-horas{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.tipo{ display:block; font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--acento); margin-bottom:2px; }
 .mensaje-form{ min-height:22px; margin:0; font-size:15px; font-weight:600; color:var(--acento); }
 
 /* Hoja inferior */
@@ -212,6 +221,24 @@ dialog::backdrop{ background:rgba(20,12,14,.45); }
       <label for="f-fecha">Fecha del evento</label>
       <input id="f-fecha" type="date">
     </div>
+    <fieldset class="chips" id="f-tipo">
+      <legend>Tipo de evento</legend>
+      <label><input type="radio" name="tipo" value="Cumpleaños"><span>Cumpleaños</span></label>
+      <label><input type="radio" name="tipo" value="Celebración"><span>Celebración</span></label>
+      <label><input type="radio" name="tipo" value="Empresarial"><span>Empresarial</span></label>
+      <label><input type="radio" name="tipo" value="Escuelas y ferias"><span>Escuelas y ferias</span></label>
+      <label><input type="radio" name="tipo" value="Otro"><span>Otro</span></label>
+    </fieldset>
+    <div class="fila-horas">
+      <div class="campo">
+        <label for="f-desde">Desde</label>
+        <input id="f-desde" type="time">
+      </div>
+      <div class="campo">
+        <label for="f-hasta">Hasta</label>
+        <input id="f-hasta" type="time">
+      </div>
+    </div>
     <div class="repetida" id="repetida" role="status" hidden></div>
     <p class="mensaje-form" id="msg-form" role="alert"></p>
     <button class="btn btn-lleno" id="btn-crear" type="button">Crear código</button>
@@ -280,6 +307,13 @@ function cuandoTexto(n) {
   if (n === -1) return "Ayer";
   return "Hace " + Math.abs(n) + " días";
 }
+function hora(h) { h = String(h || "").trim(); var m = h.match(/^(\d{1,2}):(\d{2})/); return m ? m[1].padStart(2, "0") + ":" + m[2] : ""; }
+function horario(r) {
+  var d = hora(r.hora_inicio), h = hora(r.hora_fin);
+  if (d && h) return d + " a " + h + " h";
+  if (d) return "Desde las " + d + " h";
+  return "";
+}
 function telWhatsApp(t) {
   t = String(t || "").replace(/\D/g, "");
   if (!t) return "";
@@ -318,10 +352,10 @@ var reservas = [];
 function ejemplo() {
   function dentro(n) { var f = new Date(); f.setDate(f.getDate() + n); return f.getFullYear() + "-" + String(f.getMonth() + 1).padStart(2, "0") + "-" + String(f.getDate()).padStart(2, "0"); }
   return [
-    { codigo: "ALM-K7M2P", cliente: "Laura Gómez", telefono: "5492644045332", fecha: dentro(3), creado: dentro(-20), usada: dentro(-12) },
-    { codigo: "ALM-R4TQ8", cliente: "Familia Quiroga", telefono: "5492645123456", fecha: dentro(12), creado: dentro(-6), usada: "" },
-    { codigo: "ALM-WH3ZN", cliente: "Constructora Andina", telefono: "5492644998877", fecha: dentro(34), creado: dentro(-2), usada: "" },
-    { codigo: "ALM-B6XEJ", cliente: "Martina Ríos", telefono: "5492644556677", fecha: dentro(-9), creado: dentro(-40), usada: dentro(-25) }
+    { codigo: "ALM-K7M2P", cliente: "Laura Gómez", telefono: "5492644045332", fecha: dentro(3), creado: dentro(-20), usada: dentro(-12), tipo: "Cumpleaños", hora_inicio: "21:00", hora_fin: "03:00" },
+    { codigo: "ALM-R4TQ8", cliente: "Familia Quiroga", telefono: "5492645123456", fecha: dentro(12), creado: dentro(-6), usada: "", tipo: "Celebración", hora_inicio: "13:00", hora_fin: "19:00" },
+    { codigo: "ALM-WH3ZN", cliente: "Constructora Andina", telefono: "5492644998877", fecha: dentro(34), creado: dentro(-2), usada: "", tipo: "Empresarial", hora_inicio: "21:30", hora_fin: "02:00" },
+    { codigo: "ALM-B6XEJ", cliente: "Martina Ríos", telefono: "5492644556677", fecha: dentro(-9), creado: dentro(-40), usada: dentro(-25), tipo: "Escuelas y ferias", hora_inicio: "", hora_fin: "" }
   ];
 }
 
@@ -407,8 +441,9 @@ function tarjetaReserva(r) {
   hoja.appendChild(el("span", null, MESES[f.getMonth()]));
 
   var datos = el("div", "datos");
+  if (r.tipo) datos.appendChild(el("span", "tipo", r.tipo));
   datos.appendChild(el("h2", null, r.cliente || "Sin nombre"));
-  var cuando = el("p", "cuando", cuandoTexto(n));
+  var cuando = el("p", "cuando", cuandoTexto(n) + (horario(r) ? " · " + horario(r) : ""));
   var oculto = el("span", null, ", " + fechaLarga(r.fecha)); oculto.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)";
   cuando.appendChild(oculto);
   datos.appendChild(cuando);
@@ -423,8 +458,11 @@ function tarjetaReserva(r) {
 
   var cuerpo = el("div", "detalle");
   var dl = el("dl");
-  [["Fecha", fechaLarga(r.fecha)], ["Celular", telLindo(r.telefono)], ["Código", r.codigo],
-   ["Tarjeta", r.usada ? "Armada el " + fechaCorta(r.usada) : "Todavía no la armó"]].forEach(function (par) {
+  var filasDetalle = [["Fecha", fechaLarga(r.fecha)]];
+  if (horario(r)) filasDetalle.push(["Horario", horario(r)]);
+  if (r.tipo) filasDetalle.push(["Evento", r.tipo]);
+  filasDetalle.concat([["Celular", telLindo(r.telefono)], ["Código", r.codigo],
+   ["Tarjeta", r.usada ? "Armada el " + fechaCorta(r.usada) : "Todavía no la armó"]]).forEach(function (par) {
     dl.appendChild(el("dt", null, par[0]));
     var dd = el("dd", par[0] === "Código" ? "codigo" : null, par[1]); dl.appendChild(dd);
   });
@@ -476,6 +514,8 @@ var confirmarRepetida = false, ultima = null;
 
 document.getElementById("btn-nueva").addEventListener("click", function () {
   fCliente.value = ""; fTel.value = ""; fFecha.value = ""; fFecha.min = hoyISO();
+  document.getElementById("f-desde").value = ""; document.getElementById("f-hasta").value = "";
+  document.querySelectorAll('input[name="tipo"]').forEach(function (r) { r.checked = false; });
   msgForm.textContent = ""; cajaRepetida.hidden = true; confirmarRepetida = false;
   document.getElementById("btn-crear").textContent = "Crear código";
   pasoForm.hidden = false; pasoListo.hidden = true;
@@ -501,10 +541,15 @@ fFecha.addEventListener("change", function () {
 
 document.getElementById("btn-crear").addEventListener("click", async function () {
   var cliente = fCliente.value.trim(), tel = telWhatsApp(fTel.value), fecha = fFecha.value, b = this;
+  var elegido = document.querySelector('input[name="tipo"]:checked');
+  var tipo = elegido ? elegido.value : "";
+  var desde = document.getElementById("f-desde").value, hasta = document.getElementById("f-hasta").value;
   var falta = [];
   if (!cliente) falta.push("el nombre");
   if (!fecha) falta.push("la fecha");
-  if (falta.length) { msgForm.textContent = "Completá " + falta.join(" y ") + "."; return; }
+  if (!tipo) falta.push("el tipo de evento");
+  if (falta.length) { msgForm.textContent = "Completá " + (falta.length > 1 ? falta.slice(0, -1).join(", ") + " y " + falta[falta.length - 1] : falta[0]) + "."; return; }
+  if (hasta && !desde) { msgForm.textContent = "Si ponés hasta qué hora, completá también desde qué hora."; return; }
   if (!tel || tel.length !== 13) { msgForm.textContent = "Revisá el celular: tienen que ser 10 números, sin 0 y sin 15."; fTel.focus(); return; }
   if (fecha < hoyISO()) { msgForm.textContent = "La fecha ya pasó. Elegí una fecha de hoy en adelante."; return; }
   if (!cajaRepetida.hidden && !confirmarRepetida) {
@@ -517,11 +562,11 @@ document.getElementById("btn-crear").addEventListener("click", async function ()
     if (MODO_PRUEBA) {
       var letras = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", c = "";
       for (var i = 0; i < 5; i++) c += letras[Math.floor(Math.random() * letras.length)];
-      nueva = { codigo: "ALM-" + c, cliente: cliente, telefono: tel, fecha: fecha, creado: hoyISO(), usada: "" };
+      nueva = { codigo: "ALM-" + c, cliente: cliente, telefono: tel, fecha: fecha, creado: hoyISO(), usada: "", tipo: tipo, hora_inicio: desde, hora_fin: hasta };
     } else {
-      var resp = await pedir({ accion: "crear", cliente: cliente, telefono: tel, fecha: fecha });
+      var resp = await pedir({ accion: "crear", cliente: cliente, telefono: tel, fecha: fecha, tipo: tipo, hora_inicio: desde, hora_fin: hasta });
       if (!resp || !resp.codigo) throw new Error("sin código");
-      nueva = { codigo: resp.codigo, cliente: resp.cliente || cliente, telefono: String(resp.telefono || tel), fecha: fecha, creado: resp.creado || hoyISO(), usada: "" };
+      nueva = { codigo: resp.codigo, cliente: resp.cliente || cliente, telefono: String(resp.telefono || tel), fecha: fecha, creado: resp.creado || hoyISO(), usada: "", tipo: tipo, hora_inicio: desde, hora_fin: hasta };
     }
     reservas.push(nueva); ultima = nueva; pintar();
     document.getElementById("listo-codigo").textContent = nueva.codigo;
