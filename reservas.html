@@ -371,8 +371,12 @@ async function pedir(datos, claveUsar) {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.assign({ clave: claveUsar || clave() }, datos)), signal: control.signal
     });
-    var json = await r.json();
+    var json = null;
+    try { json = await r.json(); } catch (x) {}
     if (json && json.error === "clave") { var e = new Error("clave"); e.tipo = "clave"; throw e; }
+    // Si n8n respondió con un error (o algo que no esperamos), avisar en vez de seguir como si nada.
+    if (!r.ok || !json || json.error) throw new Error("respuesta");
+    if (datos.accion === "listar" && !Array.isArray(json.reservas)) throw new Error("respuesta");
     return json;
   } finally { clearTimeout(espera); }
 }
@@ -525,18 +529,39 @@ hojaNueva.addEventListener("click", function (e) {
   if (e.target === hojaNueva || e.target.closest("[data-cerrar]")) hojaNueva.close();
 });
 
-fFecha.addEventListener("change", function () {
+function sumarDias(iso, n) { var f = aFecha(iso); f.setDate(f.getDate() + n); return f.getFullYear() + "-" + String(f.getMonth() + 1).padStart(2, "0") + "-" + String(f.getDate()).padStart(2, "0"); }
+function pasaMedianoche(desde, hasta) { return !!(desde && hasta && hasta < desde); }
+function nombres(lista) { return lista.map(function (r) { return r.cliente || "Sin nombre"; }).join(" y "); }
+
+function revisarFecha() {
   confirmarRepetida = false;
   document.getElementById("btn-crear").textContent = "Crear código";
-  var ya = reservas.filter(function (r) { return r.fecha === fFecha.value; });
-  if (ya.length) {
-    cajaRepetida.innerHTML = "";
-    cajaRepetida.appendChild(document.createTextNode("Ese día ya está reservado por "));
-    cajaRepetida.appendChild(el("b", null, ya.map(function (r) { return r.cliente; }).join(" y ")));
-    cajaRepetida.appendChild(document.createTextNode(". Revisá la fecha antes de seguir."));
-    cajaRepetida.hidden = false;
-  } else cajaRepetida.hidden = true;
-});
+  cajaRepetida.innerHTML = ""; cajaRepetida.hidden = true;
+  var fecha = fFecha.value; if (!fecha) return;
+  var desde = document.getElementById("f-desde").value, hasta = document.getElementById("f-hasta").value;
+  var avisos = [];
+  var mismoDia = reservas.filter(function (r) { return r.fecha === fecha; });
+  if (mismoDia.length) avisos.push(["Ese día ya está reservado por ", nombres(mismoDia), "."]);
+  // Evento del día anterior que termina después de medianoche
+  var anterior = reservas.filter(function (r) { return r.fecha === sumarDias(fecha, -1) && pasaMedianoche(hora(r.hora_inicio), hora(r.hora_fin)); });
+  if (anterior.length) avisos.push(["El evento del día anterior de ", nombres(anterior), " termina a las " + hora(anterior[0].hora_fin) + " h de ese día."]);
+  // Este evento pasa la medianoche y al día siguiente hay otro
+  if (pasaMedianoche(desde, hasta)) {
+    var siguiente = reservas.filter(function (r) { return r.fecha === sumarDias(fecha, 1); });
+    if (siguiente.length) avisos.push(["Este evento termina al día siguiente, y ese día hay otro de ", nombres(siguiente), "."]);
+  }
+  if (!avisos.length) return;
+  avisos.forEach(function (a, i) {
+    if (i) cajaRepetida.appendChild(el("br"));
+    cajaRepetida.appendChild(document.createTextNode(a[0]));
+    cajaRepetida.appendChild(el("b", null, a[1]));
+    cajaRepetida.appendChild(document.createTextNode(a[2]));
+  });
+  cajaRepetida.appendChild(el("br"));
+  cajaRepetida.appendChild(document.createTextNode("Revisá la fecha antes de seguir."));
+  cajaRepetida.hidden = false;
+}
+[fFecha, document.getElementById("f-desde"), document.getElementById("f-hasta")].forEach(function (c) { c.addEventListener("change", revisarFecha); });
 [fCliente, fTel].forEach(function (c) { c.addEventListener("input", function () { msgForm.textContent = ""; }); });
 
 document.getElementById("btn-crear").addEventListener("click", async function () {
